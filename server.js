@@ -260,7 +260,9 @@ utils.findAvailablePort(app, function (port) {
       browserSync({
         proxy: 'localhost:' + (port - 50),
         port: port,
-        ui: false,
+        ui: {
+          port: 3367
+        },
         files: ['public/**/*.*', 'app/views/**/*.*'],
         ghostmode: false,
         open: false,
