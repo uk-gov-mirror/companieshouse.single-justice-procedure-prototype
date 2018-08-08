@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-// Route index page
-router.get('/', function (req, res) {
-  res.render('index')
-})
-
-// Add your routes here - above the module.exports line
+// Service Core
+require('./routes/core.js')(router)
+// Main Journey
+// require('./routes/journey.js')(router)
 
 module.exports = router

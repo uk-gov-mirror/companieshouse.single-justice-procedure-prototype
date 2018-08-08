@@ -3,61 +3,179 @@ $govuk-global-styles: true;
 
 //Import GOV.UK Frontend
 @import "govuk-frontend/all";
+@import 'ch-overrides';
 
 // Patterns that aren't in Frontend
 @import 'patterns/check-your-answers';
 @import 'patterns/related-items';
 @import 'patterns/task-list';
+@import 'patterns/navigation';
+@import 'patterns/pagination';
+@import 'patterns/table-per-page';
+@import 'patterns/table-counter';
+@import 'patterns/filters';
+@import 'patterns/dashboard';
 
 //cookie-banner
 @import "../../../docs/assets/sass/cookie-banner";
-
-.code {
-  color: $govuk-text-colour;
-  background-color: govuk-colour("grey-4");
-
-  text-shadow: 0 1px govuk-colour("white");
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 14px;
-  direction: ltr;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-
-  border: 1px solid $govuk-border-colour;
-  padding: 4px 4px 2px;
-}
-
-// Local fixes to GOV.UK frontend
-
-.markdown hr {
-  @include govuk-responsive-margin(6, 'top');
-  @include govuk-responsive-margin(6, 'bottom');
-}
-
-.govuk-list + .govuk-heading-l,
-.govuk-list + .govuk-heading-m,
-.govuk-list + .govuk-heading-s {
-  @include govuk-responsive-margin(4, 'top');
-}
 
 // Take a look at in app/assets/sass/patterns/ to see which files are imported.
 // @import 'patterns/check-your-answers';
 // @import 'patterns/task-list';
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
-.govuk-width-container-full {
+.govuk-main-wrapper {
+  padding-top: 10px;
+}
+
+.govuk-header--borderless {
+  border-bottom: none;
+}
+
+.govuk-header__logo {
+  padding-bottom: 10px;
+  margin-bottom: 0;
+}
+
+.govuk-header__content {
+  width: 100%;
+}
+
+.govuk-header__navigation {
+  padding: 0 15px;
+  margin: 0 -15px;
+  background-color: govuk-colour("grey-3");
+}
+
+.govuk-header__navigation-item {
+  a {
+    &:link,
+    &:visited {
+      color: black;
+    }
+  }
+}
+
+.govuk-header__navigation-item-link {
+  display: inline-block;
+  padding: 5px;
+  color: black;
+}
+
+.govuk-width-container--full {
   max-width: 100%;
   margin: 0 15px;
+}
+
+.govuk-width-container--borderless {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+// SEARCH BAR
+.ch-search-bar {
+  background: govuk-colour("blue");
+  max-width: 100%;
+  padding: .6rem 0 1rem;
+
+}
+
+.ch-search-box {
+  margin: 0 15px;
+  text-align: right;
+
+  .govuk-form-group {
+    margin: 0;
+  }
+}
+
+.ch-search-box__label {
+  color: govuk-colour("white");
+  display: none;
+  @include govuk-media-query($from: tablet) {
+    display: inline-block;
+    padding-right: .5em;
+  }
+}
+
+.ch-search-box__input {
+  width: 100%;
+  @include govuk-media-query($from: tablet) {
+    width: 40%;
+  }
+}
+
+.govuk-caption-xl__section {
+  border-left: 2px solid govuk-colour("grey-2");
+  margin-left: .2em;
+  padding-left: .3em;
+}
+
+.govuk-table__cell,
+.govuk-table__header {
+  padding: .3em .5em .3em 0;
+}
+
+.govuk-table__cell--centred {
+  text-align: center;
+}
+
+.govuk-button--table {
+  margin-bottom: 0;
+}
+
+.govuk-checkboxes__item--table {
+  min-height: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.govuk-checkboxes__label--table {
+  margin: 0;
+  padding: 0;
+}
+
+.govuk-checkboxes__input + .govuk-checkboxes__label--table::before {
+  height: 30px;
+  width: 30px;
+}
+
+.govuk-checkboxes__input + .govuk-checkboxes__label--table::after {
+  top: 9px;
+  left: 6px;
+  width: 15px;
+  height: 5px;
+  border-width: 0 0 4px 4px;
+}
+
+.govuk-checkboxes__input--table {
+  height: 30px;
+  width: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.column-results {
+  display: none;
+  @include govuk-media-query($from: tablet) {
+    display: block;
+  }
+}
+
+.column-results--active {
+  display: block;
+}
+
+.column-filters {
+  display: none;
+  @include govuk-media-query($from: tablet) {
+    display: block;
+  }
+}
+
+.column-filters--active {
+  display: block;
+  @include govuk-media-query($from: tablet) {
+    display: block;
+  }
 }

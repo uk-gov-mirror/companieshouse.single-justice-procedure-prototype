@@ -1,0 +1,269 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Manage prosecutions
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+{% block content %}
+  <div class="govuk-width-container govuk-width-container--full">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <h1 class="govuk-heading-xl">
+            <span class="govuk-caption-xl">Prosecution
+            </span>
+            All cases
+          </h1>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <nav class="section-navigation">
+            <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
+              <li class="section-navigation__item section-navigation__item--active">
+                <a href="#" class="section-navigation__link section-navigation__link--active">
+                  <span id="heading-referrals">Referrals</span>
+                </a>
+              </li>
+              <li class="section-navigation__item">
+                <a href="#" class="section-navigation__link">
+                  <span id="heading-all-cases">All cases</span>
+                </a>
+              </li>
+              <li class="section-navigation__item ">
+                <a href="#" class="section-navigation__link">
+                  <span id="heading-team-cases">My team cases</span>
+                </a>
+              </li>
+              <li class="section-navigation__item">
+                <a href="#" class="section-navigation__link">
+                  <span id="heading-my-cases">My cases</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters column-results column-results--active">
+          <p class="info result-count" id="result-count" aria-live="assertive">&nbsp;</p>
+          <a href="#filters" class="govuk-link filter-toggle govuk-button">Filter cases</a>
+          <table class="govuk-table" id="all-cases-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Company</th>
+                <th class="govuk-table__header" scope="col">Select</th>
+                <th class="govuk-table__header" scope="col">CRN</th>
+                <th class="govuk-table__header" scope="col">Status</th>
+                <th class="govuk-table__header" scope="col">Reference</th>
+                <th class="govuk-table__header" scope="col">Created on</th>
+                <th class="govuk-table__header" scope="col">Assigned to</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% set tableRow %}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">
+                  <label for="checkbox-0">
+                    <a href="">EJ FENCING LIMITED</a>
+                  </label>
+                </th>
+                <td class="govuk-table__cell govuk-table__cell--centred">
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
+                      <input class="govuk-checkboxes__input govuk-checkboxes__input--table" id="checkbox-0" name="nationality" type="checkbox" value="british">
+                      <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
+                    </div>
+                  </div>
+                </td>
+                <td class="govuk-table__cell">00345567</td>
+                <td class="govuk-table__cell">Open</td>
+                <td class="govuk-table__cell">CR71/09076/18</td>
+                <td class="govuk-table__cell">17 Jul 2018</td>
+                <td class="govuk-table__cell">Jane Howard</td>
+              </tr>
+              {% endset %}
+              {{ tableRow | safe }}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">
+                  <label for="checkbox-0">
+                    <a href="case/overview">THE GIRLS DAY SCHOOL TRUST&hellip;</a>
+                  </label>
+                </th>
+                <td class="govuk-table__cell govuk-table__cell--centred">
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
+                      <input class="govuk-checkboxes__input govuk-checkboxes__input--table" id="checkbox-0" name="nationality" type="checkbox" value="british">
+                      <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
+                    </div>
+                  </div>
+                </td>
+                <td class="govuk-table__cell">00345567</td>
+                <td class="govuk-table__cell">Open</td>
+                <td class="govuk-table__cell">CR71/09076/18</td>
+                <td class="govuk-table__cell">17 Jul 2018</td>
+                <td class="govuk-table__cell">Jane Howard</td>
+              </tr>
+              {{ tableRow | safe }}
+              {{ tableRow | safe }}
+              {{ tableRow | safe }}
+              {{ tableRow | safe }}
+            </tbody>
+          </table>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <div class="table-per-page">
+                <form action="" method="">
+                  {{ govukSelect({
+                      id: "results-per-page",
+                      classes: "table-per-page__input",
+                      name: "resultsPerPage",
+                      label: {
+                        html: "Cases per page",
+                        classes: "table-per-page__label"
+                      },
+                      items: [
+                        {
+                          value: "10",
+                          text: "10"
+                        },
+                        {
+                          value: "20",
+                          text: "20",
+                          selected: true
+                        },
+                        {
+                          value: "50",
+                          text: "50"
+                        },
+                        {
+                          value: "100",
+                          text: "100"
+                        },
+                        {
+                          value: "all",
+                          text: "All"
+                        }
+                      ]
+                    }) }}
+                </form>
+              </div>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <ul class="pagination govuk-body" role="navigation">
+                <li class="pagination__item pagination__item--disabled">
+                  <a href="#previous" class="pagination__link pagination__link--disabled">Previous</a>
+                </li>
+                <li class="pagination__item pagination__item--active">
+                  <a href="#" class="pagination__link pagination__link--active">1</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">2</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">3</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">4</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">5</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">Next</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-quarter column-filters">
+          <section class="filters" id="filters">
+            <form action="" method="post">
+              <div role="widget" class="filter open">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-category" aria-expanded="true" tabindex="0">
+                  <span id="filter-label-category">
+                    <span class="govuk-visually-hidden">Filter by
+                    </span>Status</span>
+                  <div class="toggle"></div>
+                </div>
+                <fieldset id="filter-category" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-category">
+                  <legend class="govuk-visually-hidden">What filing statuses do you want to see?</legend>
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-status-open" name="filterStatus" type="checkbox" value="open">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-open">
+                        Open
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-status-closed" name="filterStatus" type="checkbox" value="closed">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-closed">
+                        Closed
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-status-reopened" name="filterStatus" type="checkbox" value="reOpened">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-reopened">
+                        Re-opened
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-status-in-progress" name="filterStatus" type="checkbox" value="inProgress">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-in-progress">
+                        In progress
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div role="widget" class="filter">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-assignee" aria-expanded="false" tabindex="0">
+                  <span id="filter-label-assignee">
+                    <span class="govuk-visually-hidden">Filter by
+                    </span>Assignee</span>
+                  <div class="toggle"></div>
+                </div>
+                <fieldset id="filter-assignee" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-assignee">
+                  <legend class="govuk-visually-hidden">Select to see filing codes?</legend>
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-assignee-0" name="filterAssignee" type="checkbox" value="open">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-0">
+                        Jo Harding
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-assignee-1" name="filterAssignee" type="checkbox" value="closed">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-1">
+                        Rachel Brown
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-assignee-2" name="filterAssignee" type="checkbox" value="reOpened">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-2">
+                        Ieuan Morgan
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-assignee-3" name="filterAssignee" type="checkbox" value="inProgress">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-3">
+                        Sharon Jones
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </form>
+          </section>
+          <p>
+            <a href="" class="filter-expand" aria-hidden="true">Open all filters</a>
+          </p>
+          <p>
+            <a href="" role="button" class="link filter-reset" title="Clear filters to see all cases" aria-controls="filters">Reset filters</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock %}
