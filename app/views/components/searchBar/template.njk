@@ -1,0 +1,18 @@
+{% from "input/macro.njk" import govukInput %}
+
+<section class="ch-search-bar {{ params.classes if params.classes }}">
+  <div class="ch-search-box">
+    {{ govukInput({
+      label: {
+        text: "Email address"
+      },
+      id: "email",
+      name: "email",
+      label: {
+        text: "Search site",
+        classes: "ch-search-box__label"
+      },
+      classes: "ch-search-box__input"
+    }) }}
+  </div>
+</section>
