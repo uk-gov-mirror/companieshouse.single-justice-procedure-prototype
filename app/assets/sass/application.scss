@@ -179,3 +179,18 @@ $govuk-global-styles: true;
     display: block;
   }
 }
+
+// TAGS
+.govuk-tag {
+  &.govuk-tag--light-green {
+    background-color: govuk-colour("light-green");
+  }
+
+  &.govuk-tag--pink {
+    background-color: govuk-colour("pink");
+  }
+
+  &.govuk-tag--yellow {
+    background-color: govuk-colour("yellow");
+  }
+}
