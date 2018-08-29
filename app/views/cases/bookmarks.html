@@ -17,34 +17,9 @@
           </h1>
         </div>
       </div>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <nav class="section-navigation">
-            <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
-              <li class="section-navigation__item section-navigation__item--active">
-                <a href="#" class="section-navigation__link section-navigation__link--active">
-                  <span id="heading-referrals">Referrals</span>
-                </a>
-              </li>
-              <li class="section-navigation__item">
-                <a href="#" class="section-navigation__link">
-                  <span id="heading-all-cases">All cases</span>
-                </a>
-              </li>
-              <li class="section-navigation__item ">
-                <a href="#" class="section-navigation__link">
-                  <span id="heading-team-cases">My team cases</span>
-                </a>
-              </li>
-              <li class="section-navigation__item">
-                <a href="#" class="section-navigation__link">
-                  <span id="heading-my-cases">My cases</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+
+      {% include "includes/cases-navigation.html" %}
+
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters column-results column-results--active">
           <p class="info result-count" id="result-count" aria-live="assertive">&nbsp;</p>
@@ -53,62 +28,46 @@
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col">Company</th>
-                <th class="govuk-table__header" scope="col">Select</th>
                 <th class="govuk-table__header" scope="col">CRN</th>
                 <th class="govuk-table__header" scope="col">Status</th>
+                <th class="govuk-table__header" scope="col">Priority</th>
                 <th class="govuk-table__header" scope="col">Reference</th>
                 <th class="govuk-table__header" scope="col">Created on</th>
-                <th class="govuk-table__header" scope="col">Assigned to</th>
+                <th class="govuk-table__header govuk-table__header--bookmark" scope="col">Bookmark</th>
               </tr>
             </thead>
             <tbody class="govuk-table__body">
-              {% set tableRow %}
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">
-                  <label for="checkbox-0">
-                    <a href="">EJ FENCING LIMITED</a>
-                  </label>
-                </th>
-                <td class="govuk-table__cell govuk-table__cell--centred">
-                  <div class="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
-                      <input class="govuk-checkboxes__input govuk-checkboxes__input--table" id="checkbox-0" name="nationality" type="checkbox" value="british">
-                      <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
-                    </div>
-                  </div>
-                </td>
-                <td class="govuk-table__cell">00345567</td>
-                <td class="govuk-table__cell">Open</td>
-                <td class="govuk-table__cell">CR71/09076/18</td>
-                <td class="govuk-table__cell">17 Jul 2018</td>
-                <td class="govuk-table__cell">Jane Howard</td>
-              </tr>
-              {% endset %}
-              {{ tableRow | safe }}
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">
-                  <label for="checkbox-0">
-                    <a href="case/overview">THE GIRLS DAY SCHOOL TRUST&hellip;</a>
-                  </label>
-                </th>
-                <td class="govuk-table__cell govuk-table__cell--centred">
-                  <div class="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
-                      <input class="govuk-checkboxes__input govuk-checkboxes__input--table" id="checkbox-0" name="nationality" type="checkbox" value="british">
-                      <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
-                    </div>
-                  </div>
-                </td>
-                <td class="govuk-table__cell">00345567</td>
-                <td class="govuk-table__cell">Open</td>
-                <td class="govuk-table__cell">CR71/09076/18</td>
-                <td class="govuk-table__cell">17 Jul 2018</td>
-                <td class="govuk-table__cell">Jane Howard</td>
-              </tr>
-              {{ tableRow | safe }}
-              {{ tableRow | safe }}
-              {{ tableRow | safe }}
-              {{ tableRow | safe }}
+              {% for case in cases %}
+                {% if case.bookmarked === true %}
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">
+                      <a href="/case/decision?id={{ case.id }}">{{ case.company.name }}</a>
+                    </th>
+                    <td class="govuk-table__cell">{{ case.company.number}}</td>
+                    <td class="govuk-table__cell">{{ case.status }}</td>
+                    <td class="govuk-table__cell">
+                      <strong class="govuk-tag govuk-tag--light-green">{{ case.priority }}</strong>
+                    </td>
+                    <td class="govuk-table__cell">{{ case.reference }}</td>
+                    <td class="govuk-table__cell">{{ case.referred}}</td>
+                    <td class="govuk-table__cell govuk-table__cell--bookmark">
+                      {% if case.bookmarked %}
+                        <a href="" class="govuk-link bookmark-button" title="Remove this case from bookmarks" data-value="{{ case.id }}">
+                          <i class="fas fa-star fa-star--active"></i>
+                        </a>
+                      {% else %}
+                        <a href="" class="govuk-link bookmark-button" title="Bookmark this case" data-value="{{ case.id }}">
+                          <i class="fas fa-star"></i>
+                        </a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell" colspan="7">You don't have any cases bookmarked right now</td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
             </tbody>
           </table>
           <div class="govuk-grid-row">
@@ -181,6 +140,15 @@
           <section class="filters" id="filters">
             <form action="" method="post">
               <div role="widget" class="filter open">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-crn" aria-expanded="true" tabindex="0">
+                  <span id="filter-label-crn">
+                    <span class="govuk-visually-hidden">Filter by
+                    </span>Company number</span>
+                  <div class="toggle"></div>
+                </div>
+                <fieldset id="filter-crn" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-crn"></fieldset>
+              </div>
+              <div role="widget" class="filter open">
                 <div class="govuk-body filters-heading" role="button" aria-controls="filter-category" aria-expanded="true" tabindex="0">
                   <span id="filter-label-category">
                     <span class="govuk-visually-hidden">Filter by
@@ -217,38 +185,32 @@
                   </div>
                 </fieldset>
               </div>
-              <div role="widget" class="filter">
-                <div class="govuk-body filters-heading" role="button" aria-controls="filter-assignee" aria-expanded="false" tabindex="0">
-                  <span id="filter-label-assignee">
+              <div role="widget" class="filter open">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-priority" aria-expanded="false" tabindex="0">
+                  <span id="filter-label-priority">
                     <span class="govuk-visually-hidden">Filter by
-                    </span>Assignee</span>
+                    </span>Priority</span>
                   <div class="toggle"></div>
                 </div>
-                <fieldset id="filter-assignee" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-assignee">
+                <fieldset id="filter-priority" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-priority">
                   <legend class="govuk-visually-hidden">Select to see filing codes?</legend>
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-assignee-0" name="filterAssignee" type="checkbox" value="open">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-0">
-                        Jo Harding
+                      <input class="govuk-checkboxes__input" id="filter-priority-0" name="filterAssignee" type="checkbox" value="High">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-priority-0">
+                        <strong class="govuk-tag govuk-tag--pink">High</strong>
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-assignee-1" name="filterAssignee" type="checkbox" value="closed">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-1">
-                        Rachel Brown
+                      <input class="govuk-checkboxes__input" id="filter-priority-1" name="filterAssignee" type="checkbox" value="Medium">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-priority-1">
+                        <strong class="govuk-tag govuk-tag--yellow">Medium</strong>
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-assignee-2" name="filterAssignee" type="checkbox" value="reOpened">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-2">
-                        Ieuan Morgan
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-assignee-3" name="filterAssignee" type="checkbox" value="inProgress">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-assignee-3">
-                        Sharon Jones
+                      <input class="govuk-checkboxes__input" id="filter-priority-2" name="filterAssignee" type="checkbox" value="Low">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-priority-2">
+                        <strong class="govuk-tag govuk-tag--light-green">Low</strong>
                       </label>
                     </div>
                   </div>
