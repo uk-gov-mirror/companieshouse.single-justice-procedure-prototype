@@ -5,3 +5,12 @@
 .govuk-heading-m {
   border-bottom: 1px solid govuk-colour("grey-2");
 }
+
+// BUTTONS
+.govuk-button {
+  &.govuk-button--blue {
+    background-color: govuk-colour("red");
+    box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+    -webkit-box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+  }
+}
