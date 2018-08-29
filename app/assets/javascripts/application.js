@@ -48,4 +48,18 @@ $(document).ready(function () {
   $("input[name='filterType']").change(function () {
     $('.filing-type').toggle()
   })
+
+  // BOOKMARKS
+  $('.bookmark-button').click(function () {
+    var button = $(this)
+    $.get('/actions/bookmarks/toggle', { id: $(this).data('value') }).done(function (data) {
+      console.log(data)
+      if (data === true) {
+        button.children().addClass('fa-star--active')
+      } else {
+        button.children().removeClass('fa-star--active')
+      }
+    })
+    return false
+  })
 })
