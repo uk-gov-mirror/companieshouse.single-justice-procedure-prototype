@@ -1,0 +1,39 @@
+.pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  @include govuk-media-query($from: tablet) {
+    float: right;
+  }
+}
+
+.pagination__item {
+  float: left;
+  margin-bottom: 0;
+}
+
+.pagination__item--active {
+  background: govuk-colour("grey-3");
+}
+
+.pagination__item--disabled {}
+
+.pagination__link {
+  color: govuk-colour("blue");
+  display: block;
+  padding: .3em .7em;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.pagination__link--active {
+  background: govuk-color("grey-3");
+  display: block;
+  padding: .3em .7em;
+}
+
+.pagination__link--disabled {}

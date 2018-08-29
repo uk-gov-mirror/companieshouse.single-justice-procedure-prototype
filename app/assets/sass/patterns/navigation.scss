@@ -1,0 +1,116 @@
+@include govuk-media-query($from: tablet) {
+  .section-navigation {
+    display: block;
+    border-bottom: 1px solid govuk-colour("grey-2");
+    margin-bottom: 1.5em;
+    overflow: auto;
+  }
+
+  .section-navigation__list {
+
+    @include govuk-media-query($from: tablet) {
+      margin: 0;
+      overflow: auto;
+      padding: 0;
+    }
+
+    & > li {
+      margin-bottom: 0;
+    }
+  }
+
+  .section-navigation__item {
+    @include govuk-media-query($from: tablet) {
+      display: inline-block;
+      float: left;
+      margin: 0;
+    }
+  }
+
+  .section-navigation__item--active {}
+
+  .section-navigation__link {
+    border-bottom: 2px solid govuk-colour("white");
+    text-decoration: none;
+    @include govuk-media-query($from: tablet) {
+      display:: block;
+      padding: .75em 1.25em;
+    }
+  }
+
+  .section-navigation__link:hover {
+    border-bottom: 2px solid govuk-colour("grey-2");
+    text-decoration: underline;
+  }
+
+  .section-navigation__link:visited {
+    color: govuk-colour("blue");
+  }
+
+  .section-navigation__link--active {
+    border-bottom: 2px solid govuk-colour("blue");
+    @include govuk-media-query($from: tablet) {
+      font-weight: bold;
+    }
+  }
+
+  .section-navigation__link--active:hover {
+    border-bottom: 2px solid govuk-colour("blue");
+  }
+}
+
+// TIMELINE
+.timeline {
+  border-left: 5px solid govuk-colour('grey-3');
+
+  &:before {
+    @include govuk-font(16);
+    background: govuk-colour('grey-3');
+    content: 'Newest';
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: -5px;
+    padding: .25em .5em;
+  }
+
+  &:after {
+    @include govuk-font(16);
+    background: govuk-colour('grey-3');
+    content: 'Oldest';
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: -5px;
+    padding: .25em .5em;
+  }
+
+  .timeline__item {
+    font-weight: bold;
+    padding: .5em 1.35em;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 11px;
+      left: 0;
+      width: 18px;
+      height: 7px;
+      -webkit-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      transform: rotate(0deg);
+      border: solid;
+      border-width: 0 0 5px 0;
+      border-color: govuk-colour('grey-3');
+      opacity: 1;
+      background: transparent;
+    }
+
+    &:after {}
+
+    .timeline__item-date {
+      color: govuk-colour('grey-1');
+      display: block;
+      font-weight: normal;
+    }
+  }
+}
