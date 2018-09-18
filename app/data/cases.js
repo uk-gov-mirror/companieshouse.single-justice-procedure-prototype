@@ -80,32 +80,6 @@ module.exports = [
           }
         }
       ],
-      pscs: [
-        {
-          name: 'Matthew Blakemoor',
-          dateOfBirth: '16 January 1965',
-          status: 'active',
-          nature: 'More than 75% of share capital',
-          notified: '1 July 2016',
-          nationality: 'British',
-          serviceAddress: {
-            line1: 'Unit 5, Western Industrial Estate',
-            line2: 'Western Road',
-            town: 'Cardiff',
-            county: 'Cardiff County',
-            postcode: 'CF11 8TJ',
-            country: 'United Kingdom'
-          },
-          residentialAddress: {
-            line1: '25 Muir Lane',
-            line2: '',
-            town: 'Caerphilly',
-            county: 'Caerphilly County',
-            postcode: 'CF83 5RD',
-            country: 'United Kingdom'
-          }
-        }
-      ],
       filings: [
         {
           type: 'AA',
@@ -122,23 +96,16 @@ module.exports = [
           link: 'file.pdf'
         }
       ],
-      charges: [
+      overdue: [
         {
-          name: 'Mortgage',
-          created: '25 June 1995',
-          delivered: '30 June 1995',
-          description: 'Unit 5, Western Industrial estate, Cardiff',
-          entitled: 'Lloyds Bank PLC',
-          status: {
-            value: 'Satisfied',
-            date: '15 August 2016'
-          }
-        }
-      ],
-      natureOfBusiness: [
+          type: 'AA',
+          dueDate: '24 Jul 2018',
+          name: 'Annual accounts'
+        },
         {
-          code: 64191,
-          label: 'Construction and fabrication of metal materials'
+          type: 'CS01',
+          dueDate: '16 Apr 2018',
+          name: 'Confirmation statement'
         }
       ]
     },

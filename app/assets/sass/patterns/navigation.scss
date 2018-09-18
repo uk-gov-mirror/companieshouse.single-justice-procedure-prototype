@@ -47,6 +47,14 @@
     color: govuk-colour("blue");
   }
 
+  .section-navigation__link--condensed {
+    @include govuk-media-query($from: tablet) {
+      display:: block;
+      @include govuk-font(16);
+      padding: .4em .7em;
+    }
+  }
+
   .section-navigation__link--active {
     border-bottom: 2px solid govuk-colour("blue");
     @include govuk-media-query($from: tablet) {
