@@ -5,7 +5,7 @@ module.exports = [
     status: 'Referred',
     referred: '15 Jul 2018',
     referrer: 'Joanne Wiley',
-    priority: 'high',
+    priority: 'normal',
     bookmarked: true,
     company: {
       name: 'TEMPLETON METALWORK LIMITED',
@@ -168,7 +168,21 @@ module.exports = [
         },
         offences: [
           {
+            id: 0,
             type: 'AA',
+            status: 'open',
+            date: '1 March 2018',
+            hearingDate: '',
+            plea: '',
+            verdict: {
+              type: '',
+              fee: 0,
+              costs: 0
+            }
+          },
+          {
+            id: 1,
+            type: 'CS',
             status: 'open',
             date: '1 March 2018',
             hearingDate: '',

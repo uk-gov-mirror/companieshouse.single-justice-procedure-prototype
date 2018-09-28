@@ -199,6 +199,9 @@ if (typeof (routes) !== 'function') {
   app.use('/', routes)
 }
 
+// Scenario check
+app.get('*', utils.checkScenario())
+
 // Redirect to the zip of the latest release of the Prototype Kit on GitHub
 app.get('/prototype-admin/download-latest', function (req, res) {
   var url = utils.getLatestRelease()

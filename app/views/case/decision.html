@@ -26,17 +26,16 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full action-bar">
+          {{ govukButton({
+            text: "Accept case",
+            classes: "case-accept-button"
+          }) }}
           <form action="" method="post" class="action-bar__form">
             <input type="hidden" name="caseID" value="{{ case.id }}"/>
-            {{ govukButton({
-              text: "Accept case"
-            }) }}
-          </form>
-          <form action="" method="post" class="action-bar__form">
-            <input type="hidden" name="caseID" value="{{ case.id }}"/>
+            <input type="hidden" name="caseAction" value="reject"/>
             {{ govukButton({
               text: "Reject case",
-              classes: "govuk-button--blue"
+              classes: "govuk-button--red"
             }) }}
           </form>
         </div>
@@ -102,110 +101,111 @@
             </div>
           </div>
           <div class="govuk-grid-row toggle-pane" id="case-offences" aria-hidden="true" aria-expanded="false" style="display: none;">
-            <div class="govuk-grid-column-full" aria-describeddby="heading-case-offences">
-              {% for defendant in case.defendants %}
-                <table class="govuk-table govuk-table--condensed">
-                  <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
-                  <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header" scope="row">Date of birth</th>
-                      <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header" scope="row">Role</th>
-                      <td class="govuk-table__cell">{{ defendant.role }}</td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header" scope="row">Appointed on</th>
-                      <td class="govuk-table__cell">{{ defendant.appointed }}</td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header" scope="row">Status</th>
-                      <td class="govuk-table__cell">
-
-                        {% if defendant.status === 'active' %}
-                          <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
-                        {% else %}
-                          <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
-                        {% endif %}
-
-                      </td>
-                    </tr>
-
-                    {% if defendant.status === 'resigned' %}
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Resigned on</th>
-                        <td class="govuk-table__cell">{{ defendant.resigned }}</td>
-                      </tr>
-                    {% endif %}
-
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
-                      <td class="govuk-table__cell">
-                        {{ defendant.address.line1 }}<br/>
-                        {{ defendant.address.line2 }}<br/>
-                        {{ defendant.address.town }}<br/>
-                        {{ defendant.address.county }}<br/>
-                        {{ defendant.address.country }}
-                      </td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th class="govuk-table__header" scope="row">Country of residence</th>
-                      <td class="govuk-table__cell">{{ defendant.address.country }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                {% for offence in defendant.offences %}
+            <form action="" method="post" id="case-details-form">
+              <input type="hidden" name="caseID" value="{{ case.id }}"/>
+              <input type="hidden" name="caseAction" value="accept"/>
+              <div class="govuk-grid-column-full" aria-labelledby="heading-case-offences">
+                <div class="govuk-panel govuk-panel--basic govuk-panel--left-aligned govuk-!-padding-2">
+                  <div class="govuk-form-group">
+                    <div class="govuk-checkboxes">
+                      <div class="govuk-checkboxes__item govuk-checboxes__item--white">
+                        <input class="govuk-checkboxes__input" id="company-proceed" name="proceedAgainstCompany" type="checkbox" value="true">
+                        <label class="govuk-label govuk-checkboxes__label" for="company-proceed">
+                          Proceed against the company
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% for defendant in case.defendants %}
                   <table class="govuk-table govuk-table--condensed">
-                    <caption class="govuk-table__caption">Offences</caption>
+                    <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
+                    <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Date of birth</th>
+                        <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Role</th>
+                        <td class="govuk-table__cell">{{ defendant.role }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Appointed on</th>
+                        <td class="govuk-table__cell">{{ defendant.appointed }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Status</th>
+                        <td class="govuk-table__cell">
+
+                          {% if defendant.status === 'active' %}
+                            <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                          {% else %}
+                            <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                          {% endif %}
+
+                        </td>
+                      </tr>
+
+                      {% if defendant.status === 'resigned' %}
+                        <tr class="govuk-table__row">
+                          <th class="govuk-table__header" scope="row">Resigned on</th>
+                          <td class="govuk-table__cell">{{ defendant.resigned }}</td>
+                        </tr>
+                      {% endif %}
+
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
+                        <td class="govuk-table__cell">
+                          {{ defendant.address.line1 }}<br/>
+                          {{ defendant.address.line2 }}<br/>
+                          {{ defendant.address.town }}<br/>
+                          {{ defendant.address.county }}<br/>
+                          {{ defendant.address.country }}
+                        </td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Country of residence</th>
+                        <td class="govuk-table__cell">{{ defendant.address.country }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="govuk-table govuk-table--condensed">
+                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Offences</caption>
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-
+                        <th class="govuk-table__header">Proceed</th>
                         <th class="govuk-table__header">Type</th>
                         <th class="govuk-table__header">Date</th>
                       </tr>
                     </thead>
                     <tbody class="govuk-table__body">
-                      <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                          {{ govukCheckboxes({
-                            idPrefix: "waste",
-                            name: "waste",
-                            fieldset: {
-                              legend: {
-                                text: "Which types of waste do you transport?",
-                                isPageHeading: true,
-                                classes: "govuk-fieldset__legend--xl"
-                              }
-                            },
-                            hint: {
-                              text: "Select all that apply."
-                            },
-                            items: [
-                              {
-                                value: "carcasses",
-                                text: "Waste from animal carcasses"
-                              }
-                            ]
-                          }) }}
-                        </td>
-                        <td class="govuk-table__cell ">
-                          {% if offence.type === 'AA' %}
-                            Annual accounts
-                          {% elif offence.type === 'CS' %}
-                            Confirmation statement
-                          {% endif %}
-                        </td>
-                        <td class="govuk-table__cell" scope="row">
-                          {{ offence.date }}
-                        </td>
-                      </tr>
+                      {% for offence in defendant.offences %}
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">
+                            <div class="govuk-checkboxes">
+                              <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
+                                <input class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}">
+                                <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="govuk-table__cell ">
+                            {% if offence.type === 'AA' %}
+                              Annual accounts
+                            {% elif offence.type === 'CS' %}
+                              Confirmation statement
+                            {% endif %}
+                          </td>
+                          <td class="govuk-table__cell" scope="row">
+                            {{ offence.date }}
+                          </td>
+                        </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 {% endfor %}
-              {% endfor %}
-            </div>
+              </div>
+            </form>
           </div>
           <div class="govuk-grid-row toggle-pane" id="case-contacts" aria-hidden="true" aria-expanded="false" style="display: none;">
             <div class="govuk-grid-column-full" aria-describeddby="heading-case-contact-history">
@@ -408,9 +408,12 @@
                         {{ officer.serviceAddress.country }}
                       </td>
                     </tr>
-                    <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Nationality</th> <td class="govuk-table__cell">{{ officer.nationality }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Country of
-                    residence</th> <td class="govuk-table__cell">{{ officer.residentialAddress.country}}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Occupation</th> <td class="govuk-table__cell">{{ officer.occupation }}</td>
-                    </tr> -->
+                    <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Nationality</th> <td class="govuk-table__cell">{{ officer.nationality }}</td> </tr> -->
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Country of residence</th>
+                      <td class="govuk-table__cell">{{ officer.residentialAddress.country}}</td>
+                    </tr>
+                    <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Occupation</th> <td class="govuk-table__cell">{{ officer.occupation }}</td> </tr> -->
                   </tbody>
                 </table>
               {% endfor %}

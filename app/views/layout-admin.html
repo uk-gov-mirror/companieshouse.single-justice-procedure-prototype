@@ -27,6 +27,7 @@
 {% from "./components/header/macro.njk" import chHeader %}
 {% from "./components/searchBar/macro.njk" import chSearchBar %}
 {% from "./components/footer/macro.njk" import chFooter %}
+{% from "./components/caseNavigation/macro.njk" import caseNavigation %}
 
 {% block head %}
   {% include "includes/head.html" %}
@@ -67,10 +68,7 @@
     "classes": "govuk-header--borderless",
     "containerClasses": "govuk-width-container govuk-width-container--full govuk-width-container--borderless"
   }) }}
-  {{ chSearchBar({
-    "classes": "",
-    "containerClasses": "govuk-width-container govuk-width-container--full govuk-width-container--borderless"
-  }) }}
+  <!--{{ chSearchBar({ "classes": "", "containerClasses": "govuk-width-container govuk-width-container--full govuk-width-container--borderless" }) }}-->
 {% endblock %}
 
 {% block footer %}

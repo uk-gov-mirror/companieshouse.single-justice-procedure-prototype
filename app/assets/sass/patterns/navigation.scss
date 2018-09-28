@@ -34,7 +34,7 @@
     text-decoration: none;
     @include govuk-media-query($from: tablet) {
       display:: block;
-      padding: .75em 1.25em;
+      padding: .65em 1em;
     }
   }
 
@@ -69,26 +69,26 @@
 
 // TIMELINE
 .timeline {
-  border-left: 5px solid govuk-colour('grey-3');
+  border-left: 5px solid govuk-colour('blue');
 
+  &:after,
   &:before {
     @include govuk-font(16);
-    background: govuk-colour('grey-3');
-    content: 'Newest';
+    background: govuk-colour('blue');
+    color: govuk-colour('white');
     display: inline-block;
-    margin-bottom: 10px;
     margin-left: -5px;
     padding: .25em .5em;
   }
 
+  &:before {
+    content: 'Newest';
+    margin-bottom: 10px;
+  }
+
   &:after {
-    @include govuk-font(16);
-    background: govuk-colour('grey-3');
     content: 'Oldest';
-    display: inline-block;
     margin-top: 5px;
-    margin-left: -5px;
-    padding: .25em .5em;
   }
 
   .timeline__item {
@@ -108,7 +108,7 @@
       transform: rotate(0deg);
       border: solid;
       border-width: 0 0 5px 0;
-      border-color: govuk-colour('grey-3');
+      border-color: govuk-colour('blue');
       opacity: 1;
       background: transparent;
     }

@@ -83,4 +83,10 @@ $(document).ready(function () {
     }
     return false
   })
+
+  // ACCEPT CASE
+  $('.case-accept-button').click(function () {
+    $('#case-details-form').submit()
+    return false
+  })
 })

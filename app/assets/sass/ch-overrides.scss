@@ -1,16 +1,41 @@
 .govuk-heading-xl {
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
 }
 
 .govuk-heading-m {
-  border-bottom: 1px solid govuk-colour("grey-2");
+  // border-bottom: 1px solid govuk-colour("grey-2");
 }
 
 // BUTTONS
 .govuk-button {
-  &.govuk-button--blue {
+  &.govuk-button--red {
     background-color: govuk-colour("red");
-    box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
-    -webkit-box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+    // box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+    // -webkit-box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+  }
+
+  &.govuk-button-edit {
+    background-color: govuk-colour("blue");
+  }
+}
+
+// PANEL
+.govuk-panel {
+  &.govuk-panel--basic {
+    background: govuk-colour("grey-3");
+  }
+
+  &.govuk-panel--left-aligned {
+    text-align: left;
+  }
+
+  .govuk-form-group {
+    margin-bottom: 0;
+  }
+}
+
+.govuk-panel {
+  &.govuk-panel--blue {
+    background-color: govuk-colour("blue");
   }
 }
