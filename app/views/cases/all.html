@@ -9,8 +9,8 @@
   <div class="govuk-width-container govuk-width-container--full">
     <main class="govuk-main-wrapper">
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+        <div class="govuk-grid-column-three-quarters">
+          <h1 class="govuk-heading-xl">
             <span class="govuk-caption-xl">Prosecution
             </span>
             Cases
@@ -152,37 +152,19 @@
                 </div>
               </div>
               <div role="widget" class="filter open">
-                <div class="govuk-body filters-heading" role="button" aria-controls="filter-status" aria-expanded="true" tabindex="0">
-                  <span id="filter-label-status">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-category" aria-expanded="true" tabindex="0">
+                  <span id="filter-label-category">
                     <span class="govuk-visually-hidden">Filter by
                     </span>Status</span>
                   <div class="toggle"></div>
                 </div>
-                <fieldset id="filter-status" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-status">
-                  <legend class="govuk-visually-hidden">What case statuses do you want to see?</legend>
+                <fieldset id="filter-category" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-category">
+                  <legend class="govuk-visually-hidden">What filing statuses do you want to see?</legend>
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-status-accepted" name="filterStatus" type="checkbox" value="accepted">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-accepted">
-                        Accepted
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-status-ultimatum" name="filterStatus" type="checkbox" value="ultimatum">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-ultimatum">
-                        Ultimatum issued
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-status-sjpn" name="filterStatus" type="checkbox" value="sjpn">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-sjpn">
-                        SJPN issued
-                      </label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-status-verdict" name="filterStatus" type="checkbox" value="verdict">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-verdict">
-                        Verdict returned
+                      <input class="govuk-checkboxes__input" id="filter-status-open" name="filterStatus" type="checkbox" value="open">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-open">
+                        Open
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
@@ -192,9 +174,15 @@
                       </label>
                     </div>
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="filter-status-rejected" name="filterStatus" type="checkbox" value="rejected">
-                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-rejected">
-                        Rejected
+                      <input class="govuk-checkboxes__input" id="filter-status-reopened" name="filterStatus" type="checkbox" value="reOpened">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-reopened">
+                        Re-opened
+                      </label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="filter-status-in-progress" name="filterStatus" type="checkbox" value="inProgress">
+                      <label class="govuk-label govuk-checkboxes__label" for="filter-status-in-progress">
+                        In progress
                       </label>
                     </div>
                   </div>
@@ -242,7 +230,7 @@
         </div>
       </div>
     {% else %}
-      <p>There are no referred cases to show</p>
+      <p>There are no accepted cases to show</p>
     {% endif %}
   </main>
 </div>

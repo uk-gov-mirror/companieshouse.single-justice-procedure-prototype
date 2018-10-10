@@ -26,427 +26,432 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full action-bar">
+          {{ govukButton({
+            text: "Accept case",
+            classes: "case-accept-button"
+          }) }}
           <form action="" method="post" class="action-bar__form">
             <input type="hidden" name="caseID" value="{{ case.id }}"/>
-            {{ govukButton({
-              text: "Accept case"
-            }) }}
-          </form>
-          <form action="" method="post" class="action-bar__form">
-            <input type="hidden" name="caseID" value="{{ case.id }}"/>
+            <input type="hidden" name="caseAction" value="reject"/>
             {{ govukButton({
               text: "Reject case",
-              classes: "govuk-button--blue"
+              classes: "govuk-button--red"
             }) }}
           </form>
         </div>
       </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half decision-case">
-          <h3 class="govuk-heading-m">Case Overview</h3>
-          <ul class="govuk-list govuk-list--number">
-            <li>
-              <a class="govuk-link" href="#case-info">Overview</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-officers">Defendants</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-pscs">Contacts</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-filings">Documents</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-charges">History</a>
-            </li>
-          </ul>
-          <h4 class="govuk-heading-m decision-case__header" id="case-info">Basic details</h4>
-          <table class="govuk-table govuk-table--condensed">
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Reference</th>
-                <td class="govuk-table__cell ">{{ case.reference }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Status</th>
-                <td class="govuk-table__cell ">
-
-                  {% if case.status === 'active' %}
-                    <strong class="govuk-tag govuk-tag--light-green">{{ case.status }}</strong>
-                  {% elif case.status === 'Referred' %}
-                    <strong class="govuk-tag govuk-tag--yellow">{{ case.status }}</strong>
-                  {% else %}
-                    <strong class="govuk-tag govuk-tag--grey">{{ case.status }}</strong>
-                  {% endif %}
-
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Referral date</th>
-                <td class="govuk-table__cell ">{{ case.referred }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Referred by</th>
-                <td class="govuk-table__cell ">{{ case.referrer }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h4 class="govuk-heading-m decision-case__header" id="case-info">Defendants</h4>
-
-          {% for defendant in case.defendants %}
-            <table class="govuk-table govuk-table--condensed">
-              <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Date of birth</th>
-                  <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Role</th>
-                  <td class="govuk-table__cell">{{ defendant.role }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Appointed on</th>
-                  <td class="govuk-table__cell">{{ defendant.appointed }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Status</th>
-                  <td class="govuk-table__cell">
-
-                    {% if defendant.status === 'active' %}
-                      <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
-                    {% else %}
-                      <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
-                    {% endif %}
-
-                  </td>
-                </tr>
-
-                {% if defendant.status === 'resigned' %}
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Resigned on</th>
-                    <td class="govuk-table__cell">{{ defendant.resigned }}</td>
-                  </tr>
-                {% endif %}
-
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
-                  <td class="govuk-table__cell">
-                    {{ defendant.address.line1 }}<br/>
-                    {{ defendant.address.line2 }}<br/>
-                    {{ defendant.address.town }}<br/>
-                    {{ defendant.address.county }}<br/>
-                    {{ defendant.address.country }}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Country of residence</th>
-                  <td class="govuk-table__cell">{{ defendant.address.country }}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            {% for offence in defendant.offences %}
+          <h3 class="govuk-heading-m">Case Details</h3>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <nav class="section-navigation">
+                <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
+                  <li class="section-navigation__item section-navigation__item--active">
+                    <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="case-overview" data-section="decision-case">
+                      <span id="heading-case-overview">Overview</span>
+                    </a>
+                  </li>
+                  <li class="section-navigation__item">
+                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-offences" data-section="decision-case">
+                      <span id="heading-case-offences">Defendants & Offences</span>
+                    </a>
+                  </li>
+                  <li class="section-navigation__item">
+                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-contacts" data-section="decision-case">
+                      <span id="heading-case-contact-history">Contact history</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="case-overview" aria-hidden="false" aria-expanded="true" style="display: block;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-case-overview">
               <table class="govuk-table govuk-table--condensed">
-                <caption class="govuk-table__caption">Offences</caption>
-                <thead class="govuk-table__head">
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header">Type</th>
-                    <th class="govuk-table__header">Date</th>
-                  </tr>
-                </thead>
                 <tbody class="govuk-table__body">
                   <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Reference</th>
+                    <td class="govuk-table__cell ">{{ case.reference }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Status</th>
                     <td class="govuk-table__cell ">
-                      {% if offence.type === 'AA' %}
-                        Annual accounts
-                      {% elif offence.type === 'CS' %}
-                        Confirmation statement
+
+                      {% if case.status === 'active' %}
+                        <strong class="govuk-tag govuk-tag--light-green">{{ case.status }}</strong>
+                      {% elif case.status === 'Referred' %}
+                        <strong class="govuk-tag govuk-tag--yellow">{{ case.status }}</strong>
+                      {% else %}
+                        <strong class="govuk-tag govuk-tag--grey">{{ case.status }}</strong>
                       {% endif %}
+
                     </td>
-                    <td class="govuk-table__cell" scope="row">
-                      {{ offence.date }}
-                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Referral date</th>
+                    <td class="govuk-table__cell ">{{ case.referred }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Referred by</th>
+                    <td class="govuk-table__cell ">{{ case.referrer }}</td>
                   </tr>
                 </tbody>
               </table>
-            {% endfor %}
-          {% endfor %}
+            </div>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="case-offences" aria-hidden="true" aria-expanded="false" style="display: none;">
+            <form action="" method="post" id="case-details-form">
+              <input type="hidden" name="caseID" value="{{ case.id }}"/>
+              <input type="hidden" name="caseAction" value="accept"/>
+              <div class="govuk-grid-column-full" aria-labelledby="heading-case-offences">
+                <div class="govuk-panel govuk-panel--basic govuk-panel--left-aligned govuk-!-padding-2">
+                  <div class="govuk-form-group">
+                    <div class="govuk-checkboxes">
+                      <div class="govuk-checkboxes__item govuk-checboxes__item--white">
+                        <input class="govuk-checkboxes__input" id="company-proceed" name="proceedAgainstCompany" type="checkbox" value="true">
+                        <label class="govuk-label govuk-checkboxes__label" for="company-proceed">
+                          Proceed against the company
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% for defendant in case.defendants %}
+                  <table class="govuk-table govuk-table--condensed">
+                    <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
+                    <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Date of birth</th>
+                        <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Role</th>
+                        <td class="govuk-table__cell">{{ defendant.role }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Appointed on</th>
+                        <td class="govuk-table__cell">{{ defendant.appointed }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Status</th>
+                        <td class="govuk-table__cell">
 
-          <h4 class="govuk-heading-m decision-case__header" id="case-info">Contact history</h4>
-          <h4 class="govuk-heading-m decision-case__header" id="case-info">Documents</h4>
-          <h4 class="govuk-heading-m decision-case__header" id="case-info">Case history</h4>
+                          {% if defendant.status === 'active' %}
+                            <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                          {% else %}
+                            <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                          {% endif %}
+
+                        </td>
+                      </tr>
+
+                      {% if defendant.status === 'resigned' %}
+                        <tr class="govuk-table__row">
+                          <th class="govuk-table__header" scope="row">Resigned on</th>
+                          <td class="govuk-table__cell">{{ defendant.resigned }}</td>
+                        </tr>
+                      {% endif %}
+
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
+                        <td class="govuk-table__cell">
+                          {{ defendant.address.line1 }}<br/>
+                          {{ defendant.address.line2 }}<br/>
+                          {{ defendant.address.town }}<br/>
+                          {{ defendant.address.county }}<br/>
+                          {{ defendant.address.country }}
+                        </td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Country of residence</th>
+                        <td class="govuk-table__cell">{{ defendant.address.country }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="govuk-table govuk-table--condensed">
+                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Offences</caption>
+                    <thead class="govuk-table__head">
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header">Proceed</th>
+                        <th class="govuk-table__header">Type</th>
+                        <th class="govuk-table__header">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                      {% for offence in defendant.offences %}
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">
+                            <div class="govuk-checkboxes">
+                              <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
+                                <input class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}">
+                                <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="govuk-table__cell ">
+                            {% if offence.type === 'AA' %}
+                              Annual accounts
+                            {% elif offence.type === 'CS' %}
+                              Confirmation statement
+                            {% endif %}
+                          </td>
+                          <td class="govuk-table__cell" scope="row">
+                            {{ offence.date }}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% endfor %}
+              </div>
+            </form>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="case-contacts" aria-hidden="true" aria-expanded="false" style="display: none;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-case-contact-history">
+              <table class="govuk-table govuk-table--condensed">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="col">Date</th>
+                    <th class="govuk-table__header" scope="col">Type</th>
+                    <th class="govuk-table__header" scope="col">Note</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for contact in case.contacts %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">
+                        {{ contact.date }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {{ contact.type }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {{ contact.notes }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="govuk-grid-column-one-half decision-profile">
-          <h3 class="govuk-heading-m">Company Profile</h3>
-          <ul class="govuk-list govuk-list--number">
-            <li>
-              <a class="govuk-link" href="#company-info">Overview</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-officers">Officers</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-pscs">Persons with significant control</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-filings">Filing history</a>
-            </li>
-            <li>
-              <a class="govuk-link" href="#company-charges">Charges</a>
-            </li>
-          </ul>
-          <h4 class="govuk-heading-m decision-profile__header" id="company-info">Overview</h4>
-          <table class="govuk-table govuk-table--condensed">
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Number</th>
-                <td class="govuk-table__cell ">{{ case.company.number }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Status</th>
-                <td class="govuk-table__cell ">
+          <h3 class="govuk-heading-m">Company Details</h3>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <nav class="section-navigation">
+                <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
+                  <li class="section-navigation__item section-navigation__item--active">
+                    <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-overview" data-section="decision-profile">
+                      <span id="heading-company-overview">Overview</span>
+                    </a>
+                  </li>
+                  <li class="section-navigation__item">
+                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-officers" data-section="decision-profile">
+                      <span id="heading-company-officers">Officers</span>
+                    </a>
+                  </li>
+                  <li class="section-navigation__item">
+                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-overdue" data-section="decision-profile">
+                      <span id="heading-company-overdue">Overdue filings</span>
+                    </a>
+                  </li>
+                  <li class="section-navigation__item">
+                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-filings" data-section="decision-profile">
+                      <span id="heading-company-filing-history">Filing history</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="company-overview" aria-hidden="false" aria-expanded="true" style="display: block;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-company-overview">
+              <table class="govuk-table govuk-table--condensed">
+                <tbody class="govuk-table__body">
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Number</th>
+                    <td class="govuk-table__cell ">{{ case.company.number }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Status</th>
+                    <td class="govuk-table__cell ">
 
-                  {% if case.company.status === 'active' %}
-                    <strong class="govuk-tag govuk-tag--light-green">{{ case.company.status }}</strong>
-                  {% elif case.company.status === 'closed' %}
-                    <strong class="govuk-tag govuk-tag--yellow">{{ case.company.status }}</strong>
-                  {% else %}
-                    <strong class="govuk-tag govuk-tag--grey">{{ case.company.status }}</strong>
-                  {% endif %}
+                      {% if case.company.status === 'active' %}
+                        <strong class="govuk-tag govuk-tag--light-green">{{ case.company.status }}</strong>
+                      {% elif case.company.status === 'closed' %}
+                        <strong class="govuk-tag govuk-tag--yellow">{{ case.company.status }}</strong>
+                      {% else %}
+                        <strong class="govuk-tag govuk-tag--grey">{{ case.company.status }}</strong>
+                      {% endif %}
 
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Incorporation date</th>
-                <td class="govuk-table__cell ">{{ case.company.incorporationDate }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Type</th>
-                <td class="govuk-table__cell ">{{ case.company.type }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header govuk-table__header--top" scope="row">Registered Office Address</th>
-                <td class="govuk-table__cell ">
-                  {{ case.company.registeredOffice.line1 }}<br/>
-                  {{ case.company.registeredOffice.line2 }}<br/>
-                  {{ case.company.registeredOffice.town }}<br/>
-                  {{ case.company.registeredOffice.county }}<br/>
-                  {{ case.company.registeredOffice.country }}
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Next accounts period end</th>
-                <td class="govuk-table__cell ">{{ case.company.accountsMUD }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Next accounts due</th>
-                <td class="govuk-table__cell ">{{ case.company.accountsDue }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Last accounts period end</th>
-                <td class="govuk-table__cell ">{{ case.company.lastAccountsMUD }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Next confirmation statement date</th>
-                <td class="govuk-table__cell ">{{ case.company.csDate }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Next confirmation statement due</th>
-                <td class="govuk-table__cell ">{{ case.company.csDue }}</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Last confirmation statement date</th>
-                <td class="govuk-table__cell ">{{ case.company.lastCSDate }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h4 class="govuk-heading-m decision-profile__header" id="company-officers">Officers</h4>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Incorporation date</th>
+                    <td class="govuk-table__cell ">{{ case.company.incorporationDate }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Type</th>
+                    <td class="govuk-table__cell ">{{ case.company.type }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header govuk-table__header--top" scope="row">Registered Office Address</th>
+                    <td class="govuk-table__cell ">
+                      {{ case.company.registeredOffice.line1 }}<br/>
+                      {{ case.company.registeredOffice.line2 }}<br/>
+                      {{ case.company.registeredOffice.town }}<br/>
+                      {{ case.company.registeredOffice.county }}<br/>
+                      {{ case.company.registeredOffice.country }}
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Next accounts period end</th>
+                    <td class="govuk-table__cell ">{{ case.company.accountsMUD }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Next accounts due</th>
+                    <td class="govuk-table__cell ">{{ case.company.accountsDue }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Last accounts period end</th>
+                    <td class="govuk-table__cell ">{{ case.company.lastAccountsMUD }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Next confirmation statement date</th>
+                    <td class="govuk-table__cell ">{{ case.company.csDate }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Next confirmation statement due</th>
+                    <td class="govuk-table__cell ">{{ case.company.csDue }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Last confirmation statement date</th>
+                    <td class="govuk-table__cell ">{{ case.company.lastCSDate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="company-overdue" aria-hidden="true" aria-expanded="false" style="display: none;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-company-overdue">
+              <h2 class="govuk-heading-m">The following filings are overdue:</h2>
+              <table class="govuk-table govuk-table--condensed">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="col">Filing</th>
+                    <th class="govuk-table__header" scope="col">Due date</th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for filing in case.company.overdue %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">
+                        {{ filing.name }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {{ filing.dueDate }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-          {% for officer in case.company.officers %}
-            <table class="govuk-table govuk-table--condensed">
-              <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ officer.name }}</caption>
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Date of birth</th>
-                  <td class="govuk-table__cell">{{ officer.dateOfBirth }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Role</th>
-                  <td class="govuk-table__cell">{{ officer.role }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Appointed on</th>
-                  <td class="govuk-table__cell">{{ officer.appointed }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Status</th>
-                  <td class="govuk-table__cell">
+          <div class="govuk-grid-row toggle-pane" id="company-officers" aria-hidden="true" aria-expanded="false" style="display: none;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-company-officers">
+              {% for officer in case.company.officers %}
+                <table class="govuk-table govuk-table--condensed">
+                  <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ officer.name }}</caption>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Date of birth</th>
+                      <td class="govuk-table__cell">{{ officer.dateOfBirth }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Role</th>
+                      <td class="govuk-table__cell">{{ officer.role }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Appointed on</th>
+                      <td class="govuk-table__cell">{{ officer.appointed }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Status</th>
+                      <td class="govuk-table__cell">
 
-                    {% if officer.status === 'active' %}
-                      <strong class="govuk-tag govuk-tag--light-green">{{ officer.status }}</strong>
-                    {% else %}
-                      <strong class="govuk-tag govuk-tag--grey">{{ officer.status }}</strong>
+                        {% if officer.status === 'active' %}
+                          <strong class="govuk-tag govuk-tag--light-green">{{ officer.status }}</strong>
+                        {% else %}
+                          <strong class="govuk-tag govuk-tag--grey">{{ officer.status }}</strong>
+                        {% endif %}
+
+                      </td>
+                    </tr>
+
+                    {% if officer.status === 'resigned' %}
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Resigned on</th>
+                        <td class="govuk-table__cell">{{ officer.resigned }}</td>
+                      </tr>
                     {% endif %}
 
-                  </td>
-                </tr>
-
-                {% if officer.status === 'resigned' %}
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Resigned on</th>
-                    <td class="govuk-table__cell">{{ officer.resigned }}</td>
-                  </tr>
-                {% endif %}
-
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
-                  <td class="govuk-table__cell">
-                    {{ officer.serviceAddress.line1 }}<br/>
-                    {{ officer.serviceAddress.line2 }}<br/>
-                    {{ officer.serviceAddress.town }}<br/>
-                    {{ officer.serviceAddress.county }}<br/>
-                    {{ officer.serviceAddress.country }}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Nationality</th>
-                  <td class="govuk-table__cell">{{ officer.nationality }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Country of residence</th>
-                  <td class="govuk-table__cell">{{ officer.residentialAddress.country}}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Occupation</th>
-                  <td class="govuk-table__cell">{{ officer.occupation }}</td>
-                </tr>
-              </tbody>
-            </table>
-          {% endfor %}
-
-          <h4 class="govuk-heading-m decision-profile__header" id="company-pscs">Persons with significant control</h4>
-
-          {% for psc in case.company.pscs %}
-            <table class="govuk-table govuk-table--condensed">
-              <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ psc.name }}</caption>
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Date of birth</th>
-                  <td class="govuk-table__cell">{{ psc.dateOfBirth }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Nature of control</th>
-                  <td class="govuk-table__cell">{{ psc.nature }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Notified on</th>
-                  <td class="govuk-table__cell">{{ psc.notified }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Status</th>
-                  <td class="govuk-table__cell">
-
-                    {% if psc.status === 'active' %}
-                      <strong class="govuk-tag govuk-tag--light-green">{{ psc.status }}</strong>
-                    {% else %}
-                      <strong class="govuk-tag govuk-tag--grey">{{ psc.status }}</strong>
-                    {% endif %}
-
-                  </td>
-                </tr>
-
-                {% if psc.status === 'resigned' %}
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Resigned on</th>
-                    <td class="govuk-table__cell">{{ psc.resigned }}</td>
-                  </tr>
-                {% endif %}
-
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
-                  <td class="govuk-table__cell">
-                    {{ psc.serviceAddress.line1 }}<br/>
-                    {{ psc.serviceAddress.line2 }}<br/>
-                    {{ psc.serviceAddress.town }}<br/>
-                    {{ psc.serviceAddress.county }}<br/>
-                    {{ psc.serviceAddress.country }}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Nationality</th>
-                  <td class="govuk-table__cell">{{ psc.nationality }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Country of residence</th>
-                  <td class="govuk-table__cell">{{ psc.residentialAddress.country}}</td>
-                </tr>
-              </tbody>
-            </table>
-          {% endfor %}
-
-          <h4 class="govuk-heading-m decision-profile__header" id="company-filings">Filing history</h4>
-
-          <table class="govuk-table govuk-table--condensed">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Date</th>
-                <th class="govuk-table__header" scope="col">Type</th>
-                <th class="govuk-table__header" scope="col">Description</th>
-                <th class="govuk-table__header" scope="col"></th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              {% for filing in case.company.filings %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                    {{ filing.date }}
-                  </td>
-                  <td class="govuk-table__cell">
-                    {{ filing.type }}
-                  </td>
-                  <td class="govuk-table__cell">
-                    <strong class="govuk-!-font-weight-bold">{{ filing.name }}</strong>
-                    {{ filing.label }}
-                  </td>
-                  <td class="govuk-table__cell">
-                    <a href="{{ filing.link }}" class="govuk-link" target="_blank">View filing</a>
-                  </td>
-                </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
+                      <td class="govuk-table__cell">
+                        {{ officer.serviceAddress.line1 }}<br/>
+                        {{ officer.serviceAddress.line2 }}<br/>
+                        {{ officer.serviceAddress.town }}<br/>
+                        {{ officer.serviceAddress.county }}<br/>
+                        {{ officer.serviceAddress.country }}
+                      </td>
+                    </tr>
+                    <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Nationality</th> <td class="govuk-table__cell">{{ officer.nationality }}</td> </tr> -->
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Country of residence</th>
+                      <td class="govuk-table__cell">{{ officer.residentialAddress.country}}</td>
+                    </tr>
+                    <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Occupation</th> <td class="govuk-table__cell">{{ officer.occupation }}</td> </tr> -->
+                  </tbody>
+                </table>
               {% endfor %}
-            </tbody>
-          </table>
-          <h4 class="govuk-heading-m decision-profile__header" id="company-charges">Charges</h4>
-
-          {% for charge in case.company.charges %}
-            <table class="govuk-table govuk-table--condensed">
-              <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ charge.name }}</caption>
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Created on</th>
-                  <td class="govuk-table__cell">{{ charge.created }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Delivered on</th>
-                  <td class="govuk-table__cell">{{ charge.delivered }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Brief description</th>
-                  <td class="govuk-table__cell">{{ charge.description }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Entitled party</th>
-                  <td class="govuk-table__cell">{{ charge.entitled }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Status</th>
-                  <td class="govuk-table__cell">{{ charge.status.value }}
-                    {{ charge.status.date }}</td>
-                </tr>
-              </tbody>
-            </table>
-          {% endfor %}
+            </div>
+          </div>
+          <div class="govuk-grid-row toggle-pane" id="company-filings" aria-hidden="true" aria-expanded="false" style="display: none;">
+            <div class="govuk-grid-column-full" aria-describeddby="heading-company-filings">
+              <table class="govuk-table govuk-table--condensed">
+                <thead class="govuk-table__head">
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="col">Date</th>
+                    <th class="govuk-table__header" scope="col">Type</th>
+                    <th class="govuk-table__header" scope="col">Description</th>
+                    <th class="govuk-table__header" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                  {% for filing in case.company.filings %}
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell">
+                        {{ filing.date }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        {{ filing.type }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        <strong class="govuk-!-font-weight-bold">{{ filing.name }}</strong>
+                        {{ filing.label }}
+                      </td>
+                      <td class="govuk-table__cell">
+                        <a href="{{ filing.link }}" class="govuk-link" target="_blank">View filing</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </main>

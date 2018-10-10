@@ -8,17 +8,8 @@
 {% block content %}
   <div class="govuk-width-container govuk-width-container--full">
     <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-          <h1 class="govuk-heading-xl">
-            <span class="govuk-caption-xl">Prosecution - Case CR71/09076/18
-            </span>
-            PJM ACCOUNTANCY LIMITED
-          </h1>
-        </div>
-      </div>
 
-      {% include "includes/case-navigation.html" %}
+      {% include "includes/case-header.html" %}
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">
@@ -27,19 +18,23 @@
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Status</th>
-                <td class="govuk-table__cell ">Open</td>
+                <td class="govuk-table__cell ">{{ case.status }}</td>
               </tr>
               <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Created on</th>
-                <td class="govuk-table__cell ">5 Januray 2018</td>
+                <th class="govuk-table__header" scope="row">Referred</th>
+                <td class="govuk-table__cell ">{{ case.referred }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Referrer</th>
+                <td class="govuk-table__cell ">{{ case.referrer }}</td>
               </tr>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Company number</th>
-                <td class="govuk-table__cell ">00345567</td>
+                <td class="govuk-table__cell ">{{ case.company.number }}</td>
               </tr>
               <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Assigned to</th>
-                <td class="govuk-table__cell ">Bethan Fields</td>
+                <th class="govuk-table__header" scope="row">Priority</th>
+                <td class="govuk-table__cell ">{{ case.priority | capitalize }}</td>
               </tr>
             </tbody>
           </table>
@@ -72,7 +67,7 @@
             </div>
           </div>
         </div>
-        <div class="govuk-grid-column-one-third">
+        <div class="govuk-grid-column-two-thirds">
           <h2 class="govuk-heading-l">Case timeline</h2>
           <ul class="govuk-list timeline">
             <li class="timeline__item">
