@@ -2,23 +2,16 @@ module.exports = function (router) {
   // Route index page
   router.get('/', function (req, res) {
     req.session.cases = require('../data/cases.js')
+    req.session.recents = []
     res.render('account/login')
   })
 
-  // Referrals screen
-  router.get('/cases/referrals', function (req, res) {
-    res.render('cases/referrals', {
-      cases: req.session.cases
-    })
-  })
-
-  // ACCEPT/REJECT DECISION SCREEN
-  router.get('/case/decision', function (req, res) {
-    console.log(req.session.cases)
-    var id = req.query.id
-    res.render('case/decision', {
-      case: req.session.cases[id]
-    })
+  router.all('*', function (req, res, next) {
+    if (typeof req.session.cases === 'undefined') {
+      // console.log('cases not loaded')
+      return res.redirect('/')
+    }
+    next()
   })
 
   // Bookmarks

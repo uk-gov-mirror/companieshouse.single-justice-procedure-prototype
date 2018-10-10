@@ -49,14 +49,14 @@ $govuk-global-styles: true;
 .govuk-header__navigation {
   padding: 0 15px;
   margin: 0 -15px;
-  background-color: govuk-colour("grey-3");
+  background: govuk-colour("blue");
 }
 
 .govuk-header__navigation-item {
   a {
     &:link,
     &:visited {
-      color: black;
+      color: white;
     }
   }
 }
@@ -64,7 +64,7 @@ $govuk-global-styles: true;
 .govuk-header__navigation-item-link {
   display: inline-block;
   padding: 5px;
-  color: black;
+  color: white;
 }
 
 .govuk-width-container--full {
@@ -131,8 +131,15 @@ $govuk-global-styles: true;
 
 .govuk-checkboxes__item--table {
   min-height: 30px;
+  max-width: 40px;
   padding: 0;
   margin: 0;
+}
+
+.govuk-checboxes__item--white {
+  .govuk-checkboxes__label::before {
+    background-color: govuk-colour("white");
+  }
 }
 
 .govuk-checkboxes__label--table {
@@ -192,6 +199,12 @@ $govuk-global-styles: true;
 
 .govuk-table--condensed {
   @include govuk-font(16);
+}
+
+.govuk-table--collapsed {
+  tbody {
+    display: none;
+  }
 }
 
 // TAGS

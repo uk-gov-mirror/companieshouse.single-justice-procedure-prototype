@@ -3,28 +3,53 @@
     <nav class="section-navigation">
       <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
         <li class="section-navigation__item section-navigation__item--active">
-          <a href="/cases/referrals" class="section-navigation__link section-navigation__link--active">
+          <a href="/cases/referrals" class="section-navigation__link {{ referredLinkActive }}">
             <span id="heading-referrals">Referrals</span>
           </a>
         </li>
         <li class="section-navigation__item">
-          <a href="/cases/accepted" class="section-navigation__link">
-            <span id="heading-all-cases">Accepted</span>
+          <a href="/cases/all" class="section-navigation__link {{ allLinkActive }}">
+            <span id="heading-all-cases">All</span>
           </a>
         </li>
         <li class="section-navigation__item">
-          <a href="/cases/rejected" class="section-navigation__link">
-            <span id="heading-my-cases">Rejected</span>
+          <a href="/cases/accepted" class="section-navigation__link {{ acceptedLinkActive }}">
+            <span id="heading-accepted-cases">Accepted</span>
           </a>
         </li>
         <li class="section-navigation__item">
-          <a href="/cases/bookmarks" class="section-navigation__link">
-            <span id="heading-my-cases">Bookmarks</span>
+          <a href="/cases/ultimatum-issued" class="section-navigation__link {{ ultimatumLinkActive }}">
+            <span id="heading-ultimatum-cases">Ultimatum</span>
           </a>
         </li>
         <li class="section-navigation__item">
-          <a href="/cases/recents" class="section-navigation__link">
-            <span id="heading-my-cases">Recently viewed</span>
+          <a href="/cases/sjpn-issued" class="section-navigation__link {{ sjpnLinkActive }}">
+            <span id="heading-sjpn-cases">SJPN Issued</span>
+          </a>
+        </li>
+        <li class="section-navigation__item">
+          <a href="/cases/verdict-returned" class="section-navigation__link {{ verdictLinkActive }}">
+            <span id="heading-verdict-cases">Verdict</span>
+          </a>
+        </li>
+        <li class="section-navigation__item">
+          <a href="/cases/closed-returned" class="section-navigation__link {{ closedLinkActive }}">
+            <span id="heading-closed-cases">Closed</span>
+          </a>
+        </li>
+        <li class="section-navigation__item">
+          <a href="/cases/rejected" class="section-navigation__link {{ rejectedLinkActive }}">
+            <span id="heading-rejected-cases">Rejected</span>
+          </a>
+        </li>
+        <li class="section-navigation__item">
+          <a href="/cases/bookmarks" class="section-navigation__link {{ bookmarksLinkActive}}">
+            <span id="heading-bookmarked-cases">Bookmarks</span>
+          </a>
+        </li>
+        <li class="section-navigation__item">
+          <a href="/cases/recents" class="section-navigation__link {{ recentsLinkActive }}">
+            <span id="heading-recent-cases">Recently viewed</span>
           </a>
         </li>
       </ul>
