@@ -82,12 +82,12 @@
   }
 
   &:before {
-    content: 'Newest';
+    content: 'Oldest';
     margin-bottom: 10px;
   }
 
   &:after {
-    content: 'Oldest';
+    content: 'Newest';
     margin-top: 5px;
   }
 

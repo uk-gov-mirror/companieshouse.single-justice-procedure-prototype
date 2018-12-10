@@ -21,6 +21,9 @@ $govuk-global-styles: true;
 @import 'patterns/filters';
 @import 'patterns/dashboard';
 
+// Component Macro SCSS
+@import 'components/notification-panel';
+
 //cookie-banner
 @import "../../../docs/assets/sass/cookie-banner";
 
@@ -273,6 +276,18 @@ $govuk-global-styles: true;
 }
 
 .action-bar {
+  margin: 0 -30px 2em;
+
+  .action-bar__content {
+    background: govuk-colour('grey-4');
+    border-bottom: 2px solid govuk-colour('grey-3');
+    padding: 15px 30px;
+  }
+
+  .action-bar__button {
+    margin-bottom: 0;
+  }
+
   .action-bar__form {
     display: inline;
   }

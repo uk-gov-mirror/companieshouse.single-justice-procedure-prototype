@@ -1,6 +1,8 @@
 {% from "skip-link/macro.njk" import govukSkipLink %}
 {% from "./components/header/macro.njk" import chHeader %}
 {% from "./components/footer/macro.njk" import chFooter %}
+{% from "./components/notificationPanel/macro.njk" import notificationPanel %}
+
 <!DOCTYPE html>
 <html lang="{{ htmlLang | default('en') }}" class="govuk-template {{ htmlClasses }}">
   <head>
@@ -50,6 +52,14 @@
 
     {% block main %}
       <div class="govuk-width-container govuk-width-container--full">
+        <div class="notification-bar">
+          {% if notifications.list.length > 0 %}
+            {{ notificationPanel({
+              titleText: notifications.title,
+              notificationList: notifications.list
+            }) }}
+          {% endif %}
+        </div>
         {% block beforeContent %}{% endblock %}
         <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main">
           {% block content %}{% endblock %}

@@ -1,21 +1,29 @@
-const utils = require('../../lib/utils.js')
-
 module.exports = function (router) {
   // ACCEPT/REJECT DECISION SCREEN
   router.get('/case/decision', function (req, res) {
     var id = req.query.id
+    var casetab = req.query.casetab
+    var companytab = req.query.companytab
+
     res.render('case/decision', {
-      case: req.session.cases[id]
+      case: req.session.cases[id],
+      casetab: casetab,
+      companytab: companytab
     })
   })
   router.post('/case/decision', function (req, res) {
     var id = req.body.caseID
     var caseAction = req.body.caseAction
+    var useAddress = req.body.useAddress
+    var defendantID = parseInt(req.body.defendantID)
+    var casetab = req.query.casetab
+    var companytab = req.query.companytab
     var event = {}
     var date = new Date()
     var offenceList = req.body.offenceList
     var i = 0
     var splitOffences = []
+    var notifications = {}
 
     if (caseAction === 'accept') {
       event.date = date.getDate()
@@ -26,16 +34,55 @@ module.exports = function (router) {
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'Accepted'
       if (offenceList === '_unchecked') {
+        notifications.list = []
+        notifications.title = 'You forgot something'
+        notifications.list.push('You need to select at least 1 offence to accept a case')
+
+        res.redirect('/case/decision?id=0&casetab=offences&companytab=overview', {
+          case: req.session.cases[id],
+          casetab: casetab,
+          companytab: companytab,
+          notifications: notifications
+        })
+
       } else {
         for (i = 0; i < offenceList.length; i++) {
           splitOffences = offenceList[i].split('-')
           req.session.cases[id].defendants[splitOffences[0]].offences[splitOffences[1]].status = 'proceed'
         }
+        res.redirect('/case/overview?id=' + id)
       }
-      if (req.body.proceedAgainstCompany !== '_unchecked') {
-        req.session.cases[id].proceedAgainstCompany = true
+
+    } else if (useAddress !== '') {
+      notifications.list = []
+      if (useAddress === 'service') {
+        req.session.cases[id].defendants[defendantID].addressType = 'service'
+        req.session.cases[id].defendants[defendantID].address.line1 = req.session.cases[id].company.officers[defendantID].serviceAddress.line1
+        req.session.cases[id].defendants[defendantID].address.line2 = req.session.cases[id].company.officers[defendantID].serviceAddress.line2
+        req.session.cases[id].defendants[defendantID].address.town = req.session.cases[id].company.officers[defendantID].serviceAddress.town
+        req.session.cases[id].defendants[defendantID].address.county = req.session.cases[id].company.officers[defendantID].serviceAddress.county
+        req.session.cases[id].defendants[defendantID].address.postcode = req.session.cases[id].company.officers[defendantID].serviceAddress.postcode
+        req.session.cases[id].defendants[defendantID].address.country = req.session.cases[id].company.officers[defendantID].serviceAddress.country
+        notifications.title = 'The case has been updated'
+        notifications.list.push('The service address is now being used for ' + req.session.cases[id].defendants[defendantID].name)
       }
-      res.redirect('/case/overview?id=' + id)
+      if (useAddress === 'residential') {
+        req.session.cases[id].defendants[defendantID].addressType = 'residential'
+        req.session.cases[id].defendants[defendantID].address.line1 = req.session.cases[id].company.officers[defendantID].residentialAddress.line1
+        req.session.cases[id].defendants[defendantID].address.line2 = req.session.cases[id].company.officers[defendantID].residentialAddress.line2
+        req.session.cases[id].defendants[defendantID].address.town = req.session.cases[id].company.officers[defendantID].residentialAddress.town
+        req.session.cases[id].defendants[defendantID].address.county = req.session.cases[id].company.officers[defendantID].residentialAddress.county
+        req.session.cases[id].defendants[defendantID].address.postcode = req.session.cases[id].company.officers[defendantID].residentialAddress.postcode
+        req.session.cases[id].defendants[defendantID].address.country = req.session.cases[id].company.officers[defendantID].residentialAddress.country
+        notifications.title = 'The case has been updated'
+        notifications.list.push('The residential address is now being used for ' + req.session.cases[id].defendants[defendantID].name)
+      }
+      res.render('case/decision', {
+        case: req.session.cases[id],
+        casetab: casetab,
+        companytab: companytab,
+        notifications: notifications
+      })
     } else {
       event.date = date.getDate()
       event.time = date.getTime()
@@ -103,5 +150,17 @@ module.exports = function (router) {
       navTabListHistory: 'section-navigation__item--active',
       navTabLinkHistory: 'section-navigation__link--active'
     })
+  })
+  // REJECT CASE
+  router.post('/case/reject', function (req, res) {
+    var id = req.body.caseID
+    var action = req.body.caseAction
+
+    if (action === 'reason') {
+      res.render('case/reason', {})
+    }
+    if (action === 'reject') {
+      res.redirect('/cases/referrals')
+    }
   })
 }
