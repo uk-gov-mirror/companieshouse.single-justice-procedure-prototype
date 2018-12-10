@@ -10,7 +10,7 @@ module.exports = [
     company: {
       name: 'TEMPLETON METALWORK LIMITED',
       number: '00374659',
-      incorporationDate: '25 June 1995',
+      incorporationDate: '9 January 2012',
       status: 'active',
       type: 'Private Limited Company',
       registeredOffice: {
@@ -21,12 +21,12 @@ module.exports = [
         postcode: 'CF11 8TJ',
         country: 'United Kingdom'
       },
-      accountsMUD: '31 May 2018',
-      accountsDue: '28 February 2019',
-      lastAccountsMUD: '31 May 2016',
+      accountsMUD: '30 June 2017',
+      accountsDue: '31 Dec 2017',
+      lastAccountsMUD: '30 June 2016',
       csDate: '6 January 2019',
-      csDue: '20 January 2019',
-      lastCSDate: '6 January 2018',
+      csDue: '1 Feb 2019',
+      lastCSDate: '13 April 2018',
       officers: [
         {
           name: 'Matthew Blakemoor',
@@ -82,18 +82,108 @@ module.exports = [
       ],
       filings: [
         {
-          type: 'AA',
-          date: '24 Jul 2018',
-          name: 'Small company accounts',
-          label: 'made up to 30 April 2018',
+          type: 'AR01',
+          date: '8 Apr 2015',
+          name: 'Annual Return',
+          status: 'accepted',
+          label: '31/03/15 Full List',
           link: 'file.pdf'
         },
         {
+          type: 'AA',
+          date: '30 Dec 2015',
+          name: 'Annual Accounts',
+          status: 'accepted',
+          label: '30/06/15 Total Exemption Small',
+          link: ''
+        },
+        {
+          type: 'AR01',
+          date: '21 Apr 2016',
+          name: 'Annual Return',
+          status: 'accepted',
+          label: '31/03/16 Full List',
+          link: ''
+        },
+        {
+          type: 'AA',
+          date: '5 Dec 2016',
+          name: 'Annual Accounts',
+          status: 'accepted',
+          label: '30/06/16 Total Exemption Small',
+          link: ''
+        },
+        {
+          type: 'CSREM',
+          date: '28 Mar 2017',
+          name: 'Confirmation Statement Reminder',
+          status: 'issued',
+          label: 'CSREM 28/03/17 - Issued exist...',
+          link: ''
+        },
+        {
           type: 'CS01',
-          date: '16 Apr 2018',
-          name: 'Confirmation statement',
-          label: 'made on 14 April 2018 with no updates',
-          link: 'file.pdf'
+          date: '15 Apr 2017',
+          name: 'Confirmation Statement',
+          status: 'accepted',
+          label: 'Confirmation statement made on ...',
+          link: ''
+        },
+        {
+          type: 'REM2A',
+          date: '5 Dec 2017',
+          name: 'Annual Accounts Reminder',
+          status: 'issued',
+          label: 'Annual Accounts Reminder',
+          link: ''
+        },
+        {
+          type: 'CS01',
+          date: '13 Apr 2018',
+          name: 'Confirmation Statement',
+          status: 'accepted',
+          label: 'Confirmation statement made on ...',
+          link: ''
+        },
+        {
+          type: 'DEFSTAT',
+          date: '30 Apr 2018',
+          name: 'Overdue Accounts',
+          status: 'issued',
+          label: '',
+          link: ''
+        },
+        {
+          type: 'DEF3',
+          date: '31 May 2018',
+          name: 'Overdue Accounts',
+          status: 'issued',
+          label: '',
+          link: ''
+        },
+        {
+          type: 'PTF',
+          date: '10 Jun 2018',
+          name: 'Promise To File',
+          status: 'accepted',
+          label: 'Original message...',
+          link: ''
+        },
+        {
+          type: 'PTF',
+          date: '10 Jun 2018',
+          name: 'Promise To File',
+          status: 'issued',
+          label: 'Original message...',
+          link: ''
+        },
+        {
+          type: 'DEF49',
+          date: '31 Jul 2018',
+          name: 'Reminder',
+          status: 'issued',
+          label: 'Overdue Accounts',
+          link: ''
         }
       ],
       overdue: [
@@ -101,11 +191,6 @@ module.exports = [
           type: 'AA',
           dueDate: '24 Jul 2018',
           name: 'Annual accounts'
-        },
-        {
-          type: 'CS01',
-          dueDate: '16 Apr 2018',
-          name: 'Confirmation statement'
         }
       ]
     },
@@ -140,13 +225,25 @@ module.exports = [
       {
         type: 'incoming',
         mode: 'phone',
-        name: 'Matthew Blakemoor',
-        contactPhone: '02920 225685',
+        name: '',
+        contactPhone: '',
         contactEmail: '',
-        role: 'Director',
-        date: '15 July 2018',
-        time: '15:45',
-        notes: 'The director wanted to know something about what he\'d done wrong.',
+        role: '',
+        date: '2 Jun 2018',
+        time: '',
+        notes: 'Company promises to file its accounts',
+        attachments: []
+      },
+      {
+        type: 'incoming',
+        mode: 'letter',
+        name: '',
+        contactPhone: '',
+        contactEmail: '',
+        role: '',
+        date: '8 Jun 2018',
+        time: '',
+        notes: 'Company promises to file its accounts by end of month',
         attachments: []
       }
     ],
@@ -158,6 +255,7 @@ module.exports = [
         status: 'active',
         role: 'Director',
         appointed: '25 June 1995',
+        addressType: 'service',
         address: {
           line1: 'Unit 5, Western Industrial Estate',
           line2: 'Western Road',
