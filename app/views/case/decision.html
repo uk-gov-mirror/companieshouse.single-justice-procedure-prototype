@@ -30,7 +30,7 @@
             text: "Accept case",
             classes: "case-accept-button action-bar__button"
           }) }}
-          <form action="/case/reject" method="post" class="action-bar__form">
+          <form action="/case/reject-reason" method="post" class="action-bar__form">
             <input type="hidden" name="caseID" value="{{ case.id }}"/>
             <input type="hidden" name="caseAction" value="reason"/>
             {{ govukButton({

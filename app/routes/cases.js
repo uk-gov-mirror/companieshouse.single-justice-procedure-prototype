@@ -1,6 +1,7 @@
 module.exports = function (router) {
   // Referrals screen
   router.get('/cases/referrals', function (req, res) {
+    console.log(req.session.cases)
     var totalReferredCases = 0
     var i = 0
 
