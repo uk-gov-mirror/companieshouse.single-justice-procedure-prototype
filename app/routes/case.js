@@ -26,33 +26,31 @@ module.exports = function (router) {
     var notifications = {}
 
     if (caseAction === 'accept') {
-      event.date = date.getDate()
-      event.time = date.getTime()
-      event.title = 'Case accepted'
-      event.user = 'system'
-      event.notes = ''
-      req.session.cases[id].history.push(event)
-      req.session.cases[id].status = 'Accepted'
       if (offenceList === '_unchecked') {
         notifications.list = []
         notifications.title = 'You forgot something'
         notifications.list.push('You need to select at least 1 offence to accept a case')
 
-        res.redirect('/case/decision?id=0&casetab=offences&companytab=overview', {
+        res.render('case/decision', {
           case: req.session.cases[id],
           casetab: casetab,
           companytab: companytab,
           notifications: notifications
         })
-
       } else {
+        event.date = date.getDate()
+        event.time = date.getTime()
+        event.title = 'Case accepted'
+        event.user = 'system'
+        event.notes = ''
+        req.session.cases[id].history.push(event)
+        req.session.cases[id].status = 'Accepted'
         for (i = 0; i < offenceList.length; i++) {
           splitOffences = offenceList[i].split('-')
           req.session.cases[id].defendants[splitOffences[0]].offences[splitOffences[1]].status = 'proceed'
         }
         res.redirect('/case/overview?id=' + id)
       }
-
     } else if (useAddress !== '') {
       notifications.list = []
       if (useAddress === 'service') {
@@ -152,14 +150,33 @@ module.exports = function (router) {
     })
   })
   // REJECT CASE
-  router.post('/case/reject', function (req, res) {
+  router.post('/case/reject-reason', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
+    var referral = req.session.cases[id]
+    var event = {}
+    var date = new Date()
+    var rejectReason = ''
+    var backLink = '/case/decision?id=' + id + '&casetab=overview&companytab=overview'
 
     if (action === 'reason') {
-      res.render('case/reason', {})
+      res.render('case/reject-reason', {
+        case: referral,
+        id: id,
+        action: action,
+        backLink: backLink
+      })
     }
     if (action === 'reject') {
+      rejectReason = req.body.rejectReason
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Case rejected'
+      event.user = 'system'
+      event.notes = 'Reject reason: ' + rejectReason
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Rejected'
+      req.session.cases[id].rejectReason = rejectReason
       res.redirect('/cases/referrals')
     }
   })

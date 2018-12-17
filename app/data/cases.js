@@ -3,7 +3,7 @@ module.exports = [
     id: 0,
     reference: 'CR12345678',
     status: 'Referred',
-    referred: '15 Jul 2018',
+    referred: '11 Sep 2018',
     referrer: 'Joanne Wiley',
     priority: 'normal',
     bookmarked: true,
@@ -22,10 +22,10 @@ module.exports = [
         country: 'United Kingdom'
       },
       accountsMUD: '30 June 2017',
-      accountsDue: '31 Dec 2017',
+      accountsDue: '31 March 2018',
       lastAccountsMUD: '30 June 2016',
-      csDate: '6 January 2019',
-      csDue: '1 Feb 2019',
+      csDate: '13 April 2019',
+      csDue: '27 April 2019',
       lastCSDate: '13 April 2018',
       officers: [
         {
@@ -123,7 +123,7 @@ module.exports = [
         },
         {
           type: 'CS01',
-          date: '15 Apr 2017',
+          date: '13 Apr 2017',
           name: 'Confirmation Statement',
           status: 'accepted',
           label: 'Confirmation statement made on ...',
@@ -268,19 +268,6 @@ module.exports = [
           {
             id: 0,
             type: 'AA',
-            status: 'open',
-            date: '1 March 2018',
-            hearingDate: '',
-            plea: '',
-            verdict: {
-              type: '',
-              fee: 0,
-              costs: 0
-            }
-          },
-          {
-            id: 1,
-            type: 'CS',
             status: 'open',
             date: '1 March 2018',
             hearingDate: '',
