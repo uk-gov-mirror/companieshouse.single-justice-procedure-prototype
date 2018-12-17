@@ -42,7 +42,7 @@
                   {% if case.status === 'Rejected' %}
                     <tr class="govuk-table__row">
                       <th class="govuk-table__header" scope="row">
-                        <a href="/case/decision?id={{ case.id }}">{{ case.company.name }}</a>
+                        <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
                       </th>
                       <td class="govuk-table__cell">{{ case.company.number}}</td>
                       <td class="govuk-table__cell">{{ case.status }}</td>

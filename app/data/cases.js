@@ -52,32 +52,6 @@ module.exports = [
             postcode: 'CF83 5RD',
             country: 'United Kingdom'
           }
-        },
-        {
-          name: 'Sarah Blakemoor',
-          dateOfBirth: '1 October January 1969',
-          status: 'resigned',
-          role: 'Secretary',
-          appointed: '25 June 1995',
-          resigned: '13 February 2005',
-          nationality: 'British',
-          occupation: 'Civil servant',
-          serviceAddress: {
-            line1: 'Unit 5, Western Industrial Estate',
-            line2: 'Western Road',
-            town: 'Cardiff',
-            county: 'Cardiff County',
-            postcode: 'CF11 8TJ',
-            country: 'United Kingdom'
-          },
-          residentialAddress: {
-            line1: '25 Muir Lane',
-            line2: '',
-            town: 'Caerphilly',
-            county: 'Caerphilly County',
-            postcode: 'CF83 5RD',
-            country: 'United Kingdom'
-          }
         }
       ],
       filings: [
@@ -189,7 +163,9 @@ module.exports = [
       overdue: [
         {
           type: 'AA',
-          dueDate: '24 Jul 2018',
+          periodStart: '1 Jul 2016',
+          periodEnd: '30 Jun 2017',
+          dueDate: '31 Mar 2018',
           name: 'Annual accounts'
         }
       ]
