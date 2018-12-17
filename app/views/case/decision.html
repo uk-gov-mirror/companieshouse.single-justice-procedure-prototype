@@ -24,18 +24,18 @@
         </div>
       </div>
 
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full action-bar">
+      <div class="govuk-grid-row action-bar">
+        <div class="govuk-grid-column-full action-bar__content">
           {{ govukButton({
             text: "Accept case",
-            classes: "case-accept-button"
+            classes: "case-accept-button action-bar__button"
           }) }}
-          <form action="" method="post" class="action-bar__form">
+          <form action="/case/reject-reason" method="post" class="action-bar__form">
             <input type="hidden" name="caseID" value="{{ case.id }}"/>
-            <input type="hidden" name="caseAction" value="reject"/>
+            <input type="hidden" name="caseAction" value="reason"/>
             {{ govukButton({
               text: "Reject case",
-              classes: "govuk-button--red"
+              classes: "govuk-button--red action-bar__button"
             }) }}
           </form>
         </div>
@@ -47,21 +47,45 @@
             <div class="govuk-grid-column-full">
               <nav class="section-navigation">
                 <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
-                  <li class="section-navigation__item section-navigation__item--active">
-                    <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="case-overview" data-section="decision-case">
-                      <span id="heading-case-overview">Overview</span>
-                    </a>
-                  </li>
-                  <li class="section-navigation__item">
-                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-offences" data-section="decision-case">
-                      <span id="heading-case-offences">Defendants & Offences</span>
-                    </a>
-                  </li>
-                  <li class="section-navigation__item">
-                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-contacts" data-section="decision-case">
-                      <span id="heading-case-contact-history">Contact history</span>
-                    </a>
-                  </li>
+                  {% if casetab === 'overview' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="case-overview" data-section="decision-case">
+                        <span id="heading-case-overview">Overview</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-overview" data-section="decision-case">
+                        <span id="heading-case-overview">Overview</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if casetab === 'offences' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="case-offences" data-section="decision-case">
+                        <span id="heading-case-offences">Defendants & Offences</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-offences" data-section="decision-case">
+                        <span id="heading-case-offences">Defendants & Offences</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if casetab === 'contacts' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="case-contacts" data-section="decision-case">
+                        <span id="heading-case-contact-history">Contact history</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="case-contacts" data-section="decision-case">
+                        <span id="heading-case-contact-history">Contact history</span>
+                      </a>
+                    </li>
+                  {% endif %}
                 </ul>
               </nav>
             </div>
@@ -101,74 +125,82 @@
             </div>
           </div>
           <div class="govuk-grid-row toggle-pane" id="case-offences" aria-hidden="true" aria-expanded="false" style="display: none;">
-            <form action="" method="post" id="case-details-form">
-              <input type="hidden" name="caseID" value="{{ case.id }}"/>
-              <input type="hidden" name="caseAction" value="accept"/>
-              <div class="govuk-grid-column-full" aria-labelledby="heading-case-offences">
-                <div class="govuk-panel govuk-panel--basic govuk-panel--left-aligned govuk-!-padding-2">
-                  <div class="govuk-form-group">
-                    <div class="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item govuk-checboxes__item--white">
-                        <input class="govuk-checkboxes__input" id="company-proceed" name="proceedAgainstCompany" type="checkbox" value="true">
-                        <label class="govuk-label govuk-checkboxes__label" for="company-proceed">
-                          Proceed against the company
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {% for defendant in case.defendants %}
-                  <table class="govuk-table govuk-table--condensed">
-                    <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
-                    <tbody class="govuk-table__body">
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Date of birth</th>
-                        <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
-                      </tr>
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Role</th>
-                        <td class="govuk-table__cell">{{ defendant.role }}</td>
-                      </tr>
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Appointed on</th>
-                        <td class="govuk-table__cell">{{ defendant.appointed }}</td>
-                      </tr>
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Status</th>
-                        <td class="govuk-table__cell">
+            <div class="govuk-grid-column-full" aria-labelledby="heading-case-offences">
+              {% for defendant in case.defendants %}
+                <table class="govuk-table govuk-table--condensed">
+                  <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Date of birth</th>
+                      <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Role</th>
+                      <td class="govuk-table__cell">{{ defendant.role }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Appointed on</th>
+                      <td class="govuk-table__cell">{{ defendant.appointed }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Status</th>
+                      <td class="govuk-table__cell">
 
-                          {% if defendant.status === 'active' %}
-                            <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
-                          {% else %}
-                            <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
-                          {% endif %}
+                        {% if defendant.status === 'active' %}
+                          <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                        {% else %}
+                          <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                        {% endif %}
 
-                        </td>
-                      </tr>
+                      </td>
+                    </tr>
 
-                      {% if defendant.status === 'resigned' %}
-                        <tr class="govuk-table__row">
-                          <th class="govuk-table__header" scope="row">Resigned on</th>
-                          <td class="govuk-table__cell">{{ defendant.resigned }}</td>
-                        </tr>
-                      {% endif %}
-
+                    {% if defendant.status === 'resigned' %}
                       <tr class="govuk-table__row">
-                        <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
-                        <td class="govuk-table__cell">
-                          {{ defendant.address.line1 }}<br/>
-                          {{ defendant.address.line2 }}<br/>
-                          {{ defendant.address.town }}<br/>
-                          {{ defendant.address.county }}<br/>
-                          {{ defendant.address.country }}
-                        </td>
+                        <th class="govuk-table__header" scope="row">Resigned on</th>
+                        <td class="govuk-table__cell">{{ defendant.resigned }}</td>
                       </tr>
-                      <tr class="govuk-table__row">
-                        <th class="govuk-table__header" scope="row">Country of residence</th>
-                        <td class="govuk-table__cell">{{ defendant.address.country }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    {% endif %}
+
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant address</th>
+                      <td class="govuk-table__cell">
+                        {% if defendant.addressType === 'service' %}
+                          <span class="govuk-!-font-weight-bold">Service address</span><br/>
+                        {% else %}
+                          <span class="govuk-!-font-weight-bold">Residential address</span><br/>
+                        {% endif %}
+                        {{ defendant.address.line1 }}<br/>
+                        {{ defendant.address.line2 }}<br/>
+                        {{ defendant.address.town }}<br/>
+                        {{ defendant.address.county }}<br/>
+                        {{ defendant.address.country }}<br/><br/>
+                        {% if defendant.addressType === 'service' %}
+                          <a href="" class="govuk-link defendant-address-button">Use residential address</a>
+                          <form action="" method="POST" id="defendant-address-form">
+                            <input type="hidden" name="useAddress" value="residential"/>
+                            <input type="hidden" name="caseID" value="{{ case.id }}"/>
+                            <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
+                          </form>
+                        {% else %}
+                          <a href="" class="govuk-link defendant-address-button">Use service address</a>
+                          <form action="" method="POST" id="defendant-address-form">
+                            <input type="hidden" name="useAddress" value="service"/>
+                            <input type="hidden" name="caseID" value="{{ case.id }}"/>
+                            <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
+                          </form>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Country of residence</th>
+                      <td class="govuk-table__cell">{{ defendant.address.country }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <form action="" method="post" id="case-details-form">
+                  <input type="hidden" name="caseID" value="{{ case.id }}"/>
+                  <input type="hidden" name="caseAction" value="accept"/>
                   <table class="govuk-table govuk-table--condensed">
                     <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Offences</caption>
                     <thead class="govuk-table__head">
@@ -203,9 +235,9 @@
                       {% endfor %}
                     </tbody>
                   </table>
-                {% endfor %}
-              </div>
-            </form>
+                </form>
+              {% endfor %}
+            </div>
           </div>
           <div class="govuk-grid-row toggle-pane" id="case-contacts" aria-hidden="true" aria-expanded="false" style="display: none;">
             <div class="govuk-grid-column-full" aria-describeddby="heading-case-contact-history">
@@ -242,26 +274,58 @@
             <div class="govuk-grid-column-full">
               <nav class="section-navigation">
                 <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
-                  <li class="section-navigation__item section-navigation__item--active">
-                    <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-overview" data-section="decision-profile">
-                      <span id="heading-company-overview">Overview</span>
-                    </a>
-                  </li>
-                  <li class="section-navigation__item">
-                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-officers" data-section="decision-profile">
-                      <span id="heading-company-officers">Officers</span>
-                    </a>
-                  </li>
-                  <li class="section-navigation__item">
-                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-overdue" data-section="decision-profile">
-                      <span id="heading-company-overdue">Overdue filings</span>
-                    </a>
-                  </li>
-                  <li class="section-navigation__item">
-                    <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-filings" data-section="decision-profile">
-                      <span id="heading-company-filing-history">Filing history</span>
-                    </a>
-                  </li>
+                  {% if companytab === 'overview' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-overview" data-section="decision-profile">
+                        <span id="heading-company-overview">Overview</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/referrals" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-overview" data-section="decision-profile">
+                        <span id="heading-company-overview">Overview</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if companytab === 'officers' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-officers" data-section="decision-profile">
+                        <span id="heading-company-officers">Officers</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-officers" data-section="decision-profile">
+                        <span id="heading-company-officers">Officers</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if companytab === 'overdue' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-overdue" data-section="decision-profile">
+                        <span id="heading-company-overdue">Overdue filings</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-overdue" data-section="decision-profile">
+                        <span id="heading-company-overdue">Overdue filings</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% if companytab === 'history' %}
+                    <li class="section-navigation__item section-navigation__item--active">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-navigation__link--active section-toggle" data-target="company-filings" data-section="decision-profile">
+                        <span id="heading-company-filing-history">Filing history</span>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li class="section-navigation__item">
+                      <a href="/cases/accepted" class="section-navigation__link section-navigation__link--condensed section-toggle" data-target="company-filings" data-section="decision-profile">
+                        <span id="heading-company-filing-history">Filing history</span>
+                      </a>
+                    </li>
+                  {% endif %}
                 </ul>
               </nav>
             </div>
@@ -431,7 +495,7 @@
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                  {% for filing in case.company.filings %}
+                  {% for filing in case.company.filings | reverse %}
                     <tr class="govuk-table__row">
                       <td class="govuk-table__cell">
                         {{ filing.date }}

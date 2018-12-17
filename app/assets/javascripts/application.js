@@ -89,4 +89,10 @@ $(document).ready(function () {
     $('#case-details-form').submit()
     return false
   })
+
+  // CHANGE DEFENDANT ADDRESS
+  $('.defendant-address-button').click(function () {
+    $('#defendant-address-form').submit()
+    return false
+  })
 })
