@@ -411,12 +411,26 @@
                 <tbody class="govuk-table__body">
                   {% for filing in case.company.overdue %}
                     <tr class="govuk-table__row">
-                      <td class="govuk-table__cell">
-                        {{ filing.name }}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ filing.dueDate }}
-                      </td>
+                      {% if filing.type === 'AA' %}
+                        <td class="govuk-table__cell">
+                          {{ filing.name }}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {{ filing.periodStart }}
+                          -
+                          {{ filing.periodEnd }}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {{ filing.dueDate }}
+                        </td>
+                      {% else %}
+                        <td class="govuk-table__cell">
+                          {{ filing.name }}
+                        </td>
+                        <td class="govuk-table__cell">
+                          {{ filing.dueDate }}
+                        </td>
+                      {% endif %}
                     </tr>
                   {% endfor %}
                 </tbody>
