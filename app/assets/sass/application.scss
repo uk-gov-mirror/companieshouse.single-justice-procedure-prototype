@@ -270,8 +270,11 @@ $govuk-global-styles: true;
   .decision-case__header {
     background: lighten(govuk-colour("light-green"), 25%);
     border-bottom: 2px solid govuk-colour("light-green");
-
     padding: .35em .4em .2em;
+  }
+
+  .govuk-table__caption {
+    color: govuk-colour("blue");
   }
 }
 
