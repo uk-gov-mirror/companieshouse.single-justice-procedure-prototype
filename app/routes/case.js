@@ -97,6 +97,7 @@ module.exports = function (router) {
   router.get('/case/overview', function (req, res) {
     var id = req.query.id
     req.session.recents.push(id)
+    console.log(req.session.cases[id].history)
     res.render('case/overview', {
       case: req.session.cases[id],
       navTabListOverview: 'section-navigation__item--active',

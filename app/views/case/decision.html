@@ -207,7 +207,7 @@
                       <tr class="govuk-table__row">
                         <th class="govuk-table__header">Proceed</th>
                         <th class="govuk-table__header">Type</th>
-                        <th class="govuk-table__header">Date</th>
+                        <th class="govuk-table__header">Period</th>
                       </tr>
                     </thead>
                     <tbody class="govuk-table__body">
@@ -229,7 +229,13 @@
                             {% endif %}
                           </td>
                           <td class="govuk-table__cell" scope="row">
-                            {{ offence.date }}
+                            {% if offence.type === 'AA' %}
+                              {{ offence.periodStart }}
+                              -
+                              {{ offence.periodEnd }}
+                            {% else %}
+                              {{ offence.date }}
+                            {% endif %}
                           </td>
                         </tr>
                       {% endfor %}
@@ -370,32 +376,14 @@
                       {{ case.company.registeredOffice.country }}
                     </td>
                   </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Next accounts period end</th>
-                    <td class="govuk-table__cell ">{{ case.company.accountsMUD }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Next accounts due</th>
-                    <td class="govuk-table__cell ">{{ case.company.accountsDue }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Last accounts period end</th>
-                    <td class="govuk-table__cell ">{{ case.company.lastAccountsMUD }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Next confirmation statement date</th>
-                    <td class="govuk-table__cell ">{{ case.company.csDate }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Next confirmation statement due</th>
-                    <td class="govuk-table__cell ">{{ case.company.csDue }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Last confirmation statement date</th>
-                    <td class="govuk-table__cell ">{{ case.company.lastCSDate }}</td>
-                  </tr>
                 </tbody>
               </table>
+              <!-- <h3 class="govuk-heading-s">Annual Accounts dates</h3> <table class="govuk-table govuk-table--condensed"> <tbody class="govuk-table__body"> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next accounts period end</th>
+              <td class="govuk-table__cell ">{{ case.company.accountsMUD }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next accounts due</th> <td class="govuk-table__cell ">{{ case.company.accountsDue }}</td> </tr> <tr
+              class="govuk-table__row"> <th class="govuk-table__header" scope="row">Last accounts period end</th> <td class="govuk-table__cell ">{{ case.company.lastAccountsMUD }}</td> </tr> </tbody> </table> <h3 class="govuk-heading-s">Confirmation Statement
+              dates</h3> <table class="govuk-table govuk-table--condensed"> <tbody class="govuk-table__body"> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next confirmation statement date</th> <td class="govuk-table__cell ">{{
+              case.company.csDate }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next confirmation statement due</th> <td class="govuk-table__cell ">{{ case.company.csDue }}</td> </tr> <tr class="govuk-table__row"> <th
+              class="govuk-table__header" scope="row">Last confirmation statement date</th> <td class="govuk-table__cell ">{{ case.company.lastCSDate }}</td> </tr> </tbody> </table> -->
             </div>
           </div>
           <div class="govuk-grid-row toggle-pane" id="company-overdue" aria-hidden="true" aria-expanded="false" style="display: none;">
@@ -405,7 +393,7 @@
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="col">Filing</th>
-                    <th class="govuk-table__header" scope="col">Due date</th>
+                    <th class="govuk-table__header" scope="col">Period</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -419,9 +407,6 @@
                           {{ filing.periodStart }}
                           -
                           {{ filing.periodEnd }}
-                        </td>
-                        <td class="govuk-table__cell">
-                          {{ filing.dueDate }}
                         </td>
                       {% else %}
                         <td class="govuk-table__cell">
@@ -499,6 +484,63 @@
           </div>
           <div class="govuk-grid-row toggle-pane" id="company-filings" aria-hidden="true" aria-expanded="false" style="display: none;">
             <div class="govuk-grid-column-full" aria-describeddby="heading-company-filings">
+              <div class="filters">
+                <div role="widget" class="filter open">
+                  <div class="govuk-body filters-heading" role="button" aria-controls="filter-filing" aria-expanded="true" tabindex="0">
+                    <span id="filter-label-filing">
+                      <span class="govuk-visually-hidden">Filter by
+                      </span>Filing type</span>
+                    <div class="toggle"></div>
+                  </div>
+                  <fieldset id="filter-filing" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-filing">
+                    <legend class="govuk-visually-hidden">What filing types do you want to see?</legend>
+                    <div class="govuk-checkboxes">
+                      <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-aa" name="filterFiling" type="checkbox" value="aa">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-aa">
+                              Annual accounts
+                            </label>
+                          </div>
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-ar01" name="filterFiling" type="checkbox" value="ar01">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-ar01">
+                              Annual return
+                            </label>
+                          </div>
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-cs01" name="filterFiling" type="checkbox" value="cs01">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-cs01">
+                              Confirmation Statement
+                            </label>
+                          </div>
+                        </div>
+                        <div class="govuk-grid-column-one-half">
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-def3" name="filterFiling" type="checkbox" value="def3">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-def3">
+                              DEF3
+                            </label>
+                          </div>
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-def49" name="filterFiling" type="checkbox" value="def49">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-def49">
+                              DEF49
+                            </label>
+                          </div>
+                          <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="filter-filing-defstat" name="filterFiling" type="checkbox" value="defstat">
+                            <label class="govuk-label govuk-checkboxes__label" for="filter-filing-defstat">
+                              DEFSTAT
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
               <table class="govuk-table govuk-table--condensed">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
@@ -528,6 +570,31 @@
                   {% endfor %}
                 </tbody>
               </table>
+              <div class="govuk-grid-column-full">
+                <ul class="pagination govuk-body" role="navigation">
+                  <li class="pagination__item pagination__item--disabled">
+                    <a href="#previous" class="pagination__link pagination__link--disabled">Previous</a>
+                  </li>
+                  <li class="pagination__item pagination__item--active">
+                    <a href="#" class="pagination__link pagination__link--active">1</a>
+                  </li>
+                  <li class="pagination__item">
+                    <a href="#" class="pagination__link">2</a>
+                  </li>
+                  <li class="pagination__item">
+                    <a href="#" class="pagination__link">3</a>
+                  </li>
+                  <li class="pagination__item">
+                    <a href="#" class="pagination__link">4</a>
+                  </li>
+                  <li class="pagination__item">
+                    <a href="#" class="pagination__link">5</a>
+                  </li>
+                  <li class="pagination__item">
+                    <a href="#" class="pagination__link">Next</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

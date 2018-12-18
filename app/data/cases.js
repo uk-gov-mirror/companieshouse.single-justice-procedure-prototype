@@ -22,7 +22,7 @@ module.exports = [
         country: 'United Kingdom'
       },
       accountsMUD: '30 June 2017',
-      accountsDue: '31 March 2018',
+      accountsDue: '30 June 2018',
       lastAccountsMUD: '30 June 2016',
       csDate: '13 April 2019',
       csDue: '27 April 2019',
@@ -246,6 +246,8 @@ module.exports = [
             type: 'AA',
             status: 'open',
             date: '1 March 2018',
+            periodStart: '1 Jul 2016',
+            periodEnd: '30 Jun 2017',
             hearingDate: '',
             plea: '',
             verdict: {
@@ -268,11 +270,11 @@ module.exports = [
     ],
     history: [
       {
-        date: '',
-        time: '',
-        title: '',
-        user: '',
-        notes: ''
+        date: '11 September 2018',
+        time: '09:35',
+        title: 'Case referred',
+        user: 'Joanne Wiley',
+        notes: 'Case referred to prosecution by COT.'
       }
     ]
   }
