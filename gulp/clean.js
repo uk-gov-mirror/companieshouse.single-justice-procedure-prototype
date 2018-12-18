@@ -3,7 +3,6 @@
   ===========
   removes folders:
     - public
-    - govuk_modules
 */
 
 const gulp = require('gulp')
@@ -11,9 +10,8 @@ const clean = require('gulp-clean')
 
 const config = require('./config.json')
 
-gulp.task('clean', function () {
+gulp.task('clean', function (done) {
   return gulp.src([config.paths.public + '/*',
-    config.paths.govukModules + '/*',
     '.port.tmp'], {read: false})
-  .pipe(clean())
+    .pipe(clean())
 })

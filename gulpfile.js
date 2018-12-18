@@ -11,6 +11,12 @@
 */
 
 const requireDir = require('require-dir')
+const gulp = require('gulp')
 
 // Require all tasks in gulp/tasks, including subfolders
 requireDir('./gulp', {recurse: true})
+
+gulp.task('default', function (done) {
+  gulp.series('generate-assets')
+  console.log('default task running')
+})
