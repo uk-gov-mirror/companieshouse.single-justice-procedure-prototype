@@ -6,12 +6,11 @@
 */
 
 const gulp = require('gulp')
-const clean = require('gulp-clean')
 
 const config = require('./config.json')
+const del = require('del')
 
 gulp.task('clean', function (done) {
-  return gulp.src([config.paths.public + '/*',
-    '.port.tmp'], {read: false})
-    .pipe(clean())
+  return del([config.paths.public + '*',
+    '.port.tmp'])
 })

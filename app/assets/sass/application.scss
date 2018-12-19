@@ -2,13 +2,13 @@
 $govuk-global-styles: true;
 
 //Import GOV.UK Frontend
-@import "govuk-frontend/all";
+@import "node_modules/govuk-frontend/all";
 @import 'ch-overrides';
-@import 'patterns/dashboard';
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "@fortawesome/fontawesome-free/scss/regular.scss";
-@import "@fortawesome/fontawesome-free/scss/solid.scss";
-@import "@fortawesome/fontawesome-free/scss/brands.scss";
+//@import 'patterns/dashboard';
+//@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+//@import "@fortawesome/fontawesome-free/scss/regular.scss";
+//@import "@fortawesome/fontawesome-free/scss/solid.scss";
+//@import "@fortawesome/fontawesome-free/scss/brands.scss";
 
 // Patterns that aren't in Frontend
 @import 'patterns/check-your-answers';
@@ -25,7 +25,7 @@ $govuk-global-styles: true;
 @import 'components/notification-panel';
 
 //cookie-banner
-@import "../../../docs/assets/sass/cookie-banner";
+//@import "components/cookie-banner";
 
 // Take a look at in app/assets/sass/patterns/ to see which files are imported.
 // @import 'patterns/check-your-answers';
