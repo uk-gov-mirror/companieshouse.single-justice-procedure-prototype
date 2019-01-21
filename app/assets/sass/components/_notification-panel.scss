@@ -15,6 +15,13 @@
   @include govuk-media-query($from: tablet) {
     border: $govuk-border-width solid govuk-colour('blue');
   }
+
+  &.notify {}
+
+  &.error {
+    border-color: govuk-colour('red');
+    background-color: govuk-colour('white');
+  }
 }
 
 .notification-panel__title {

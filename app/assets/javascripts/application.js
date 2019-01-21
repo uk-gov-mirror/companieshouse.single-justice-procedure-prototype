@@ -5,6 +5,16 @@ if (window.console && window.console.info) {
   window.console.info('GOV.UK Prototype Kit - do not use for production')
 }
 
+// Generate ultimatum
+var generateUltimatum = function () {
+  $('.govuk-panel--doc-gen').slideUp(400, function () {
+    $('.action-bar__button--ultimatum').removeClass('govuk-button--disabled')
+    $('.action-bar__button--ultimatum').attr('aria-disabled', false)
+    $('.action-bar__button--ultimatum').attr('disabled', false)
+    $('.document-container').show()
+  })
+}
+
 $(document).ready(function () {
   $('.result-count').text('Showing 3 of 10 cases on 5 pages')
   $('.result-count').attr('data-current', 3)
@@ -63,21 +73,26 @@ $(document).ready(function () {
     return false
   })
 
+  // SHOW FILING TYPE
+  $('.section-navigation__item--disabled').click(function () {
+    return false
+  })
+
   // SECTION SWITCHER
   $('.section-toggle').click(function () {
     var target = $(this).data('target')
     var section = $(this).data('section')
     if ($(this).hasClass('section-navigation__link--active')) {
-
+      // DO NOTHING...
     } else {
       $('.' + section + ' .section-navigation__link').removeClass('section-navigation__link--active')
       $('.' + section + ' .section-navigation__item').removeClass('section-navigation__item--active')
       $(this).parent().addClass('section-navigation__item--active')
       $(this).addClass('section-navigation__link--active')
-      $('.' + section + ' .toggle-pane').hide()
+      $('.' + section + ' .toggle-pane').removeClass('toggle-pane--active')
       $('.' + section + ' .toggle-pane').attr('aria-expanded', false)
       $('.' + section + ' .toggle-pane').attr('aria-hidden', true)
-      $('#' + target).toggle()
+      $('#' + target).addClass('toggle-pane--active')
       $('#' + target).attr('aria-expanded', true)
       $('#' + target).attr('aria-hidden', false)
     }
@@ -93,6 +108,15 @@ $(document).ready(function () {
   // CHANGE DEFENDANT ADDRESS
   $('.defendant-address-button').click(function () {
     $('#defendant-address-form').submit()
+    return false
+  })
+
+  // REGENERATE ULTIMATUM
+  $('.recreate-ultimatum').click(function () {
+    $('.document-container').hide()
+    $('.govuk-panel--doc-gen').slideDown(400, function () {
+      window.setTimeout(generateUltimatum, 8000)
+    })
     return false
   })
 })

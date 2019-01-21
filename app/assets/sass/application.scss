@@ -4,6 +4,7 @@ $govuk-global-styles: true;
 //Import GOV.UK Frontend
 @import "node_modules/govuk-frontend/all";
 @import 'ch-overrides';
+@import 'letter-styles';
 //@import 'patterns/dashboard';
 //@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 //@import "@fortawesome/fontawesome-free/scss/regular.scss";
@@ -23,6 +24,7 @@ $govuk-global-styles: true;
 
 // Component Macro SCSS
 @import 'components/notification-panel';
+@import 'components/spinner';
 
 //cookie-banner
 //@import "components/cookie-banner";
@@ -212,6 +214,8 @@ $govuk-global-styles: true;
 
 // TAGS
 .govuk-tag {
+  text-transform: capitalize;
+
   &.govuk-tag--light-green {
     background-color: govuk-colour("light-green");
   }
@@ -222,6 +226,7 @@ $govuk-global-styles: true;
 
   &.govuk-tag--yellow {
     background-color: govuk-colour("yellow");
+    color: $govuk-text-colour;
   }
 
   &.govuk-tag--grey {

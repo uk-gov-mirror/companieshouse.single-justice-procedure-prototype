@@ -1,0 +1,38 @@
+.spinner {}
+
+.spinner--infinite {}
+
+@keyframes spinner-grow {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.spinner__dot {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  background-color: none;
+  border-radius: 50%;
+  border: .4rem solid govuk-colour('white');
+  opacity: 0;
+  -webkit-animation: spinner-grow 1s linear infinite;
+  animation: spinner-grow 1s linear infinite;
+}
+
+.spinner__dot--1 {
+  animation-delay: .0s;
+}
+
+.spinner__dot--2 {
+  animation-delay: .25s;
+}
+
+.spinner__dot--3 {
+  animation-delay: .5s;
+}
