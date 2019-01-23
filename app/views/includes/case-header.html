@@ -10,22 +10,49 @@
 </div>
 <div class="govuk-grid-row action-bar">
   <div class="govuk-grid-column-full action-bar__content">
-    {{ govukButton({
-      text: "Issue ultimatum",
-      classes: "case-accept-button action-bar__button"
-    }) }}
-    {{ govukButton({
-      text: "Edit case",
-      classes: "govuk-button--edit action-bar__button"
-    }) }}
-    <form action="" method="post" class="action-bar__form">
-      <input type="hidden" name="caseID" value="{{ case.id }}"/>
-      <input type="hidden" name="caseAction" value="reject"/>
-      {{ govukButton({
+    {% if case.status === 'Accepted' %}
+      <form action="/case/ultimatum" method="post" class="action-bar__form">
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+        <input type="hidden" name="caseAction" value="issueUltimatum"/>
+        {{ govukButton({
+          text: "Issue ultimatum",
+          classes: "action-bar__button action-bar__button--ultimatum",
+          disabled: true
+        }) }}
+      </form>
+    {% endif %}
+    {% if case.status === 'Ultimatum issued' %}
+      <form action="/case/ultimatum" method="post" class="action-bar__form">
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+        <input type="hidden" name="caseAction" value="expireUltimatum"/>
+        {{ govukButton({
+          text: "*** Expire ultimatum ***",
+          classes: "action-bar__button action-bar__button--ultimatum",
+          disabled: false
+        }) }}
+      </form>
+    {% endif %}
+    {% if case.status === 'Ultimatum expired' %}
+      <form action="/case/ultimatum" method="post" class="action-bar__form">
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+        <input type="hidden" name="caseAction" value="issueSJPN"/>
+        {{ govukButton({
+          text: "Issue SJPN",
+          classes: "action-bar__button action-bar__button--SJPN",
+          disabled: false
+        }) }}
+      </form>
+    {% endif %}
+    {% if case.status !== 'Referred' or case.status !== 'SJPN issued' %}
+      <form action="/case/close-case" method="post" class="action-bar__form">
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+        <input type="hidden" name="caseAction" value="close"/>
+        {{ govukButton({
         text: "Close case",
-        classes: "govuk-button--red action-bar__button"
+        classes: "action-bar__button"
       }) }}
-    </form>
+      </form>
+    {% endif %}
   </div>
 </div>
 <div class="govuk-grid-row">
@@ -33,32 +60,39 @@
     <nav class="section-navigation">
       <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
         <li class="section-navigation__item {{ navTabListOverview }}">
-          <a href="/case/overview?id={{ case.id }}" class="section-navigation__link {{ navTabLinkOverview }}">
+          <a href="/case/overview?id={{ case.id }}" class="section-navigation__link {{ navTabLinkOverview }} {{ tabDisabled }}">
             <span id="heading-case-overview">Overview</span>
           </a>
         </li>
         <li class="section-navigation__item {{ navTabListProfile }}">
-          <a href="/case/company-profile?id={{ case.id }}" class="section-navigation__link {{ navTabLinkProfile }}">
+          <a href="/case/company-profile?id={{ case.id }}" class="section-navigation__link {{ navTabLinkProfile }} {{ tabDisabled }}">
             <span id="heading-case-profile">Company profile</span>
           </a>
         </li>
         <li class="section-navigation__item {{ navTabListDefendants }}">
-          <a href="/case/defendants?id={{ case.id }}" class="section-navigation__link {{ navTabLinkDefendants }}">
+          <a href="/case/defendants?id={{ case.id }}" class="section-navigation__link {{ navTabLinkDefendants }} {{ tabDisabled }}">
             <span id="heading-case-defendants">Defendants</span>
           </a>
         </li>
+        {% if case.status === "Accepted" or case.status === "Ultimatum issued" %}
+          <li class="section-navigation__item {{ navTabListUltimatum }}">
+            <a href="/case/ultimatum?id={{ case.id }}" class="section-navigation__link {{ navTabLinkUltimatum }} {{ tabDisabled }}">
+              <span id="heading-case-ultimatum">Ultimatum</span>
+            </a>
+          </li>
+        {% endif %}
         <li class="section-navigation__item {{ navTabListWitness }}">
-          <a href="/case/witness-statements?id={{ case.id }}" class="section-navigation__link {{ navTabLinkWitness }}">
+          <a href="/case/witness-statements?id={{ case.id }}" class="section-navigation__link {{ navTabLinkWitness }} {{ tabDisabled }}">
             <span id="heading-case-witness">Witness statements</span>
           </a>
         </li>
         <li class="section-navigation__item {{ navTabListContacts }}">
-          <a href="/case/contacts?id={{ case.id }}" class="section-navigation__link {{ navTabLinkContacts }}">
+          <a href="/case/contacts?id={{ case.id }}" class="section-navigation__link {{ navTabLinkContacts }} {{ tabDisabled }}">
             <span id="heading-case-contacts">Contacts</span>
           </a>
         </li>
         <li class="section-navigation__item {{ navTabListHistory }}">
-          <a href="/case/history?id={{ case.id }}" class="section-navigation__link {{ navTabLinkHistory }}">
+          <a href="/case/history?id={{ case.id }}" class="section-navigation__link {{ navTabLinkHistory }} {{ tabDisabled }}">
             <span id="heading-case-history">History</span>
           </a>
         </li>

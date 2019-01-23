@@ -3,6 +3,8 @@ module.exports = function (router) {
   router.get('/', function (req, res) {
     req.session.cases = require('../data/cases.js')
     req.session.recents = []
+    req.session.notifications = {}
+    req.session.notifications.list = []
     res.render('account/login')
   })
 
