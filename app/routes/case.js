@@ -2,13 +2,13 @@ module.exports = function (router) {
   // ACCEPT/REJECT DECISION SCREEN
   router.get('/case/decision', function (req, res) {
     var id = req.query.id
-    var casetab = req.query.casetab
-    var companytab = req.query.companytab
+    var caseTab = 'section-navigation__link--active'
+    var companyTab = 'section-navigation__link--active'
 
     res.render('case/decision', {
       case: req.session.cases[id],
-      casetab: casetab,
-      companytab: companytab
+      caseOverviewTab: caseTab,
+      companyOverviewTab: companyTab
     })
   })
   router.post('/case/decision', function (req, res) {
@@ -16,26 +16,30 @@ module.exports = function (router) {
     var caseAction = req.body.caseAction
     var useAddress = req.body.useAddress
     var defendantID = parseInt(req.body.defendantID)
-    var casetab = req.query.casetab
-    var companytab = req.query.companytab
-    var event = {}
+    var caseTab = 'section-navigation__link--active'
+    var companyTab = 'section-navigation__link--active'
     var date = new Date()
     var offenceList = req.body.offenceList
     var i = 0
     var splitOffences = []
-    var notifications = {}
+    var notification = {}
+    var event = {}
+    var notificationList = []
 
     if (caseAction === 'accept') {
       if (offenceList === '_unchecked') {
-        notifications.list = []
-        notifications.title = 'You forgot something'
-        notifications.list.push('You need to select at least 1 offence to accept a case')
+        notification.text = 'You need to select at least 1 offence to accept a case'
+        notification.href = '#offence-0-0'
+        req.session.notifications.title = 'There was a problem accepting this case'
+        notificationList.push(notification)
+        req.session.notifications.list = notificationList
 
         res.render('case/decision', {
           case: req.session.cases[id],
-          casetab: casetab,
-          companytab: companytab,
-          notifications: notifications
+          caseOffencesTab: caseTab,
+          companyOverviewTab: companyTab,
+          notifications: req.session.notifications,
+          notificationType: 'error'
         })
       } else {
         event.date = date.getDate()
@@ -49,10 +53,12 @@ module.exports = function (router) {
           splitOffences = offenceList[i].split('-')
           req.session.cases[id].defendants[splitOffences[0]].offences[splitOffences[1]].status = 'proceed'
         }
-        res.redirect('/case/overview?id=' + id)
+
+        req.session.notifications.title = 'Case accepted'
+        req.session.notifications.list = notificationList
+        res.redirect('/case/ultimatum?id=' + id)
       }
     } else if (useAddress !== '') {
-      notifications.list = []
       if (useAddress === 'service') {
         req.session.cases[id].defendants[defendantID].addressType = 'service'
         req.session.cases[id].defendants[defendantID].address.line1 = req.session.cases[id].company.officers[defendantID].serviceAddress.line1
@@ -61,8 +67,10 @@ module.exports = function (router) {
         req.session.cases[id].defendants[defendantID].address.county = req.session.cases[id].company.officers[defendantID].serviceAddress.county
         req.session.cases[id].defendants[defendantID].address.postcode = req.session.cases[id].company.officers[defendantID].serviceAddress.postcode
         req.session.cases[id].defendants[defendantID].address.country = req.session.cases[id].company.officers[defendantID].serviceAddress.country
-        notifications.title = 'The case has been updated'
-        notifications.list.push('The service address is now being used for ' + req.session.cases[id].defendants[defendantID].name)
+        req.session.notifications.title = 'The case has been updated'
+        notification.text = 'The service address is now being used for ' + req.session.cases[id].defendants[defendantID].name
+        notificationList.push(notification)
+        req.session.notifications.list = notificationList
       }
       if (useAddress === 'residential') {
         req.session.cases[id].defendants[defendantID].addressType = 'residential'
@@ -72,24 +80,20 @@ module.exports = function (router) {
         req.session.cases[id].defendants[defendantID].address.county = req.session.cases[id].company.officers[defendantID].residentialAddress.county
         req.session.cases[id].defendants[defendantID].address.postcode = req.session.cases[id].company.officers[defendantID].residentialAddress.postcode
         req.session.cases[id].defendants[defendantID].address.country = req.session.cases[id].company.officers[defendantID].residentialAddress.country
-        notifications.title = 'The case has been updated'
-        notifications.list.push('The residential address is now being used for ' + req.session.cases[id].defendants[defendantID].name)
+        req.session.notifications.title = 'The case has been updated'
+        notification.text = 'The residential address is now being used for ' + req.session.cases[id].defendants[defendantID].name
+        notificationList.push(notification)
+        req.session.notifications.list = notificationList
       }
       res.render('case/decision', {
         case: req.session.cases[id],
-        casetab: casetab,
-        companytab: companytab,
-        notifications: notifications
+        caseOffencesTab: caseTab,
+        companyOverviewTab: companyTab,
+        notifications: req.session.notifications,
+        notificationType: 'notify'
       })
     } else {
-      event.date = date.getDate()
-      event.time = date.getTime()
-      event.title = 'Case rejected'
-      event.user = 'system'
-      event.notes = ''
-      req.session.cases[id].history.push(event)
-      req.session.cases[id].status = 'Rejected'
-      res.redirect('/cases/referrals')
+
     }
   })
 
@@ -97,7 +101,6 @@ module.exports = function (router) {
   router.get('/case/overview', function (req, res) {
     var id = req.query.id
     req.session.recents.push(id)
-    console.log(req.session.cases[id].history)
     res.render('case/overview', {
       case: req.session.cases[id],
       navTabListOverview: 'section-navigation__item--active',
@@ -141,6 +144,55 @@ module.exports = function (router) {
       proceedMessage: proceedMessage
     })
   })
+  // ULTIMATUM
+  router.get('/case/ultimatum', function (req, res) {
+    var id = req.query.id
+
+    res.render('case/ultimatum', {
+      case: req.session.cases[id],
+      navTabListUltimatum: 'section-navigation__item--active',
+      navTabLinkUltimatum: 'section-navigation__link--active',
+      notifications: req.session.notifications
+    })
+  })
+  router.post('/case/ultimatum', function (req, res) {
+    var id = req.body.caseID
+    var action = req.body.caseAction
+    var referral = req.session.cases[id]
+    var event = {}
+    var date = new Date()
+
+    if (action === 'issueUltimatum') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Ultimatum issued'
+      event.user = 'system'
+      event.notes = 'Ultimatum sent to the defendant'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Ultimatum issued'
+      res.redirect('/case/overview?id=' + id)
+    }
+    if (action === 'reissueUltimatum') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Ultimatum reissued'
+      event.user = 'system'
+      event.notes = 'Updated ultimatum letter sent to defendant'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Ultimatum issued'
+      res.redirect('/case/overview?id=' + id)
+    }
+    if (action === 'expireUltimatum') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Ultimatum reissued'
+      event.user = 'system'
+      event.notes = 'Updated ultimatum letter sent to defendant'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Ultimatum issued'
+      res.redirect('/case/overview?id=' + id)
+    }
+  })
   // CASE HISTORY
   router.get('/case/history', function (req, res) {
     var id = req.query.id
@@ -158,7 +210,7 @@ module.exports = function (router) {
     var event = {}
     var date = new Date()
     var rejectReason = ''
-    var backLink = '/case/decision?id=' + id + '&casetab=overview&companytab=overview'
+    var backLink = '/case/decision?id=' + id
 
     if (action === 'reason') {
       res.render('case/reject-reason', {
@@ -178,7 +230,7 @@ module.exports = function (router) {
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'Rejected'
       req.session.cases[id].rejectReason = rejectReason
-      res.redirect('/cases/referrals')
+      res.redirect('/cases/rejected')
     }
   })
 }

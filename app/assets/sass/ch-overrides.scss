@@ -8,10 +8,13 @@
 
 // BUTTONS
 .govuk-button {
-  &.govuk-button--red {
-    background-color: govuk-colour("red");
-    // box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+  &.govuk-button--default {
+    background-color: govuk-colour("grey-1");
+    background: none;
+    box-shadow: none;
     // -webkit-box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+    // box-shadow: 0 2px 0 darken(govuk-colour("red"), 25%);
+    text-decoration: underline;
   }
 
   &.govuk-button-edit {

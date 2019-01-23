@@ -1,0 +1,100 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Prosecution Case Overview: PJM ACCOUNTANCY LIMITED
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/cases/referrals"
+  }) }}
+{% endblock %}
+
+{% if case.status === 'Accepted' %}
+  {% set tabDisabled = 'section-navigation__item--disabled' %}
+{% else %}
+  {% set tabDisabled = false %}
+{% endif %}
+
+{% set ultimatumLink %}
+<a href="/public/documents/ultimatum.pdf" class="govuk-link" target="_blank">View document</a>
+{% endset %}
+
+{% block content %}
+  {% include "includes/case-header.html" %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-panel govuk-panel--confirmation govuk-panel--doc-gen" style="display: none;">
+        <div class="govuk-panel__body">
+          <div class="doc-generator">
+            <h3 class="govuk-panel__title">Creating ultimatum for
+              {{ case.company.name }}</h3>
+            <div class="spinner spinner--infinite">
+              <span class="spinner__dot spinner__dot--1"></span>
+              <span class="spinner__dot spinner__dot--2"></span>
+              <span class="spinner__dot spinner__dot--3"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="document-container" style="display: none;">
+        {{ govukTable({
+          caption: "Ultimatum details",
+          firstCellIsHeader: true,
+          rows: [
+            [
+              {
+                text: "Ultimatum created"
+              },
+              {
+                text: "18 January 2019"
+              }
+            ],
+            [
+              {
+                text: "Document size"
+              },
+              {
+                text: "159Kb"
+              }
+            ],
+            [
+              {
+                text: "Created by"
+              },
+              {
+                text: "Charlotte Hooper"
+              }
+            ],
+            [
+              {
+                text: "Document link"
+              },
+              {
+                html: ultimatumLink
+              }
+            ]
+          ]
+        }) }}
+        <p class="govuk-body">
+          <a href="" class="govuk-link recreate-ultimatum">Recreate ultimatum</a>
+        </p>
+        <p class="govuk-body">
+          <a href="" class="govuk-link reissue-ultimatum">Reissue ultimatum</a>
+        </p>
+      </div>
+    </div>
+  {% endblock %}
+  {% block page_scripts %}
+    {% if case.status === 'Accepted' %}
+      <script type="text/javascript">
+        $('.govuk-panel--doc-gen').show()
+        window.setTimeout(generateUltimatum, 8000)
+      </script>
+    {% elif case.status === 'Ultimatum issued' %}
+      <script type="text/javascript">
+        $('.document-container').show()
+      </script>
+    {% endif %}
+  {% endblock %}
