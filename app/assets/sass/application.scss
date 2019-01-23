@@ -2,13 +2,13 @@
 $govuk-global-styles: true;
 
 //Import GOV.UK Frontend
-@import "govuk-frontend/all";
+@import "node_modules/govuk-frontend/all";
 @import 'ch-overrides';
-@import 'patterns/dashboard';
-@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "@fortawesome/fontawesome-free/scss/regular.scss";
-@import "@fortawesome/fontawesome-free/scss/solid.scss";
-@import "@fortawesome/fontawesome-free/scss/brands.scss";
+//@import 'patterns/dashboard';
+//@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+//@import "@fortawesome/fontawesome-free/scss/regular.scss";
+//@import "@fortawesome/fontawesome-free/scss/solid.scss";
+//@import "@fortawesome/fontawesome-free/scss/brands.scss";
 
 // Patterns that aren't in Frontend
 @import 'patterns/check-your-answers';
@@ -21,8 +21,11 @@ $govuk-global-styles: true;
 @import 'patterns/filters';
 @import 'patterns/dashboard';
 
+// Component Macro SCSS
+@import 'components/notification-panel';
+
 //cookie-banner
-@import "../../../docs/assets/sass/cookie-banner";
+//@import "components/cookie-banner";
 
 // Take a look at in app/assets/sass/patterns/ to see which files are imported.
 // @import 'patterns/check-your-answers';
@@ -49,14 +52,14 @@ $govuk-global-styles: true;
 .govuk-header__navigation {
   padding: 0 15px;
   margin: 0 -15px;
-  background-color: govuk-colour("grey-3");
+  background: govuk-colour("blue");
 }
 
 .govuk-header__navigation-item {
   a {
     &:link,
     &:visited {
-      color: black;
+      color: white;
     }
   }
 }
@@ -64,7 +67,7 @@ $govuk-global-styles: true;
 .govuk-header__navigation-item-link {
   display: inline-block;
   padding: 5px;
-  color: black;
+  color: white;
 }
 
 .govuk-width-container--full {
@@ -131,8 +134,15 @@ $govuk-global-styles: true;
 
 .govuk-checkboxes__item--table {
   min-height: 30px;
+  max-width: 40px;
   padding: 0;
   margin: 0;
+}
+
+.govuk-checboxes__item--white {
+  .govuk-checkboxes__label::before {
+    background-color: govuk-colour("white");
+  }
 }
 
 .govuk-checkboxes__label--table {
@@ -192,6 +202,12 @@ $govuk-global-styles: true;
 
 .govuk-table--condensed {
   @include govuk-font(16);
+}
+
+.govuk-table--collapsed {
+  tbody {
+    display: none;
+  }
 }
 
 // TAGS
@@ -254,12 +270,27 @@ $govuk-global-styles: true;
   .decision-case__header {
     background: lighten(govuk-colour("light-green"), 25%);
     border-bottom: 2px solid govuk-colour("light-green");
-
     padding: .35em .4em .2em;
+  }
+
+  .govuk-table__caption {
+    color: govuk-colour("blue");
   }
 }
 
 .action-bar {
+  margin: 0 -30px 2em;
+
+  .action-bar__content {
+    background: govuk-colour('grey-4');
+    border-bottom: 2px solid govuk-colour('grey-3');
+    padding: 15px 30px;
+  }
+
+  .action-bar__button {
+    margin-bottom: 0;
+  }
+
   .action-bar__form {
     display: inline;
   }

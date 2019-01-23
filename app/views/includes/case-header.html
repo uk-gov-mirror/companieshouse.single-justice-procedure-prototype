@@ -1,0 +1,68 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+      <span class="govuk-caption-xl">Prosecution - Case
+        {{ case.reference }}
+      </span>
+      {{ case.company.name }}
+    </h1>
+  </div>
+</div>
+<div class="govuk-grid-row action-bar">
+  <div class="govuk-grid-column-full action-bar__content">
+    {{ govukButton({
+      text: "Issue ultimatum",
+      classes: "case-accept-button action-bar__button"
+    }) }}
+    {{ govukButton({
+      text: "Edit case",
+      classes: "govuk-button--edit action-bar__button"
+    }) }}
+    <form action="" method="post" class="action-bar__form">
+      <input type="hidden" name="caseID" value="{{ case.id }}"/>
+      <input type="hidden" name="caseAction" value="reject"/>
+      {{ govukButton({
+        text: "Close case",
+        classes: "govuk-button--red action-bar__button"
+      }) }}
+    </form>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav class="section-navigation">
+      <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
+        <li class="section-navigation__item {{ navTabListOverview }}">
+          <a href="/case/overview?id={{ case.id }}" class="section-navigation__link {{ navTabLinkOverview }}">
+            <span id="heading-case-overview">Overview</span>
+          </a>
+        </li>
+        <li class="section-navigation__item {{ navTabListProfile }}">
+          <a href="/case/company-profile?id={{ case.id }}" class="section-navigation__link {{ navTabLinkProfile }}">
+            <span id="heading-case-profile">Company profile</span>
+          </a>
+        </li>
+        <li class="section-navigation__item {{ navTabListDefendants }}">
+          <a href="/case/defendants?id={{ case.id }}" class="section-navigation__link {{ navTabLinkDefendants }}">
+            <span id="heading-case-defendants">Defendants</span>
+          </a>
+        </li>
+        <li class="section-navigation__item {{ navTabListWitness }}">
+          <a href="/case/witness-statements?id={{ case.id }}" class="section-navigation__link {{ navTabLinkWitness }}">
+            <span id="heading-case-witness">Witness statements</span>
+          </a>
+        </li>
+        <li class="section-navigation__item {{ navTabListContacts }}">
+          <a href="/case/contacts?id={{ case.id }}" class="section-navigation__link {{ navTabLinkContacts }}">
+            <span id="heading-case-contacts">Contacts</span>
+          </a>
+        </li>
+        <li class="section-navigation__item {{ navTabListHistory }}">
+          <a href="/case/history?id={{ case.id }}" class="section-navigation__link {{ navTabLinkHistory }}">
+            <span id="heading-case-history">History</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -3,8 +3,14 @@ const router = express.Router()
 
 // Service Core
 require('./routes/core.js')(router)
-// Main Journey
-// require('./routes/journey.js')(router)
+
+// CASES VIEWS
+require('./routes/cases.js')(router)
+
+// CASE VIEWS
+require('./routes/case.js')(router)
+
+// AJAX ACTIONS
 require('./routes/actions.js')(router)
 
 module.exports = router

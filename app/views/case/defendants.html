@@ -8,127 +8,125 @@
 {% block content %}
   <div class="govuk-width-container govuk-width-container--full">
     <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-          <h1 class="govuk-heading-xl">
-            <span class="govuk-caption-xl">Prosecution - Case CR71/09076/18
-            </span>
-            PJM ACCOUNTANCY LIMITED
-          </h1>
-        </div>
-      </div>
 
-      {% include "includes/case-navigation.html" %}
+      {% include "includes/case-header.html" %}
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          {{ govukTable({
-            firstCellIsHeader: true,
-            head: [
-              {
-                text: "Name"
-              },
-              {
-                text: "Address"
-              },
-              {
-                text: "Type"
-              },
-              {
-                text: "Role"
-              },
-              {
-                text: "Status"
-              }
-            ],
-            rows: [
-              [
-                {
-                  text: "JOHN SMITH"
-                },
-                {
-                  text: "10 Shetland Avenue\nWarrington\nCheshire\nWA4 5EN"
-                },
-                {
-                  text: "Person"
-                },
-                {
-                  text: "Director"
-                },
-                {
-                  text: "Active"
-                }
-              ],
-              [
-                {
-                  text: "JOHN SMITH"
-                },
-                {
-                  text: "10 Shetland Avenue\nWarrington\nCheshire\nWA4 5EN"
-                },
-                {
-                  text: "Person"
-                },
-                {
-                  text: "Director"
-                },
-                {
-                  text: "Active"
-                }
-              ],
-              [
-                {
-                  text: "JOHN SMITH"
-                },
-                {
-                  text: "10 Shetland Avenue\nWarrington\nCheshire\nWA4 5EN"
-                },
-                {
-                  text: "Person"
-                },
-                {
-                  text: "Director"
-                },
-                {
-                  text: "Active"
-                }
-              ],
-              [
-                {
-                  text: "JOHN SMITH"
-                },
-                {
-                  text: "10 Shetland Avenue\nWarrington\nCheshire\nWA4 5EN"
-                },
-                {
-                  text: "Person"
-                },
-                {
-                  text: "Director"
-                },
-                {
-                  text: "Active"
-                }
-              ],
-              [
-                {
-                  text: "A COMPANY LIMITED"
-                },
-                {
-                  text: "10 Shetland Avenue\nWarrington\nCheshire\nWA4 5EN"
-                },
-                {
-                  text: "Corporate"
-                },
-                {
-                  text: "Director"
-                },
-                {
-                  text: "Active"
-                }
-              ]
-            ]
-          }) }}
+          <h2 class="govuk-heading-l">
+            Currently proceeding against
+            {{ proceedMessage}}
+          </h2>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+
+          {% for defendant in case.defendants %}
+            <h2 class="govuk-heading-m">{{ defendant.name }}</h2>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-half">
+                <table class="govuk-table govuk-table--condensed">
+                  <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Defendant details</caption>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Date of birth</th>
+                      <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Role</th>
+                      <td class="govuk-table__cell">{{ defendant.role }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Appointed on</th>
+                      <td class="govuk-table__cell">{{ defendant.appointed }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Status</th>
+                      <td class="govuk-table__cell">
+
+                        {% if defendant.status === 'active' %}
+                          <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                        {% else %}
+                          <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                        {% endif %}
+
+                      </td>
+                    </tr>
+
+                    {% if defendant.status === 'resigned' %}
+                      <tr class="govuk-table__row">
+                        <th class="govuk-table__header" scope="row">Resigned on</th>
+                        <td class="govuk-table__cell">{{ defendant.resigned }}</td>
+                      </tr>
+                    {% endif %}
+
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header govuk-table__header--top" scope="row">Correspondence address</th>
+                      <td class="govuk-table__cell">
+                        {{ defendant.address.line1 }}<br/>
+                        {{ defendant.address.line2 }}<br/>
+                        {{ defendant.address.town }}<br/>
+                        {{ defendant.address.county }}<br/>
+                        {{ defendant.address.country }}
+                      </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Country of residence</th>
+                      <td class="govuk-table__cell">{{ defendant.address.country }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="govuk-grid-column-one-half">
+                <table class="govuk-table govuk-table--condensed">
+                  <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Defendant offences</caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header">Proceed</th>
+                      <th class="govuk-table__header">Type</th>
+                      <th class="govuk-table__header">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+
+                    {% for offence in defendant.offences %}
+                      <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">
+                          <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
+                              {% if case.proceedAgainstCompany === true %}
+                                <input class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}" disabled="disabled">
+                              {% elif offence.status === 'proceed' %}
+                                <input class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}" disabled="disabled" checked="checked">
+                              {% else %}
+                                <input class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}" disabled="disabled">
+                              {% endif %}
+                              <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="govuk-table__cell ">
+
+                          {% if offence.type === 'AA' %}
+                            Annual accounts
+                          {% elif offence.type === 'CS' %}
+                            Confirmation statement
+                          {% endif %}
+
+                        </td>
+                        <td class="govuk-table__cell" scope="row">
+                          {{ offence.date }}
+                        </td>
+                      </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          {% endfor %}
+
         </div>
       </main>
     </div>

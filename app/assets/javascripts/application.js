@@ -62,4 +62,37 @@ $(document).ready(function () {
     })
     return false
   })
+
+  // SECTION SWITCHER
+  $('.section-toggle').click(function () {
+    var target = $(this).data('target')
+    var section = $(this).data('section')
+    if ($(this).hasClass('section-navigation__link--active')) {
+
+    } else {
+      $('.' + section + ' .section-navigation__link').removeClass('section-navigation__link--active')
+      $('.' + section + ' .section-navigation__item').removeClass('section-navigation__item--active')
+      $(this).parent().addClass('section-navigation__item--active')
+      $(this).addClass('section-navigation__link--active')
+      $('.' + section + ' .toggle-pane').hide()
+      $('.' + section + ' .toggle-pane').attr('aria-expanded', false)
+      $('.' + section + ' .toggle-pane').attr('aria-hidden', true)
+      $('#' + target).toggle()
+      $('#' + target).attr('aria-expanded', true)
+      $('#' + target).attr('aria-hidden', false)
+    }
+    return false
+  })
+
+  // ACCEPT CASE
+  $('.case-accept-button').click(function () {
+    $('#case-details-form').submit()
+    return false
+  })
+
+  // CHANGE DEFENDANT ADDRESS
+  $('.defendant-address-button').click(function () {
+    $('#defendant-address-form').submit()
+    return false
+  })
 })

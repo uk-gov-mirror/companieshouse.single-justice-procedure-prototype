@@ -1,0 +1,50 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Case Decision: PJM ACCOUNTANCY LIMITED
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+{% block content %}
+
+  <div class="govuk-width-container govuk-width-container--full">
+    {{ govukBackLink({
+      text: "Back",
+      href: backLink
+    }) }}
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <h1 class="govuk-heading-xl">
+            <span class="govuk-caption-xl">Prosecution - Case
+              {{ case.reference }}
+            </span>
+            {{ case.company.name }}
+          </h1>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half decision-case">
+          <h2 class="govuk-heading-l">Reject case</h2>
+          <form action="" method="post" class="">
+            {{ govukTextarea({
+              name: "rejectReason",
+              id: "reject-reason",
+              label: {
+                text: "Why are you rejecting this case?",
+                isPageHeading: "true"
+              }
+            }) }}
+            <input type="hidden" name="caseID" value="{{ id }}"/>
+            <input type="hidden" name="caseAction" value="reject"/>
+            <div class="govuk-form-group">
+              {{ govukButton({
+                text: "Reject case"
+              }) }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  {% endblock %}>
