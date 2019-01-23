@@ -53,6 +53,9 @@ module.exports = function (router) {
           splitOffences = offenceList[i].split('-')
           req.session.cases[id].defendants[splitOffences[0]].offences[splitOffences[1]].status = 'proceed'
         }
+
+        req.session.notifications.title = 'Case accepted'
+        req.session.notifications.list = notificationList
         res.redirect('/case/ultimatum?id=' + id)
       }
     } else if (useAddress !== '') {
@@ -144,10 +147,12 @@ module.exports = function (router) {
   // ULTIMATUM
   router.get('/case/ultimatum', function (req, res) {
     var id = req.query.id
+
     res.render('case/ultimatum', {
       case: req.session.cases[id],
       navTabListUltimatum: 'section-navigation__item--active',
-      navTabLinkUltimatum: 'section-navigation__link--active'
+      navTabLinkUltimatum: 'section-navigation__link--active',
+      notifications: req.session.notifications
     })
   })
   router.post('/case/ultimatum', function (req, res) {
@@ -168,6 +173,16 @@ module.exports = function (router) {
       res.redirect('/case/overview?id=' + id)
     }
     if (action === 'reissueUltimatum') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Ultimatum reissued'
+      event.user = 'system'
+      event.notes = 'Updated ultimatum letter sent to defendant'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Ultimatum issued'
+      res.redirect('/case/overview?id=' + id)
+    }
+    if (action === 'expireUltimatum') {
       event.date = date.getDate()
       event.time = date.getTime()
       event.title = 'Ultimatum reissued'
