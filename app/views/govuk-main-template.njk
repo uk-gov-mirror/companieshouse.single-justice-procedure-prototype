@@ -55,14 +55,18 @@
 
         {% block beforeContent %}{% endblock %}
         <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content" role="main">
-          <div class="notification-bar">
-            {% if notifications.list.length > 0 %}
-              {{ notificationPanel({
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <div class="notification-bar">
+                {% if notifications %}
+                  {{ notificationPanel({
                 titleText: notifications.title,
                 notificationList: notifications.list,
                 classes: notificationType
               }) }}
-            {% endif %}
+                {% endif %}
+              </div>
+            </div>
           </div>
           {% block content %}{% endblock %}
         </main>
