@@ -55,6 +55,7 @@ module.exports = function (router) {
         }
 
         req.session.notifications.title = 'Case accepted'
+        // notificationList.push(notification)
         req.session.notifications.list = notificationList
         res.redirect('/case/ultimatum?id=' + id)
       }
@@ -185,11 +186,68 @@ module.exports = function (router) {
     if (action === 'expireUltimatum') {
       event.date = date.getDate()
       event.time = date.getTime()
-      event.title = 'Ultimatum reissued'
+      event.title = 'Ultimatum expired'
       event.user = 'system'
-      event.notes = 'Updated ultimatum letter sent to defendant'
+      event.notes = 'Ultimatum period expired without response'
       req.session.cases[id].history.push(event)
-      req.session.cases[id].status = 'Ultimatum issued'
+      req.session.cases[id].status = 'Ultimatum expired'
+      res.redirect('/case/overview?id=' + id)
+    }
+  })
+  // SJPN
+  router.get('/case/sjpn', function (req, res) {
+    var id = req.query.id
+
+    res.render('case/sjpn', {
+      case: req.session.cases[id],
+      navTabListSJPN: 'section-navigation__item--active',
+      navTabLinkSJPN: 'section-navigation__link--active'
+    })
+  })
+  router.post('/case/sjpn', function (req, res) {
+    var id = req.body.caseID
+    var action = req.body.caseAction
+    var referral = req.session.cases[id]
+    var event = {}
+    var date = new Date()
+
+    if (action === 'issueSJPN') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'SJPN issued'
+      event.user = 'system'
+      event.notes = 'SJPN issued to defendant and queued for delivery to court'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'SJPN issued'
+      res.redirect('/case/overview?id=' + id)
+    }
+  })
+  // WITNESS STATEMENTS
+  router.get('/case/witness-statements', function (req, res) {
+    var id = req.query.id
+
+    res.render('case/witness-statements', {
+      case: req.session.cases[id],
+      navTabListWitness: 'section-navigation__item--active',
+      navTabLinkWitness: 'section-navigation__link--active',
+      notifications: req.session.notifications
+    })
+  })
+  router.post('/case/witness-statements', function (req, res) {
+    var id = req.body.caseID
+    var action = req.body.caseAction
+    var referral = req.session.cases[id]
+    var event = {}
+    var date = new Date()
+
+    if (action === 'issueSJPN') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'SJPN issued'
+      event.user = 'system'
+      event.notes = 'SJPN issued to defendant and queued for delivery to court'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'SJPN issued'
       res.redirect('/case/overview?id=' + id)
     }
   })
