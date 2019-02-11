@@ -6,6 +6,15 @@
     overflow: auto;
   }
 
+  .section-navigation--subnav-present {
+    margin-bottom: 0;
+  }
+
+  .section-navigation--subnav {
+    border-bottom: 1px solid govuk-colour("grey-2");
+    background: govuk-colour("grey-3");
+  }
+
   .section-navigation__list {
 
     @include govuk-media-query($from: tablet) {
