@@ -43,7 +43,18 @@
         }) }}
       </form>
     {% endif %}
-    {% if case.status !== 'Referred' or case.status !== 'SJPN issued' %}
+    {% if case.status === 'SJPN issued' %}
+      <form action="/case/sjpn" method="post" class="action-bar__form">
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+        <input type="hidden" name="caseAction" value="expireSJPN"/>
+        {{ govukButton({
+          text: "*** Expire SJPN ***",
+          classes: "action-bar__button action-bar__button--sjpn",
+          disabled: false
+        }) }}
+      </form>
+    {% endif %}
+    {% if case.status !== 'Referred' and case.status !== 'SJPN issued' %}
       <form action="/case/close-case" method="post" class="action-bar__form">
         <input type="hidden" name="caseID" value="{{ case.id }}"/>
         <input type="hidden" name="caseAction" value="close"/>
@@ -89,11 +100,6 @@
           </li>
         {% endif %}
 
-        <li class="section-navigation__item {{ navTabListContacts }}">
-          <a href="/case/contacts?id={{ case.id }}" class="section-navigation__link {{ navTabLinkContacts }} {{ tabDisabled }}">
-            <span id="heading-case-contacts">Contacts</span>
-          </a>
-        </li>
         <li class="section-navigation__item {{ navTabListHistory }}">
           <a href="/case/history?id={{ case.id }}" class="section-navigation__link {{ navTabLinkHistory }} {{ tabDisabled }}">
             <span id="heading-case-history">History</span>
