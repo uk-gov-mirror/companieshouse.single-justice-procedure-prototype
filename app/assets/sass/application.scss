@@ -284,12 +284,12 @@ $govuk-global-styles: true;
 }
 
 .action-bar {
-  margin: 0 -30px 2em;
+  margin: 0 -15px 2em;
 
   .action-bar__content {
     background: govuk-colour('grey-4');
     border-bottom: 2px solid govuk-colour('grey-3');
-    padding: 15px 30px;
+    padding: 15px;
   }
 
   .action-bar__button {

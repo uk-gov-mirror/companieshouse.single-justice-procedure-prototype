@@ -20,7 +20,7 @@
 {% set subNav = true %}
 
 {% set SJPNLink %}
-<a href="/public/documents/ultimatum.pdf" class="govuk-link" target="_blank">View document</a>
+<a href="/public/documents/sjpn.pdf" class="govuk-link" target="_blank">View document</a>
 {% endset %}
 
 {% block content %}
@@ -80,18 +80,20 @@
           ]
         }) }}
         <p class="govuk-body">
-          <a href="" class="govuk-link recreate-ultimatum">Recreate SJPN</a>
+          <a href="" class="govuk-link recreate-sjpn" data-id="{{ case.id }}">Recreate SJPN</a>
         </p>
       </div>
     </div>
   {% endblock %}
   {% block page_scripts %}
-    {% if case.status === 'Ultimatum expired' %}
+    {% if case.sjpnGenerated !== true %}
       <script type="text/javascript">
         $('.govuk-panel--doc-gen').show()
-        window.setTimeout(generateUltimatum, 8000)
+        window.setTimeout(function () {
+          generateSJPN({{ case.id }})
+        }, 5000)
       </script>
-    {% elif case.status === 'Ultimatum issued' %}
+    {% else %}
       <script type="text/javascript">
         $('.document-container').show()
       </script>

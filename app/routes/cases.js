@@ -17,19 +17,71 @@ module.exports = function (router) {
   })
 
   // Accepted screen
-  router.get('/cases/accepted', function (req, res) {
-    var totalAcceptedCases = 0
+  router.get('/cases/ultimatum', function (req, res) {
+    var totalUltimatumCases = 0
     var i = 0
 
     for (i = 0; i < req.session.cases.length; i++) {
-      if (req.session.cases[i].status === 'Accepted') {
-        totalAcceptedCases++
+      if (req.session.cases[i].status === 'Accepted' || req.session.cases[i].status === 'Ultimatum issued') {
+        totalUltimatumCases++
       }
     }
-    res.render('cases/accepted', {
+    res.render('cases/ultimatum', {
       cases: req.session.cases,
-      totalAcceptedCases: totalAcceptedCases,
-      acceptedLinkActive: 'section-navigation__link--active'
+      totalUltimatumCases: totalUltimatumCases,
+      ultimatumLinkActive: 'section-navigation__link--active'
+    })
+  })
+
+  // SJPN screen
+  router.get('/cases/sjpn', function (req, res) {
+    var totalSJPNCases = 0
+    var i = 0
+
+    for (i = 0; i < req.session.cases.length; i++) {
+      if (req.session.cases[i].status === 'Ultimatum expired' || req.session.cases[i].status === 'SJPN issued') {
+        totalSJPNCases++
+      }
+    }
+    res.render('cases/sjpn', {
+      cases: req.session.cases,
+      totalSJPNCases: totalSJPNCases,
+      sjpnLinkActive: 'section-navigation__link--active'
+    })
+  })
+
+  // Outcomes screen
+  router.get('/cases/outcomes', function (req, res) {
+    console.log(req.session.cases)
+    var totalOutcomeCases = 0
+    var i = 0
+
+    for (i = 0; i < req.session.cases.length; i++) {
+      if (req.session.cases[i].status === 'Awaiting outcomes' || req.session.cases[i].status === 'Outcomes added') {
+        totalOutcomeCases++
+      }
+    }
+    res.render('cases/outcomes', {
+      cases: req.session.cases,
+      totalOutcomeCases: totalOutcomeCases,
+      outcomeLinkActive: 'section-navigation__link--active'
+    })
+  })
+
+  // Closed screen
+  router.get('/cases/closed', function (req, res) {
+    var totalClosedCases = 0
+    var i = 0
+
+    for (i = 0; i < req.session.cases.length; i++) {
+      if (req.session.cases[i].status === 'Closed') {
+        totalClosedCases++
+      }
+    }
+    res.render('cases/closed', {
+      cases: req.session.cases,
+      totalClosedCases: totalClosedCases,
+      closedLinkActive: 'section-navigation__link--active'
     })
   })
 

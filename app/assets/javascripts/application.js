@@ -6,12 +6,28 @@ if (window.console && window.console.info) {
 }
 
 // Generate ultimatum
-var generateUltimatum = function () {
+var generateUltimatum = function (id) {
   $('.govuk-panel--doc-gen').slideUp(400, function () {
     $('.action-bar__button--ultimatum').removeClass('govuk-button--disabled')
     $('.action-bar__button--ultimatum').attr('aria-disabled', false)
     $('.action-bar__button--ultimatum').attr('disabled', false)
-    $('.document-container').show()
+    $.get('/actions/ultimatum/generate', { id: id }).done(function (data) {
+      console.log('action complete')
+      $('.document-container').show()
+    })
+  })
+}
+
+// Generate SJPN
+var generateSJPN = function (id) {
+  $('.govuk-panel--doc-gen').slideUp(400, function () {
+    $('.action-bar__button--sjpn').removeClass('govuk-button--disabled')
+    $('.action-bar__button--sjpn').attr('aria-disabled', false)
+    $('.action-bar__button--sjpn').attr('disabled', false)
+    $.get('/actions/sjpn/generate', { id: id }).done(function (data) {
+      console.log('action complete')
+      $('.document-container').show()
+    })
   })
 }
 
@@ -113,9 +129,26 @@ $(document).ready(function () {
 
   // REGENERATE ULTIMATUM
   $('.recreate-ultimatum').click(function () {
+    var id = $(this).data('id')
+
     $('.document-container').hide()
     $('.govuk-panel--doc-gen').slideDown(400, function () {
-      window.setTimeout(generateUltimatum, 8000)
+      window.setTimeout(function () {
+        generateUltimatum(id)
+      }, 5000)
+    })
+    return false
+  })
+
+  // REGENERATE SJPN
+  $('.recreate-sjpn').click(function () {
+    var id = $(this).data('id')
+
+    $('.document-container').hide()
+    $('.govuk-panel--doc-gen').slideDown(400, function () {
+      window.setTimeout(function () {
+        generateSJPN(id)
+      }, 5000)
     })
     return false
   })

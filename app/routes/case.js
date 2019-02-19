@@ -171,7 +171,7 @@ module.exports = function (router) {
       event.notes = 'Ultimatum sent to the defendant'
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'Ultimatum issued'
-      res.redirect('/case/overview?id=' + id)
+      res.redirect('/cases/referrals')
     }
     if (action === 'reissueUltimatum') {
       event.date = date.getDate()
@@ -191,7 +191,7 @@ module.exports = function (router) {
       event.notes = 'Ultimatum period expired without response'
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'Ultimatum expired'
-      res.redirect('/case/overview?id=' + id)
+      res.redirect('/cases/referrals')
     }
   })
   // SJPN
@@ -219,7 +219,17 @@ module.exports = function (router) {
       event.notes = 'SJPN issued to defendant and queued for delivery to court'
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'SJPN issued'
-      res.redirect('/case/overview?id=' + id)
+      res.redirect('/cases/referrals')
+    }
+    if (action === 'expireSJPN') {
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'SJPN expired'
+      event.user = 'system'
+      event.notes = 'SJPN expired, now waiting for court outcomes'
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Awaiting outcomes'
+      res.redirect('/cases/referrals')
     }
   })
   // WITNESS STATEMENTS
@@ -289,6 +299,37 @@ module.exports = function (router) {
       req.session.cases[id].status = 'Rejected'
       req.session.cases[id].rejectReason = rejectReason
       res.redirect('/cases/rejected')
+    }
+  })
+  // CLOSE CASE
+  router.post('/case/close-case', function (req, res) {
+    var id = req.body.caseID
+    var action = req.body.caseAction
+    var referral = req.session.cases[id]
+    var event = {}
+    var date = new Date()
+    var closeReason = ''
+    var backLink = '/case/overview?id=' + id
+
+    if (action === 'reason') {
+      res.render('case/close-reason', {
+        case: referral,
+        id: id,
+        action: action,
+        backLink: backLink
+      })
+    }
+    if (action === 'close') {
+      closeReason = req.body.closeReason
+      event.date = date.getDate()
+      event.time = date.getTime()
+      event.title = 'Case closed'
+      event.user = 'system'
+      event.notes = 'Closure reason: ' + closeReason
+      req.session.cases[id].history.push(event)
+      req.session.cases[id].status = 'Closed'
+      req.session.cases[id].closeReason = closeReason
+      res.redirect('/cases/referrals')
     }
   })
 }

@@ -18,7 +18,7 @@
 
   {% include "includes/cases-navigation.html" %}
 
-  {% if totalClosedCases > 0 %}
+  {% if totalOutcomeCases > 0 %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters column-results column-results--active">
         <p class="info result-count" id="result-count" aria-live="assertive">&nbsp;</p>
@@ -32,11 +32,12 @@
               <th class="govuk-table__header" scope="col">Priority</th>
               <th class="govuk-table__header" scope="col">Reference</th>
               <th class="govuk-table__header" scope="col">Created on</th>
+              <th class="govuk-table__header govuk-table__header--bookmark" scope="col">Bookmark</th>
             </tr>
           </thead>
           <tbody class="govuk-table__body">
             {% for case in cases %}
-              {% if case.status === 'Closed' %}
+              {% if case.status === 'Awaiting outcomes' or case.status === 'Outcomes added' %}
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">
                     <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
@@ -48,6 +49,17 @@
                   </td>
                   <td class="govuk-table__cell">{{ case.reference }}</td>
                   <td class="govuk-table__cell">{{ case.referred}}</td>
+                  <td class="govuk-table__cell govuk-table__cell--bookmark">
+                    {% if case.bookmarked %}
+                      <a href="" class="govuk-link bookmark-button" title="Remove this case from bookmarks" data-value="{{ case.id }}">
+                        <i class="fas fa-star fa-star--active"></i>
+                      </a>
+                    {% else %}
+                      <a href="" class="govuk-link bookmark-button" title="Bookmark this case" data-value="{{ case.id }}">
+                        <i class="fas fa-star"></i>
+                      </a>
+                    {% endif %}
+                  </td>
                 </tr>
               {% endif %}
             {% endfor %}
@@ -124,7 +136,7 @@
 
     </div>
   {% else %}
-    <p>There are no closed cases to show</p>
+    <p>There are no outcome cases to show</p>
   {% endif %}
 </main>
 </div>
