@@ -11,12 +11,6 @@
   }) }}
 {% endblock %}
 
-{% if case.status === 'Accepted' %}
-  {% set tabDisabled = 'section-navigation__item--disabled' %}
-{% else %}
-  {% set tabDisabled = false %}
-{% endif %}
-
 {% set ultimatumLink %}
 <a href="/public/documents/ultimatum.pdf" class="govuk-link" target="_blank">View document</a>
 {% endset %}
@@ -78,21 +72,25 @@
           ]
         }) }}
         <p class="govuk-body">
-          <a href="" class="govuk-link recreate-ultimatum">Recreate ultimatum</a>
+          <a href="" class="govuk-link recreate-ultimatum" data-id="{{ case.id }}">Recreate ultimatum</a>
         </p>
-        <p class="govuk-body">
-          <a href="" class="govuk-link reissue-ultimatum">Reissue ultimatum</a>
-        </p>
+        {% if case.status !== 'Referred' and case.status !== 'Accepted'%}
+          <p class="govuk-body">
+            <a href="" class="govuk-link reissue-ultimatum" data-id="{{ case.id }}">Reissue ultimatum</a>
+          </p>
+        {% endif %}
       </div>
     </div>
   {% endblock %}
   {% block page_scripts %}
-    {% if case.status === 'Accepted' %}
+    {% if case.ultimatumGenerated !== true %}
       <script type="text/javascript">
         $('.govuk-panel--doc-gen').show()
-        window.setTimeout(generateUltimatum, 5000)
+        window.setTimeout(function () {
+          generateUltimatum({{ case.id }})
+        }, 5000)
       </script>
-    {% elif case.status === 'Ultimatum issued' %}
+    {% else %}
       <script type="text/javascript">
         $('.document-container').show()
       </script>

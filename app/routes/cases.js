@@ -68,6 +68,23 @@ module.exports = function (router) {
     })
   })
 
+  // Closed screen
+  router.get('/cases/closed', function (req, res) {
+    var totalClosedCases = 0
+    var i = 0
+
+    for (i = 0; i < req.session.cases.length; i++) {
+      if (req.session.cases[i].status === 'Closed') {
+        totalClosedCases++
+      }
+    }
+    res.render('cases/closed', {
+      cases: req.session.cases,
+      totalClosedCases: totalClosedCases,
+      closedLinkActive: 'section-navigation__link--active'
+    })
+  })
+
   // Rejected screen
   router.get('/cases/rejected', function (req, res) {
     var totalRejectedCases = 0
