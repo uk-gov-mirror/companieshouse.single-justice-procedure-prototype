@@ -40,7 +40,11 @@
               {% if case.status === 'Accepted' or case.status === 'Ultimatum issued' %}
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">
-                    <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
+                    {% if case.status === 'Accepted' %}
+                      <a href="/case/ultimatum?id={{ case.id }}">{{ case.company.name }}</a>
+                    {% else %}
+                      <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
+                    {% endif %}
                   </th>
                   <td class="govuk-table__cell">{{ case.company.number}}</td>
                   <td class="govuk-table__cell">{{ case.status }}</td>

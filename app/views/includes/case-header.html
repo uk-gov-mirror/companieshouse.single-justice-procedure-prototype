@@ -1,3 +1,15 @@
+{% if case.status === 'Accepted' %}
+  {% set tabDisabled = 'section-navigation__item--disabled' %}
+{% else %}
+  {% set tabDisabled = false %}
+{% endif %}
+
+{% if case.ultimatumGenerated === true %}
+  {% set issueUltimatumDisabled = false %}
+{% else %}
+  {% set issueUltimatumDisabled = true %}
+{% endif %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
@@ -17,7 +29,7 @@
         {{ govukButton({
           text: "Issue ultimatum",
           classes: "action-bar__button action-bar__button--ultimatum",
-          disabled: true
+          disabled: issueUltimatumDisabled
         }) }}
       </form>
     {% endif %}
@@ -27,8 +39,7 @@
         <input type="hidden" name="caseAction" value="expireUltimatum"/>
         {{ govukButton({
           text: "*** Expire ultimatum ***",
-          classes: "action-bar__button action-bar__button--ultimatum",
-          disabled: false
+          classes: "action-bar__button action-bar__button--ultimatum"
         }) }}
       </form>
     {% endif %}
@@ -38,8 +49,7 @@
         <input type="hidden" name="caseAction" value="issueSJPN"/>
         {{ govukButton({
           text: "Issue SJPN",
-          classes: "action-bar__button action-bar__button--SJPN",
-          disabled: false
+          classes: "action-bar__button action-bar__button--SJPN"
         }) }}
       </form>
     {% endif %}
@@ -49,15 +59,14 @@
         <input type="hidden" name="caseAction" value="expireSJPN"/>
         {{ govukButton({
           text: "*** Expire SJPN ***",
-          classes: "action-bar__button action-bar__button--sjpn",
-          disabled: false
+          classes: "action-bar__button action-bar__button--sjpn"
         }) }}
       </form>
     {% endif %}
-    {% if case.status !== 'Referred' and case.status !== 'SJPN issued' %}
+    {% if case.status !== 'Referred' and case.status !== 'SJPN issued' and case.status !== 'Awaiting outcomes' and case.status !== 'Closed'%}
       <form action="/case/close-case" method="post" class="action-bar__form">
         <input type="hidden" name="caseID" value="{{ case.id }}"/>
-        <input type="hidden" name="caseAction" value="close"/>
+        <input type="hidden" name="caseAction" value="reason"/>
         {{ govukButton({
         text: "Close case",
         classes: "action-bar__button"
