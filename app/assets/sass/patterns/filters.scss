@@ -46,6 +46,10 @@
 
       .filters-wrapper {
         display: block;
+
+        .govuk-form-group {
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -60,11 +64,11 @@
     font-size: .8em;
 
     label {
-      font-size: .8em;
+      font-size: .9em;
     }
 
     input {
-      font-size: .8em;
+      // font-size: .8em;
       width: 100%;
     }
 
@@ -79,7 +83,7 @@
       }
 
       .govuk-checkboxes__label {
-        padding: 3px 10px 5px;
+        padding: 5px 10px 3px;
 
         &::before {
           width: 30px;

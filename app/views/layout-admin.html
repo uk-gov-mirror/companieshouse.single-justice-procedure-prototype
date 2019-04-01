@@ -1,27 +1,28 @@
 {% extends "govuk-main-template.njk" %}
 
-{% from "back-link/macro.njk"     import govukBackLink %}
+{% from "back-link/macro.njk" import govukBackLink %}
 {% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "button/macro.njk" import govukButton %}
 {% from "checkboxes/macro.njk" import govukCheckboxes %}
-{% from "date-input/macro.njk"    import govukDateInput %}
+{% from "date-input/macro.njk" import govukDateInput %}
 {% from "details/macro.njk" import govukDetails %}
 {% from "error-message/macro.njk" import govukErrorMessage %}
 {% from "error-summary/macro.njk" import govukErrorSummary %}
 {% from "fieldset/macro.njk" import govukFieldset %}
-{% from "file-upload/macro.njk"   import govukFileUpload %}
+{% from "file-upload/macro.njk" import govukFileUpload %}
 {% from "input/macro.njk" import govukInput %}
 {% from "label/macro.njk" import govukLabel %}
 {% from "panel/macro.njk" import govukPanel %}
-{% from "phase-banner/macro.njk"  import govukPhaseBanner %}
+{% from "phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "radios/macro.njk" import govukRadios %}
 {% from "select/macro.njk" import govukSelect %}
-{% from "skip-link/macro.njk"     import govukSkipLink %}
+{% from "skip-link/macro.njk" import govukSkipLink %}
+{% from "summary-list/macro.njk" import govukSummaryList %}
 {% from "table/macro.njk" import govukTable %}
 {% from "tabs/macro.njk" import govukTabs %}
 {% from "tag/macro.njk" import govukTag %}
 {% from "textarea/macro.njk" import govukTextarea %}
-{% from "warning-text/macro.njk"  import govukWarningText %}
+{% from "warning-text/macro.njk" import govukWarningText %}
 
 <!-- CUSTOM COMPONENT MACROS -->
 {% from "./components/header/macro.njk" import chHeader %}
@@ -48,7 +49,7 @@
     "navigation": [
       {
         "text": "Home",
-        "href": "/cases/referrals",
+        "href": "/cases/all",
         "active": "true"
       },
       {
@@ -73,23 +74,41 @@
 
 {% block footer %}
   {{ chFooter({
-  "meta": {
-    "items": [
-      {
-        "href": "/prototype-admin/clear-data",
-        "text": "Clear data"
-      }
-    ]
-  },
-  "classes": "",
-  "containerClasses": "govuk-width-container--full"
-}) }}
+    "meta": {
+      "items": [
+        {
+          "href": "/prototype-admin/clear-data",
+          "text": "Clear data"
+        }
+      ]
+    },
+    "classes": "",
+    "containerClasses": "govuk-width-container--full"
+  }) }}
+
+  {% set caseDebug %}
+  <form action="" id="debug-case">
+    {{ govukInput({
+      label: {
+        text: "Case Debug"
+      },
+      id: "case-debug-id",
+      name: "caseDebugID",
+      type: "number"
+    }) }}
+  </form>
+  {% endset %}
+
+  {{ govukDetails({
+    summaryText: "Case Debug",
+    html: caseDebug
+  }) }}
 {% endblock %}
 
 {% block bodyEnd %}
   {% block scripts %}
     {% include "includes/scripts.html" %}
-    {% block page_scripts %}{% endblock %}
+    {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
 {% endblock %}
