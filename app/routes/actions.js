@@ -27,4 +27,11 @@ module.exports = function (router) {
     req.session.cases[id].sjpnGenerated = true
     res.send(req.session.cases[id].sjpnGenerated)
   })
+
+  // DEBUG CASE
+  router.get('/actions/debug/case', function (req, res) {
+    var id = req.query.id
+
+    res.send(req.session.cases[id])
+  })
 }

@@ -1,0 +1,132 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Step by step navigation
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: backLink
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl">Accept case workflow
+        </span>
+        {{ case.company.name }}
+      </h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active">
+        <ol class="app-step-nav__steps">
+          <li class="app-step-nav__step js-step step-is-shown" id="check-youre-allowed-to-drive">
+            <div class="app-step-nav__header js-toggle-panel" data-position="1">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden">Step</span>
+                      1
+                    </span>
+                  </span>
+                </span>
+                <span class="js-step-title">
+                  Review case details
+                </span>
+              </h2>
+            </div>
+            <div class="app-step-nav__panel" id="step-panel-check-youre-allowed-to-drive-1">
+              <p class="app-step-nav__paragraph">Confirm that all the required case informaion is present and correct and that the case is ready for prosecution.</p>
+            </div>
+          </li>
+          <li class="app-step-nav__step js-step" id="get-a-provisional-licence">
+            <div class="app-step-nav__header js-toggle-panel" data-position="2">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden">Step</span>
+                      2
+                    </span>
+                  </span>
+                </span>
+                <span class="js-step-title">
+                  Select defendants and offences
+                </span>
+              </h2>
+            </div>
+            <div class="app-step-nav__panel" id="step-panel-get-a-provisional-licence-2">
+              <p class="app-step-nav__paragraph">Choose which defendants and offences will proceed to prosecution.</p>
+            </div>
+          </li>
+          <li class="app-step-nav__step js-step" id="driving-lessons-and-practice">
+            <div class="app-step-nav__header js-toggle-panel" data-position="3">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden">Step</span>
+                      3
+                    </span>
+                  </span>
+                </span>
+                <span class="js-step-title">
+                  Create and print the ultimatum
+                </span>
+              </h2>
+            </div>
+            <div class="app-step-nav__panel" id="step-panel-driving-lessons-and-practice-3">
+              <p class="app-step-nav__paragraph">Create and print ultimatum letters for each defendant.</p>
+            </div>
+          </li>
+          <li class="app-step-nav__step js-step" id="book-and-manage-your-theory-test">
+            <div class="app-step-nav__header js-toggle-panel" data-position="5">
+              <h2 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                      <span class="govuk-visually-hidden">Step</span>
+                      4
+                    </span>
+                  </span>
+                </span>
+                <span class="js-step-title">
+                  Accept case
+                </span>
+              </h2>
+            </div>
+            <div class="app-step-nav__panel" id="step-panel-book-and-manage-your-theory-test-5">
+              <p class="app-step-nav__paragraph">Accept the case into prosecution and issue ultimatum letters.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <form action="" method="POST">
+        {{ govukCheckboxes({
+        idPrefix: "do-not-show",
+        name: "doNotShow",
+        items: [
+          {
+            value: "accept-case",
+            text: "Don't show this screen when I accept a case"
+          }
+        ]
+      }) }}
+        {{ govukButton({
+        text: "Continue"
+      }) }}
+        <input type="hidden" name="caseID" value="{{ case.id }}"/>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

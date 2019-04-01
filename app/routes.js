@@ -10,6 +10,9 @@ require('./routes/cases.js')(router)
 // CASE VIEWS
 require('./routes/case.js')(router)
 
+// WORKFLOWS
+require('./routes/workflows/accept-case.js')(router)
+
 // AJAX ACTIONS
 require('./routes/actions.js')(router)
 

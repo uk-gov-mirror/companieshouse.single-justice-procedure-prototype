@@ -1,18 +1,20 @@
 {% extends "layout-admin.html" %}
 
 {% block pageTitle %}
-  Case Decision: PJM ACCOUNTANCY LIMITED
+  Accept case workflow for
+  {{ case.company.name }}. Step 1: Review case
 {% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "/cases/referrals"
+    href: backLink
   }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-xl">Step 1 of 4</span>
       <h1 class="govuk-heading-xl">
         <span class="govuk-caption-xl">Prosecution - Case
           {{ case.reference }}
