@@ -1,41 +1,23 @@
 {% extends "layout-admin.html" %}
 
 {% block pageTitle %}
-  Case Decision: PJM ACCOUNTANCY LIMITED
+  Accept case workflow for
+  {{ case.company.name }}. Step 1: Review case
 {% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "/cases/referrals"
+    href: backLink
   }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 4</span>
       <h1 class="govuk-heading-xl">
-        <span class="govuk-caption-xl">Prosecution - Case
-          {{ case.reference }}
-        </span>
         {{ case.company.name }}
       </h1>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row action-bar" role="menubar">
-    <div class="govuk-grid-column-full action-bar__content">
-      {{ govukButton({
-            text: "Accept case",
-            classes: "case-accept-button action-bar__button"
-          }) }}
-      <form action="/case/reject-reason" method="post" class="action-bar__form">
-        <input type="hidden" name="caseID" value="{{ case.id }}"/>
-        <input type="hidden" name="caseAction" value="reason"/>
-        {{ govukButton({
-              text: "Reject case",
-              classes: " action-bar__button"
-            }) }}
-      </form>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -175,50 +157,37 @@
                     </tr>
                   </tbody>
                 </table>
-                <form action="" method="post" id="case-details-form">
-                  <input type="hidden" name="caseID" value="{{ case.id }}"/>
-                  <input type="hidden" name="caseAction" value="accept"/>
-                  <table class="govuk-table govuk-table--condensed">
-                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Offences</caption>
-                    <thead class="govuk-table__head">
+                <table class="govuk-table govuk-table--condensed">
+                  <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-margin-bottom-2">Offences</caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header">Type</th>
+                      <th class="govuk-table__header">Period</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    {% for offence in defendant.offences %}
                       <tr class="govuk-table__row">
-                        <th class="govuk-table__header">Proceed</th>
-                        <th class="govuk-table__header">Type</th>
-                        <th class="govuk-table__header">Period</th>
+                        <td class="govuk-table__cell ">
+                          {% if offence.type === 'AA' %}
+                            Annual accounts
+                          {% elif offence.type === 'CS' %}
+                            Confirmation statement
+                          {% endif %}
+                        </td>
+                        <td class="govuk-table__cell" scope="row">
+                          {% if offence.type === 'AA' %}
+                            {{ offence.periodStart }}
+                            -
+                            {{ offence.periodEnd }}
+                          {% else %}
+                            {{ offence.date }}
+                          {% endif %}
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody class="govuk-table__body">
-                      {% for offence in defendant.offences %}
-                        <tr class="govuk-table__row">
-                          <td class="govuk-table__cell">
-                            <div class="govuk-checkboxes">
-                              <div class="govuk-checkboxes__item govuk-checkboxes__item--table">
-                                <input id="offence-{{ defendant.id }}-{{ offence.id }}" class="govuk-checkboxes__input govuk-checkboxes__input--table" name="offenceList" type="checkbox" value="{{ defendant.id }}-{{ offence.id }}">
-                                <span class="govuk-label govuk-checkboxes__label govuk-checkboxes__label--table"></span>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="govuk-table__cell ">
-                            {% if offence.type === 'AA' %}
-                              Annual accounts
-                            {% elif offence.type === 'CS' %}
-                              Confirmation statement
-                            {% endif %}
-                          </td>
-                          <td class="govuk-table__cell" scope="row">
-                            {% if offence.type === 'AA' %}
-                              {{ offence.periodStart }}
-                              -
-                              {{ offence.periodEnd }}
-                            {% else %}
-                              {{ offence.date }}
-                            {% endif %}
-                          </td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </form>
+                    {% endfor %}
+                  </tbody>
+                </table>
               {% endfor %}
             </div>
           </div>
@@ -331,12 +300,6 @@
                       </tr>
                     </tbody>
                   </table>
-                  <!-- <h3 class="govuk-heading-s">Annual Accounts dates</h3> <table class="govuk-table govuk-table--condensed"> <tbody class="govuk-table__body"> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next accounts period end</th>
-                  <td class="govuk-table__cell ">{{ case.company.accountsMUD }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next accounts due</th> <td class="govuk-table__cell ">{{ case.company.accountsDue }}</td> </tr> <tr
-                  class="govuk-table__row"> <th class="govuk-table__header" scope="row">Last accounts period end</th> <td class="govuk-table__cell ">{{ case.company.lastAccountsMUD }}</td> </tr> </tbody> </table> <h3 class="govuk-heading-s">Confirmation Statement
-                  dates</h3> <table class="govuk-table govuk-table--condensed"> <tbody class="govuk-table__body"> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next confirmation statement date</th> <td class="govuk-table__cell ">{{
-                  case.company.csDate }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Next confirmation statement due</th> <td class="govuk-table__cell ">{{ case.company.csDue }}</td> </tr> <tr class="govuk-table__row"> <th
-                  class="govuk-table__header" scope="row">Last confirmation statement date</th> <td class="govuk-table__cell ">{{ case.company.lastCSDate }}</td> </tr> </tbody> </table> -->
                 </div>
               </div>
               {% if companyOverdueTab %}
@@ -438,12 +401,10 @@
                                 {{ officer.serviceAddress.country }}
                               </td>
                             </tr>
-                            <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Nationality</th> <td class="govuk-table__cell">{{ officer.nationality }}</td> </tr> -->
                             <tr class="govuk-table__row">
                               <th class="govuk-table__header" scope="row">Country of residence</th>
                               <td class="govuk-table__cell">{{ officer.residentialAddress.country}}</td>
                             </tr>
-                            <!-- <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Occupation</th> <td class="govuk-table__cell">{{ officer.occupation }}</td> </tr> -->
                           </tbody>
                         </table>
                       {% endfor %}
@@ -570,6 +531,22 @@
                     </div>
                   </section>
                 </div>
+                <div class="govuk-grid-row action-bar" role="menubar">
+                  <div class="govuk-grid-column-full action-bar__content">
+                    {% set continueHref = "/workflows/accept-case/select-offences?id=" + case.id %}
+                    {{ govukButton({
+                      text: "Continue",
+                      href: continueHref,
+                      classes: "case-accept-button action-bar__button"
+                    }) }}
+                    <form action="/case/reject-reason" method="post" class="action-bar__form">
+                      <input type="hidden" name="caseID" value="{{ case.id }}"/>
+                      <input type="hidden" name="caseAction" value="reason"/>
+                      {{ govukButton({
+                        text: "Reject case",
+                        classes: " action-bar__button"
+                      }) }}
+                    </form>
+                  </div>
+                </div>
               {% endblock %}
-
-              {% block page_scripts %}{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Step by step navigation
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: backLink
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-xl">Accept case workflow: Step 3 of 4</span>
+      <h1 class="govuk-heading-xl">
+        {{ case.company.name }}
+      </h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% set spinner %}
+      Generating&nbsp;
+      <div class="spinner-border">
+        <div class="govuk-visually-hidden">Loading</div>
+      </div>
+      {% endset %}
+      {% set link %}
+      <a href="/public/documents/ultimatum.pdf" class="govuk-link ultimatum-view-link">View ultimatum</a>
+      {% endset %}
+      {{ govukTable({
+        caption: "Ultimation generation",
+        captionClasses: "govuk-!-font-size-27",
+        firstCellIsHeader: true,
+        head: [
+          {
+            text: "Defendant"
+          },
+          {
+            text: "Ultimatum status"
+          },
+          {
+            text: "View"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: case.defendants[0].name
+            },
+            {
+              html: spinner,
+              classes: "ultimatum-generator"
+            },
+            {
+              html: link,
+              classes: ""
+            }
+          ]
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue",
+        href: "/workflows/accept-case/accept-case?id=" + case.id
+      }) }}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script type="text/javascript">
+    window.setTimeout(function () {
+      generateUltimatumLabel()
+    }, 5000)
+  </script>
+{% endblock %}

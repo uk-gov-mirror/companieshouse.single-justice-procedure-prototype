@@ -101,6 +101,7 @@ module.exports = function (router) {
   // CASE OVERVIEW
   router.get('/case/overview', function (req, res) {
     var id = req.query.id
+
     req.session.recents.push(id)
     res.render('case/overview', {
       case: req.session.cases[id],
@@ -111,6 +112,7 @@ module.exports = function (router) {
   // CASE PROFILE
   router.get('/case/company-profile', function (req, res) {
     var id = req.query.id
+
     res.render('case/company-profile', {
       case: req.session.cases[id],
       navTabListProfile: 'section-navigation__item--active',
@@ -261,9 +263,238 @@ module.exports = function (router) {
       res.redirect('/case/overview?id=' + id)
     }
   })
+  // CASE OUTCOMES
+  router.get('/case/outcomes', function (req, res) {
+    var id = req.query.id
+
+    res.render('case/outcomes', {
+      case: req.session.cases[id],
+      navTabListOutcomes: 'section-navigation__item--active',
+      navTabLinkOutcomes: 'section-navigation__link--active'
+    })
+  })
+  // ADD OUTCOME
+  router.get('/case/outcomes/add-outcome', function (req, res) {
+    var caseID = req.query.caseID
+    var defendantID = req.query.defendantID
+    var offenceID = req.query.offenceID
+    var hearingClasses = {}
+
+    hearingClasses.day = 'govuk-input--width-2'
+    hearingClasses.month = 'govuk-input--width-2'
+    hearingClasses.year = 'govuk-input--width-4'
+
+    res.render('case/outcomes/add-outcome', {
+      caseID: caseID,
+      defendantID: defendantID,
+      offenceID: offenceID,
+      case: req.session.cases[caseID],
+      navTabListOutcomes: 'section-navigation__item--active',
+      navTabLinkOutcomes: 'section-navigation__link--active',
+      backLink: '/case/outcomes?id=' + caseID,
+      hearingClasses: hearingClasses
+    })
+  })
+  router.post('/case/outcomes/add-outcome', function (req, res) {
+    var caseID = req.body.caseID
+    var defendantID = req.body.defendantID
+    var offenceID = req.body.offenceID
+    var plea = req.body.plea
+    var outcome = req.body.outcome
+    var dischargeDuration = req.body.dischargeDuration
+    var disqualificationDuration = req.body.disqualificationDuration
+    var finalDuration = ''
+    var hearingDay = req.body['hearing-day']
+    var hearingMonth = req.body['hearing-month']
+    var hearingYear = req.body['hearing-year']
+    var fine = req.body.fine
+    var costs = req.body.costs
+    var errorFlag = false
+    var errorList = []
+    var pleaErr = {}
+    var outcomeErr = {}
+    var dischargeErr = {}
+    var disqualErr = {}
+    var hearingDayErr = {}
+    var hearingMonthErr = {}
+    var hearingYearErr = {}
+    var hearingClasses = {}
+    var pleaGuiltyChecked = false
+    var pleaGuiltyCourtChecked = false
+    var pleaNotGuiltyChecked = false
+    var pleaNoneChecked = false
+    var outcomeGuiltyChecked = false
+    var outcomeGuiltyDiscChecked = false
+    var outcomeGuiltyDisqChecked = false
+    var outcomeNotGuiltyChecked = false
+    var outcomeWithdrawnChecked = false
+
+    hearingClasses.day = 'govuk-input--width-2'
+    hearingClasses.month = 'govuk-input--width-2'
+    hearingClasses.year = 'govuk-input--width-4'
+
+    if (hearingDay === '') {
+      hearingDayErr.type = 'blank'
+      hearingDayErr.text = 'You must enter a hearing day'
+      hearingDayErr.href = '#hearing-day'
+      hearingDayErr.flag = true
+      hearingClasses.day = 'govuk-input--width-2 govuk-input--error'
+      errorList.push(hearingDayErr)
+      errorFlag = true
+    }
+
+    if (hearingMonth === '') {
+      hearingMonthErr.type = 'blank'
+      hearingMonthErr.text = 'You must enter a hearing month'
+      hearingMonthErr.href = '#hearing-month'
+      hearingMonthErr.flag = true
+      hearingClasses.month = 'govuk-input--width-2 govuk-input--error'
+      errorList.push(hearingMonthErr)
+      errorFlag = true
+    }
+
+    if (hearingYear === '') {
+      hearingYearErr.type = 'blank'
+      hearingYearErr.text = 'You must enter a hearing year'
+      hearingYearErr.href = '#hearing-year'
+      hearingYearErr.flag = true
+      hearingClasses.year = 'govuk-input--width-4 govuk-input--error'
+      errorList.push(hearingYearErr)
+      errorFlag = true
+    }
+
+    if (typeof plea === 'undefined') {
+      pleaErr.type = 'blank'
+      pleaErr.text = 'You must enter a plea'
+      pleaErr.href = '#plea-1'
+      pleaErr.flag = true
+      errorList.push(pleaErr)
+      errorFlag = true
+    }
+
+    switch (plea) {
+      case 'guilty-attend':
+        pleaGuiltyCourtChecked = true
+        break
+      case 'guilty-not-attend':
+        pleaGuiltyChecked = true
+        outcome = 'guilty'
+        break
+      case 'not-guilty':
+        pleaNotGuiltyChecked = true
+        break
+      case 'no-plea':
+        pleaNoneChecked = true
+        break
+    }
+
+    if (typeof outcome === 'undefined') {
+      outcomeErr.type = 'blank'
+      outcomeErr.text = 'You must enter an outcome'
+      outcomeErr.href = '#outcome-1'
+      outcomeErr.flag = true
+      errorList.push(outcomeErr)
+      errorFlag = true
+    }
+
+    switch (outcome) {
+      case 'guilty':
+        outcomeGuiltyChecked = true
+        break
+      case 'guilty-discharge':
+        outcomeGuiltyDiscChecked = true
+        break
+      case 'guilty-disqualified':
+        outcomeGuiltyDisqChecked = true
+        break
+      case 'not-guilty':
+        outcomeNotGuiltyChecked = true
+        break
+      case 'withdrawn':
+        outcomeWithdrawnChecked = true
+        break
+    }
+
+    if (outcome === 'guilty-discharge') {
+      if (dischargeDuration === '') {
+        dischargeErr.type = 'blank'
+        dischargeErr.text = 'You must enter a discharge duration'
+        dischargeErr.href = '#discharge-duration'
+        dischargeErr.flag = true
+        errorList.push(dischargeErr)
+        errorFlag = true
+      }
+    }
+
+    if (outcome === 'guilty-disqualified') {
+      if (disqualificationDuration === '') {
+        disqualErr.type = 'blank'
+        disqualErr.text = 'You must enter a disqualification duration'
+        disqualErr.href = '#disqualification-duration'
+        disqualErr.flag = true
+        errorList.push(disqualErr)
+        errorFlag = true
+      }
+    }
+
+    if (errorFlag === true) {
+      res.render('case/outcomes/add-outcome', {
+        case: req.session.cases[caseID],
+        navTabListOutcomes: 'section-navigation__item--active',
+        navTabLinkOutcomes: 'section-navigation__link--active',
+        backLink: '/case/outcomes?id=' + caseID,
+        errorList: errorList,
+        pleaErr: pleaErr,
+        outcomeErr: outcomeErr,
+        dischargeErr: dischargeErr,
+        disqualErr: disqualErr,
+        hearingDayErr: hearingDayErr,
+        hearingMonthErr: hearingMonthErr,
+        hearingYearErr: hearingYearErr,
+        hearingClasses: hearingClasses,
+        caseID: caseID,
+        defendantID: defendantID,
+        offenceID: offenceID,
+        hearingDay: hearingDay,
+        hearingMonth: hearingMonth,
+        hearingYear: hearingYear,
+        plea: plea,
+        outcome: outcome,
+        dischargeDuration: dischargeDuration,
+        disqualificationDuration: disqualificationDuration,
+        fine: fine,
+        costs: costs,
+        pleaGuiltyChecked: pleaGuiltyChecked,
+        pleaGuiltyCourtChecked: pleaGuiltyCourtChecked,
+        pleaNotGuiltyChecked: pleaNotGuiltyChecked,
+        pleaNoneChecked: pleaNoneChecked,
+        outcomeGuiltyChecked: outcomeGuiltyChecked,
+        outcomeGuiltyDiscChecked: outcomeGuiltyDiscChecked,
+        outcomeGuiltyDisqChecked: outcomeGuiltyDisqChecked,
+        outcomeNotGuiltyChecked: outcomeNotGuiltyChecked,
+        outcomeWithdrawnChecked: outcomeWithdrawnChecked
+      })
+    } else {
+      if (outcome === 'guilty-discharge') {
+        finalDuration = dischargeDuration
+      } else if (outcome === 'guilty-disqualified') {
+        finalDuration = disqualificationDuration
+      }
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].hearingDate.day = hearingDay
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].hearingDate.month = hearingMonth
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].hearingDate.year = hearingYear
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].plea = plea
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].outcome.type = outcome
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].outcome.fine = fine
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].outcome.costs = costs
+      req.session.cases[caseID].defendants[defendantID].offences[offenceID].outcome.duration = finalDuration
+      res.redirect('/case/outcomes?id=' + caseID)
+    }
+  })
   // CASE HISTORY
   router.get('/case/history', function (req, res) {
     var id = req.query.id
+
     res.render('case/history', {
       case: req.session.cases[id],
       navTabListHistory: 'section-navigation__item--active',
@@ -298,7 +529,7 @@ module.exports = function (router) {
       req.session.cases[id].history.push(event)
       req.session.cases[id].status = 'Rejected'
       req.session.cases[id].rejectReason = rejectReason
-      res.redirect('/cases/rejected')
+      res.redirect('/cases/all')
     }
   })
   // CLOSE CASE

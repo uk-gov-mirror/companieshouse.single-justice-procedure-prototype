@@ -1,0 +1,272 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Case Decision: PJM ACCOUNTANCY LIMITED
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-xl">
+        <span class="govuk-caption-xl">Prosecution - Case
+          {{ case.reference }}
+        </span>
+        {{ case.company.name }}
+      </h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half decision-case">
+      <h2 class="govuk-heading-l">Add an outcome for
+        {{ case.defendants[defendantID].name }}:
+        {{ case.defendants[defendantID].offences[offenceID].type | displayOffenceType }}</h2>
+      <form action="" method="post" class="">
+        {% if errorList.length > 0 %}
+          {{ govukErrorSummary({
+                    titleText: "There was a problem with the outcome",
+                    errorList: errorList
+                  }) }}
+        {% endif %}
+
+        {% if hearingDayErr.flag or hearingMonthErr.flag or hearingYearErr.flag %}
+          {% set hearingError = {
+            text: "You must enter a hearing date"
+          } %}
+        {% else %}
+          {% set hearingError = false %}
+        {% endif %}
+
+        {{ govukDateInput({
+              id: "hearing",
+              namePrefix: "hearing",
+              errorMessage: hearingError,
+              fieldset: {
+                legend: {
+                  text: "What was the hearing date?",
+                  isPageHeading: false,
+                  classes: "govuk-fieldset__legend--m"
+                }
+              },
+              hint: {
+                text: "For example, 15 9 2019"
+              },
+              items: [
+                {
+                  classes: hearingClasses.day,
+                  name: 'day',
+                  value: hearingDay
+                },
+                {
+                  classes: hearingClasses.month,
+                  name: 'month',
+                  value: hearingMonth
+                },
+                {
+                  classes: hearingClasses.year,
+                  name: 'year',
+                  value: hearingYear
+                }
+              ]
+            }) }}
+
+        {% if pleaErr.flag %}
+          {% set pleaError = {
+            text: pleaErr.text
+          } %}
+        {% else %}
+          {% set pleaError = false %}
+        {% endif %}
+
+        {{ govukRadios({
+              idPrefix: "plea",
+              name: "plea",
+              errorMessage: pleaError,
+              fieldset: {
+                legend: {
+                  text: "What plea was entered?",
+                  isPageHeading: false,
+                  classes: "govuk-fieldset__legend--m"
+                }
+              },
+              items: [
+                {
+                  value: "guilty-not-attend",
+                  text: "Guilty (will not attend court)",
+                  checked: pleaGuiltyChecked
+                },
+                {
+                  value: "guilty-attend",
+                  text: "Guilty (will attend court)",
+                  checked: pleaGuiltyCourtChecked
+                },
+                {
+                  value: "not-guilty",
+                  text: "Not Guilty",
+                  checked: pleaNotGuiltyChecked
+                },
+                {
+                  value: "no-plea",
+                  text: "No plea entered",
+                  checked: pleaNoneChecked
+                }
+              ]
+            }) }}
+
+        {% if outcomeErr.flag %}
+          {% set outcomeError = {
+            text: outcomeErr.text
+          } %}
+        {% else %}
+          {% set outcomeError = false %}
+        {% endif %}
+
+        {% if dischargeErr.flag %}
+          {% set dischargeDurationError = {
+            text: dischargeErr.text
+          } %}
+          {% set outcomeError = {
+            text: outcomeErr.text
+          } %}
+        {% else %}
+          {% set dischargeDurationError = false %}
+        {% endif %}
+
+        {% if disqualErr.flag %}
+          {% set disqDurationError = {
+            text: disqualErr.text
+          } %}
+          {% set outcomeError = {
+            text: outcomeErr.text
+          } %}
+        {% else %}
+          {% set disqDurationError = false %}
+        {% endif %}
+
+        {% set dischargeDuration %}
+        {{ govukInput({
+                id: "discharge-duration",
+                name: "dischargeDuration",
+                type: "number",
+                errorMessage: dischargeDurationError,
+                classes: "govuk-input--width-2",
+                label: {
+                  text: "Discharge duration (months)"
+                },
+                value: dischargeDuration
+              }) }}
+        {% endset -%}
+
+        {% set disqualificationDuration %}
+        {{ govukInput({
+                id: "disqualification-duration",
+                name: "disqualificationDuration",
+                type: "number",
+                errorMessage: disqDurationError,
+                classes: "govuk-input--width-2",
+                label: {
+                  text: "Disqualification duration (months)"
+                },
+                value: disqualificationDuration
+              }) }}
+        {% endset -%}
+
+        {% if plea === 'guilty-not-attend' %}
+          {% set outcomesDisabled = true %}
+        {% else %}
+          {% set outcomesDisabled = false %}
+        {% endif %}
+
+        {{ govukRadios({
+              idPrefix: "outcome",
+              name: "outcome",
+              classes: "outcome-radio-group",
+              errorMessage: outcomeError,
+              fieldset: {
+                legend: {
+                  text: "What was the outcome?",
+                  isPageHeading: false,
+                  classes: "govuk-fieldset__legend--m"
+                }
+              },
+              items: [
+                {
+                  value: "guilty",
+                  text: "Guilty",
+                  checked: outcomeGuiltyChecked,
+                  disabled: outcomesDisabled
+                },
+                {
+                  value: "guilty-discharge",
+                  text: "Guilty: Conditional Discharge",
+                  conditional: {
+                    html: dischargeDuration
+                  },
+                  checked: outcomeGuiltyDiscChecked,
+                  disabled: outcomesDisabled
+                },
+                {
+                  value: "guilty-disqualified",
+                  text: "Guilty: Disqualified",
+                  conditional: {
+                    html: disqualificationDuration
+                  },
+                  checked: outcomeGuiltyDisqChecked,
+                  disabled: outcomesDisabled
+                },
+                {
+                  value: "not-guilty",
+                  text: "Not guilty",
+                  checked: outcomeNotGuiltyChecked,
+                  disabled: outcomesDisabled
+                },
+                {
+                  value: "withdrawn",
+                  text: "Case withdrawn",
+                  checked: outcomeWithdrawnChecked,
+                  disabled: outcomesDisabled
+                }
+              ]
+            }) }}
+
+        {{ govukInput({
+              label: {
+                text: "Fine"
+              },
+              id: "fine",
+              name: "fine",
+              type: "number",
+              classes: "govuk-input--width-5",
+              value: fine
+            }) }}
+
+        {{ govukInput({
+              label: {
+                text: "Costs"
+              },
+              id: "costs",
+              name: "costs",
+              type: "number",
+              classes: "govuk-input--width-5",
+              value: costs
+            }) }}
+
+        <input type="hidden" name="caseID" value="{{ caseID }}"/>
+        <input type="hidden" name="defendantID" value="{{ defendantID }}"/>
+        <input type="hidden" name="offenceID" value="{{ offenceID }}"/>
+        <div class="govuk-form-group">
+          {{ govukButton({
+                text: "Add outcome"
+              }) }}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}>

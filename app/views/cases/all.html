@@ -1,0 +1,180 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Manage prosecutions
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+        <span class="govuk-caption-xl">Prosecution
+        </span>
+        Cases
+      </h1>
+    </div>
+  </div>
+
+  {% include "includes/cases-navigation.html" %}
+
+  {% if cases.length > 0 %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters column-results column-results--active">
+        <p class="info result-count" id="result-count" aria-live="assertive">&nbsp;</p>
+        <a href="#filters" class="govuk-link filter-toggle govuk-button">Filter cases</a>
+        <p class="govuk-body">
+          <span class="sort-label">Sort cases by</span>
+          <a href="/cases/all?{{ viewParams.sort.companyName.urlString }}" class="govuk-link">{{ viewParams.sort.companyName.label }}</a>,
+          <a href="/cases/all?{{ viewParams.sort.companyNumber.urlString }}" class="govuk-link">{{ viewParams.sort.companyNumber.label }}</a>,
+          <a href="/cases/all?{{ viewParams.sort.status.urlString }}" class="govuk-link">{{ viewParams.sort.status.label }}</a>,
+          <a href="/cases/all?{{ viewParams.sort.priority.urlString }}" class="govuk-link">{{ viewParams.sort.priority.label }}</a>,
+          <a href="/cases/all?{{ viewParams.sort.reference.urlString }}" class="govuk-link">{{ viewParams.sort.reference.label }}</a>,
+          <a href="/cases/all?{{ viewParams.sort.referred.urlString }}" class="govuk-link">{{ viewParams.sort.referred.label }}</a>
+        </p>
+        <table class="govuk-table" id="all-cases-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col">Company</th>
+              <th class="govuk-table__header" scope="col">CRN</th>
+              <th class="govuk-table__header" scope="col">Status</th>
+              <th class="govuk-table__header" scope="col">Priority</th>
+              <th class="govuk-table__header" scope="col">Reference</th>
+              <th class="govuk-table__header" scope="col">Referred on</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for case in cases %}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">
+                  {% if case.status === "Referred" %}
+                    <a href="/workflows/accept-case/start?id={{ case.id }}">{{ case.company.name }}</a>
+                  {% else %}
+                    <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
+                  {% endif %}
+                </th>
+                <td class="govuk-table__cell">{{ case.company.number}}</td>
+                <td class="govuk-table__cell">{{ case.status }}</td>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--light-green">{{ case.priority }}</strong>
+                </td>
+                <td class="govuk-table__cell">{{ case.reference }}</td>
+                <td class="govuk-table__cell">{{ case.referred}}</td>
+                <!-- <td class="govuk-table__cell govuk-table__cell--bookmark"> {% if case.bookmarked %} <a href="" class="govuk-link bookmark-button" title="Remove this case from bookmarks" data-value="{{ case.id }}"> <i class="fas fa-star fa-star--active"></i>
+                </a> {% else %} <a href="" class="govuk-link bookmark-button" title="Bookmark this case" data-value="{{ case.id }}"> <i class="fas fa-star"></i> </a> {% endif %} </td> -->
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <div class="table-per-page">
+              <form action="/cases/all" method="GET" id="resultsPerPage">
+                {% if viewParams.perPage.value === 2 %}
+                  {% set perPage2 = true %}
+                {% endif %}
+                {% if viewParams.perPage.value === 5 %}
+                  {% set perPage5 = true %}
+                {% endif %}
+                {% if viewParams.perPage.value === 10 %}
+                  {% set perPage10 = true %}
+                {% endif %}
+                {% if viewParams.perPage.value === 20 %}
+                  {% set perPage20 = true %}
+                {% endif %}
+                {% if viewParams.perPage.value === 50 %}
+                  {% set perPage50 = true %}
+                {% endif %}
+                {% if viewParams.perPage.value === 100 %}
+                  {% set perPage100 = true %}
+                {% endif %}
+
+                {{ govukSelect({
+                      id: "results-per-page",
+                      classes: "table-per-page__input",
+                      name: "resultsPerPage",
+                      label: {
+                        html: "Cases per page",
+                        classes: "table-per-page__label"
+                      },
+                      items: [
+                        {
+                          value: "2",
+                          text: "2",
+                          selected: perPage2
+                        },
+                        {
+                          value: "5",
+                          text: "5",
+                          selected: perPage5
+                        },
+                        {
+                          value: "10",
+                          text: "10",
+                          selected: perPage10
+                        },
+                        {
+                          value: "20",
+                          text: "20",
+                          selected: perPage20
+                        },
+                        {
+                          value: "50",
+                          text: "50",
+                          selected: perPage50
+                        },
+                        {
+                          value: "100",
+                          text: "100",
+                          selected: perPage100
+                        }
+                      ]
+                    }) }}
+                <input type="hidden" name="sortParam" value="{{ viewParams.sort.active }}">
+              </form>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            {% if pagination.pages.length > 0 %}
+              <ul class="pagination govuk-body" role="navigation">
+                {% if pagination.currentPage > 1 %}
+                  <li class="pagination__item pagination__item--disabled">
+                    <a href="?page={{ pagination.previousPage }}{{ viewParams.total }}" class="pagination__link pagination__link--disabled">Previous page</a>
+                  </li>
+                {% endif %}
+                {% for page in pagination.pages %}
+                  {% if page.number === pagination.currentPage %}
+                    <li class="pagination__item pagination__item--active">
+                      <a href="?page={{ page.number }}{{ viewParams.total }}" class="pagination__link pagination__link--active">{{ page.number }}</a>
+                    </li>
+                  {% else %}
+                    <li class="pagination__item">
+                      <a href="?page={{ page.number }}{{ viewParams.total }}" class="pagination__link">{{ page.number }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+                {% if pagination.currentPage < pagination.totalPages %}
+                  <li class="pagination__item">
+                    <a href="?page={{ pagination.nextPage}}{{ viewParams.total }}" class="pagination__link">Next page</a>
+                  </li>
+                {% endif %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% include "includes/filters.html" %}
+
+    </div>
+  {% else %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters column-results column-results--active">
+        <p>There are no cases to show</p>
+      </div>
+
+      {% include "includes/filters.html" %}
+
+    </div>
+  {% endif %}
+{% endblock %}

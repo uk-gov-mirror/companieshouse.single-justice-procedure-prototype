@@ -39,9 +39,15 @@
             {% for case in cases %}
               {% if case.status === 'Ultimatum expired' or case.status === 'SJPN issued' %}
                 <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">
-                    <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
-                  </th>
+                  {% if case.status === 'Ultimatum expired' %}
+                    <th class="govuk-table__header" scope="row">
+                      <a href="/case/sjpn?id={{ case.id }}">{{ case.company.name }}</a>
+                    </th>
+                  {% else %}
+                    <th class="govuk-table__header" scope="row">
+                      <a href="/case/overview?id={{ case.id }}">{{ case.company.name }}</a>
+                    </th>
+                  {% endif %}
                   <td class="govuk-table__cell">{{ case.company.number}}</td>
                   <td class="govuk-table__cell">{{ case.status }}</td>
                   <td class="govuk-table__cell">

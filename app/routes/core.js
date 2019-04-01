@@ -1,7 +1,10 @@
 module.exports = function (router) {
   // Route index page
   router.get('/', function (req, res) {
-    req.session.cases = require('../data/cases.js')
+    var realCases = require('../data/cases.js')
+    var fakeCases = require('../data/fake-cases.js')
+
+    req.session.cases = realCases.concat(fakeCases)
     req.session.recents = []
     req.session.notifications = {}
     req.session.notifications.list = []

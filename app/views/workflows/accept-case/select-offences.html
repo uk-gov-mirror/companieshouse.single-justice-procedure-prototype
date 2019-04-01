@@ -1,0 +1,53 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Step by step navigation
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: backLink
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-xl">Accept case workflow: Step 2 of 4</span>
+      <h1 class="govuk-heading-xl">
+        {{ case.company.name }}
+      </h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l">Select which offences will be included in this case.</p>
+      <form action="" method="POST">
+        {% for defendant in compiledDefendants %}
+          {{ govukCheckboxes({
+            idPrefix: "waste",
+            name: "waste",
+            fieldset: {
+              legend: {
+                text: defendant.name,
+                isPageHeading: false,
+                classes: "govuk-body govuk-!-font-size-27 govuk-!-font-weight-bold"
+              }
+            },
+            items: defendant.offences
+          }) }}
+        {% endfor %}
+        {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
+        {{ govukButton({
+          text: "Continue",
+          href: buttonHref
+        }) }}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

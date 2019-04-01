@@ -12,10 +12,15 @@ var generateUltimatum = function (id) {
     $('.action-bar__button--ultimatum').attr('aria-disabled', false)
     $('.action-bar__button--ultimatum').attr('disabled', false)
     $.get('/actions/ultimatum/generate', { id: id }).done(function (data) {
-      console.log('action complete')
       $('.document-container').show()
     })
   })
+}
+
+// Generate ultimatum (Async)
+var generateUltimatumLabel = function (id) {
+  $('.ultimatum-generator').html('Generated')
+  $('.ultimatum-view-link').show()
 }
 
 // Generate SJPN
@@ -25,13 +30,23 @@ var generateSJPN = function (id) {
     $('.action-bar__button--sjpn').attr('aria-disabled', false)
     $('.action-bar__button--sjpn').attr('disabled', false)
     $.get('/actions/sjpn/generate', { id: id }).done(function (data) {
-      console.log('action complete')
       $('.document-container').show()
     })
   })
 }
 
 $(document).ready(function () {
+  window.GOVUKFrontend.initAll()
+
+  // CASE DEBUG
+  $('#debug-case').submit(function () {
+    var caseID = $('#case-debug-id').val()
+    $.get('/actions/debug/case', { id: caseID }).done(function (data) {
+      console.log(data)
+    })
+    return false
+  })
+
   $('.result-count').text('Showing 3 of 10 cases on 5 pages')
   $('.result-count').attr('data-current', 3)
   $('.result-count').attr('data-total', 10)
@@ -79,7 +94,6 @@ $(document).ready(function () {
   $('.bookmark-button').click(function () {
     var button = $(this)
     $.get('/actions/bookmarks/toggle', { id: $(this).data('value') }).done(function (data) {
-      console.log(data)
       if (data === true) {
         button.children().addClass('fa-star--active')
       } else {
@@ -117,8 +131,8 @@ $(document).ready(function () {
 
   // ACCEPT CASE
   $('.case-accept-button').click(function () {
-    $('#case-details-form').submit()
-    return false
+    // $('#case-details-form').submit()
+    // return false
   })
 
   // CHANGE DEFENDANT ADDRESS
@@ -151,5 +165,28 @@ $(document).ready(function () {
       }, 5000)
     })
     return false
+  })
+
+  // FILTER CASES
+  $('.filter .govuk-checkboxes__input').click(function () {
+    // $('#filter-form').submit()
+    // return false
+  })
+
+  // RESULTS PER PAGE
+  $('.table-per-page__input').change(function () {
+    $('#resultsPerPage').submit()
+    return false
+  })
+
+  // ADD OUTCOME
+  $('input[name=\'plea\']').change(function () {
+    if ($(this).val() === 'guilty-not-attend') {
+      $('#outcome-1').click()
+      $('input[name=\'outcome\']').attr('disabled', '')
+    } else {
+      $('input[name=\'outcome\']').attr('disabled', false)
+      $('input[name=\'outcome\']').attr('checked', false)
+    }
   })
 })
