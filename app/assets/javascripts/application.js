@@ -19,7 +19,7 @@ var generateUltimatum = function (id) {
 
 // Generate ultimatum (Async)
 var generateUltimatumLabel = function (id) {
-  $('.ultimatum-generator').html('Generated')
+  $('.ultimatum-generator').html('Generated - 3 April 2019')
   $('.ultimatum-view-link').show()
 }
 
