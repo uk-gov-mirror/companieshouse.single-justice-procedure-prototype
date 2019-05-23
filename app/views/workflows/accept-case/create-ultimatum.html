@@ -12,17 +12,17 @@
 {% endblock %}
 
 {% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-      <span class="govuk-caption-xl">Accept case workflow: Step 3 of 4</span>
+      <span class="govuk-caption-xl">Accept case workflow: Step 3 of 3</span>
       <h1 class="govuk-heading-xl">
         {{ case.company.name }}
       </h1>
     </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+
+    <div class="govuk-grid-row">
+
       {% set spinner %}
       Generating&nbsp;
       <div class="spinner-border">
@@ -64,18 +64,17 @@
         ]
       }) }}
       {{ govukButton({
-        text: "Continue",
-        href: "/workflows/accept-case/accept-case?id=" + case.id
+        text: "Finish",
+        href: "/case/overview?id=" + case.id
       }) }}
     </div>
-  </div>
 
-{% endblock %}
+  {% endblock %}
 
-{% block pageScripts %}
-  <script type="text/javascript">
-    window.setTimeout(function () {
-      generateUltimatumLabel()
-    }, 5000)
-  </script>
-{% endblock %}
+  {% block pageScripts %}
+    <script type="text/javascript">
+      window.setTimeout(function () {
+        generateUltimatumLabel()
+      }, 5000)
+    </script>
+  {% endblock %}

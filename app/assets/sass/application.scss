@@ -36,10 +36,6 @@ $govuk-global-styles: true;
 // @import 'patterns/task-list';
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
-.govuk-main-wrapper {
-  padding-top: 10px;
-}
-
 .govuk-header--borderless {
   border-bottom: none;
 }
@@ -295,10 +291,6 @@ $govuk-global-styles: true;
     background: govuk-colour('grey-4');
     border-bottom: 2px solid govuk-colour('grey-3');
     padding: 15px;
-  }
-
-  .action-bar__button {
-    margin-bottom: 0;
   }
 
   .action-bar__form {

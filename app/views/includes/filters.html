@@ -1,9 +1,7 @@
 <div class="govuk-grid-column-one-quarter column-filters">
   <section class="filters" id="filters">
     <form action="/cases/all" method="post" id="filter-form">
-      {{ govukButton({
-        text: "Filter cases"
-      }) }}
+
       <div role="widget" class="filter open">
         <div class="govuk-body filters-heading" role="button" aria-controls="filter-crn" aria-expanded="true" tabindex="0">
           <span id="filter-label-crn">
@@ -96,37 +94,9 @@
           ]
         }) }}
       </div>
-      <div role="widget" class="filter">
-        <div class="govuk-body filters-heading" role="button" aria-controls="filter-priority" aria-expanded="false" tabindex="0">
-          <span id="filter-label-priority">
-            <span class="govuk-visually-hidden">Filter by
-            </span>Priority</span>
-          <div class="toggle"></div>
-        </div>
-        <fieldset id="filter-priority" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-priority">
-          <legend class="govuk-visually-hidden">Select to see filing codes?</legend>
-          <div class="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="filter-priority-0" name="filterAssignee" type="checkbox" value="High">
-              <label class="govuk-label govuk-checkboxes__label" for="filter-priority-0">
-                <strong class="govuk-tag govuk-tag--pink">High</strong>
-              </label>
-            </div>
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="filter-priority-1" name="filterAssignee" type="checkbox" value="Medium">
-              <label class="govuk-label govuk-checkboxes__label" for="filter-priority-1">
-                <strong class="govuk-tag govuk-tag--yellow">Medium</strong>
-              </label>
-            </div>
-            <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="filter-priority-2" name="filterAssignee" type="checkbox" value="Low">
-              <label class="govuk-label govuk-checkboxes__label" for="filter-priority-2">
-                <strong class="govuk-tag govuk-tag--light-green">Low</strong>
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      </div>
+      {{ govukButton({
+        text: "Filter cases"
+      }) }}
     </form>
   </section>
   <p>
