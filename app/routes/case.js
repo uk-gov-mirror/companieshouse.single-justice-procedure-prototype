@@ -1,4 +1,33 @@
 module.exports = function (router) {
+  // CASE OVERVIEW
+  router.get('/case/overview', function (req, res) {
+    var id = parseInt(req.query.id)
+
+    for (i = 0; i < req.session.cases.length; i++) {
+      console.log(req.session.cases[i].company.name)
+      if (req.session.cases[i].id === id) {
+        req.session.workingCase = req.session.cases[i]
+      }
+    };
+
+    req.session.recents.push(id)
+    res.render('case/overview', {
+      case: req.session.cases[id],
+      navTabListOverview: 'section-navigation__item--active',
+      navTabLinkOverview: 'section-navigation__link--active'
+    })
+  })
+  // CASE PROFILE
+  router.get('/case/company-profile', function (req, res) {
+    var id = req.query.id
+
+    res.render('case/company-profile', {
+      case: req.session.cases[id],
+      navTabListProfile: 'section-navigation__item--active',
+      navTabLinkProfile: 'section-navigation__link--active'
+    })
+  })
+
   // ACCEPT/REJECT DECISION SCREEN
   router.get('/case/decision', function (req, res) {
     var id = req.query.id
@@ -98,27 +127,6 @@ module.exports = function (router) {
     }
   })
 
-  // CASE OVERVIEW
-  router.get('/case/overview', function (req, res) {
-    var id = req.query.id
-
-    req.session.recents.push(id)
-    res.render('case/overview', {
-      case: req.session.cases[id],
-      navTabListOverview: 'section-navigation__item--active',
-      navTabLinkOverview: 'section-navigation__link--active'
-    })
-  })
-  // CASE PROFILE
-  router.get('/case/company-profile', function (req, res) {
-    var id = req.query.id
-
-    res.render('case/company-profile', {
-      case: req.session.cases[id],
-      navTabListProfile: 'section-navigation__item--active',
-      navTabLinkProfile: 'section-navigation__link--active'
-    })
-  })
   // CASE DEFENDANTS
   router.get('/case/defendants', function (req, res) {
     var id = req.query.id
@@ -161,7 +169,6 @@ module.exports = function (router) {
   router.post('/case/ultimatum', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
-    var referral = req.session.cases[id]
     var event = {}
     var date = new Date()
 
@@ -209,7 +216,6 @@ module.exports = function (router) {
   router.post('/case/sjpn', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
-    var referral = req.session.cases[id]
     var event = {}
     var date = new Date()
 
@@ -248,7 +254,6 @@ module.exports = function (router) {
   router.post('/case/witness-statements', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
-    var referral = req.session.cases[id]
     var event = {}
     var date = new Date()
 

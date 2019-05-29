@@ -301,3 +301,24 @@ $govuk-global-styles: true;
 .ultimatum-view-link {
   display: none;
 }
+
+.govuk-button--blue {
+  margin-bottom: 0;
+  background: $govuk-link-colour;
+
+  &:hover {
+    background: $govuk-link-hover-colour;
+  }
+
+  &:active {
+    background: $govuk-link-active-colour;
+  }
+}
+
+.action-bar__content .govuk-details {
+  margin-bottom: 0;
+}
+
+.strong {
+  font-weight: bold;
+}

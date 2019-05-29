@@ -4,15 +4,10 @@
   Prosecution Case Overview: PJM ACCOUNTANCY LIMITED
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-  text: "Back",
-  href: backLink
-}) }}
-{% endblock %}
 {% block content %}
 
   {% include "includes/case-header.html" %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <table class="govuk-table">
@@ -34,15 +29,11 @@
             <th class="govuk-table__header" scope="row">Company number</th>
             <td class="govuk-table__cell ">{{ case.company.number }}</td>
           </tr>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row">Priority</th>
-            <td class="govuk-table__cell ">{{ case.priority | capitalize }}</td>
-          </tr>
         </tbody>
       </table>
     </div>
     <div class="govuk-grid-column-one-half">
-      <h2 class="govuk-heading-l">Case timeline</h2>
+      <h4 class="govuk-heading-s">Case timeline</h4>
       <ul class="govuk-list timeline">
         <li class="timeline__item">
           <span class="timeline__item-date">18 July 2018</span>
@@ -68,3 +59,5 @@
     </div>
   </div>
 {% endblock %}
+</main>
+</div>

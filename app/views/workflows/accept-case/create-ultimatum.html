@@ -15,7 +15,7 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
 
-      <span class="govuk-caption-xl">Accept case workflow: Step 3 of 3</span>
+      <span class="govuk-caption-xl">Accept case workflow: Step 2 of 2</span>
       <h1 class="govuk-heading-xl">
         {{ case.company.name }}
       </h1>
@@ -30,7 +30,7 @@
       </div>
       {% endset %}
       {% set link %}
-      <a href="/public/documents/ultimatum.pdf" class="govuk-link ultimatum-view-link">Print ultimatum</a>
+      <a href="/public/documents/ultimatum.pdf" class="govuk-link ultimatum-view-link" target="_blank" rel="noopener">Print ultimatum</a>
       {% endset %}
       {{ govukTable({
         caption: "Ultimation generation",

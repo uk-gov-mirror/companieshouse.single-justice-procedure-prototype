@@ -16,7 +16,7 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
 
-      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 3</span>
+      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 2</span>
       <h1 class="govuk-heading-xl">
         {{ case.company.name }}
       </h1>
@@ -97,25 +97,24 @@
               </tr>
             </tbody>
           </table>
-          <h2 class="govuk-heading-m">Offences</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header">Type</th>
-                <th class="govuk-table__header">Period</th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              {% for offence in defendant.offences %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell ">
-                    {% if offence.type === 'AA' %}
-                      Annual accounts
-                    {% elif offence.type === 'CS' %}
-                      Confirmation statement
-                    {% endif %}
-                  </td>
-                  <td class="govuk-table__cell" scope="row">
+
+          <div class="govuk-form-group">
+
+            {% for offence in defendant.offences %}
+              <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  Offences
+                </legend>
+                <div class="govuk-checkboxes">
+                  <div class="govuk-checkboxes__item ">
+                    <input class="govuk-checkboxes__input " id="waste-1" name="waste" type="checkbox" value="carcasses">
+                    <label class="govuk-label govuk-checkboxes__label strong" for="waste-1">
+                      {% if offence.type === 'AA' %}
+                        Annual accounts
+                      {% elif offence.type === 'CS' %}
+                        Confirmation statement
+                      {% endif %}
+                    </label>
                     {% if offence.type === 'AA' %}
                       {{ offence.periodStart }}
                       -
@@ -123,49 +122,64 @@
                     {% else %}
                       {{ offence.date }}
                     {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% endfor %}
 
-        <div class="govuk-grid-row action-bar" role="menubar">
-          <div class="govuk-grid-column-full action-bar__content">
-            {% set continueHref = "/workflows/accept-case/select-offences?id=" + case.id %}
-            {{ govukButton({
-                      text: "Continue",
-                      href: continueHref,
-                      classes: "case-accept-button action-bar__button"
-                    }) }}
+                  </div>
+                </div>
+              </fieldset>
+            {% endfor %}
 
-            <details class="govuk-details">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  Reject case
-                </span>
-              </summary>
-              <div class="govuk-details__text">
-                <form action="/case/reject-reason" method="post" class="action-bar__form">
-                  <input type="hidden" name="caseID" value="{{ case.id }}"/>
-                  <input type="hidden" name="caseAction" value="reason"/>
-                  {{ govukTextarea({
-                      name: "rejectReason",
-                      id: "reject-reason",
-                      label: {
-                        text: "Why are you rejecting this case?",
-                        isPageHeading: "true"
-                      }
-                    }) }}
-
-                  {{ govukButton({
-                        text: "Confirm",
-                        classes: "govuk-button--blue"
-                      }) }}
-                </form>
-
-              </details>
-            </div>
           </div>
+        {% endfor %}
+        <form action="/workflows/accept-case/create-ultimatum?id=" method="POST">
+
+          {% if errorList.length > 0 %}
+            {{ govukErrorSummary({
+              titleText: "There is a problem",
+              errorList: [
+                {
+                  text: "You have not selected the offenses",
+                  href: "#passport-issued-error"
+                }
+              ]
+            }) }}
+          {% endif %}
+
+          {% for defendant in compiledDefendants %}
+
+            {% if pleaErr.flag %}
+              {% set pleaError = {
+                text: pleaErr.text
+              } %}
+            {% else %}
+              {% set pleaError = false %}
+            {% endif %}
+
+            {{ govukCheckboxes({
+                idPrefix: "plea",
+                name: "waste",
+                errorMessage: {
+                  text: pleaError
+                },
+                fieldset: {
+                  legend: {
+                    text: defendant.name,
+                    isPageHeading: false,
+                    classes: "govuk-body govuk-!-font-size-27 govuk-!-font-weight-bold"
+                  }
+                },
+                items: defendant.offences
+              }) }}
+          {% endfor %}
+
+          <div class="govuk-form-group">
+            {{ govukButton({
+                  text: "Proceed"
+                }) }}
+            {{ govukButton({
+        text: "Skip",
+        classes: "govuk-button--secondary"
+      }) }}
+          </div>
+
         </div>
       {% endblock %}

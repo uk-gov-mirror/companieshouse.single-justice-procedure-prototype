@@ -1,34 +1,5 @@
 module.exports = function (router) {
   // WORKFLOW START SCREEN
-  router.get('/workflows/accept-case/start', function (req, res) {
-    var id = parseInt(req.query.id)
-    var i = 0
-
-    if (req.session.doNotShowAcceptCase === true) {
-      res.redirect('/workflows/accept-case/review-case?id=' + id)
-    } else {
-      for (i = 0; i < req.session.cases.length; i++) {
-        console.log(req.session.cases[i].company.name)
-        if (req.session.cases[i].id === id) {
-          req.session.workingCase = req.session.cases[i]
-        }
-      }
-
-      res.render('workflows/accept-case/start', {
-        case: req.session.workingCase,
-        backLink: '/cases/all'
-      })
-    }
-  })
-  router.post('/workflows/accept-case/start', function (req, res) {
-    var caseID = req.body.caseID
-    var doNotShow = req.body.doNotShow
-
-    if (doNotShow !== '_unchecked') {
-      req.session.doNotShowAcceptCase = true
-    }
-    res.redirect('/workflows/accept-case/review-case?id=' + caseID)
-  })
 
   // STEP 1: REVIEW CASE
   router.get('/workflows/accept-case/review-case', function (req, res) {
@@ -88,6 +59,43 @@ module.exports = function (router) {
       compiledDefendants: compiledDefendants,
       backLink: backLink
     })
+  })
+
+  router.post('/workflows/accept-case/select-offences', function (req, res) {
+    var plea = req.body.plea
+    var outcome = req.body.outcome
+    var outcomeErr = {}
+    var errorList = []
+    var errorFlag = false
+    var pleaGuiltyChecked = false
+    var pleaGuiltyCourtChecked = false
+    var pleaNotGuiltyChecked = false
+    var pleaNoneChecked = false
+    var pleaErr = {}
+
+    if (typeof plea === 'undefined') {
+      pleaErr.type = 'blank'
+      pleaErr.text = 'You must enter a plea'
+      pleaErr.href = '#plea-1'
+      pleaErr.flag = true
+      errorList.push(pleaErr)
+      errorFlag = true
+    }
+
+    if (errorFlag === true) {
+      res.render('case/outcomes/add-outcome', {
+        pleaErr: pleaErr,
+        plea: plea,
+        pleaGuiltyChecked: pleaGuiltyChecked,
+        pleaGuiltyCourtChecked: pleaGuiltyCourtChecked,
+        pleaNotGuiltyChecked: pleaNotGuiltyChecked,
+        pleaNoneChecked: pleaNoneChecked
+      })
+    } else {
+      if (outcome === 'guilty-discharge') {
+      } else if (outcome === 'guilty-disqualified') {
+      }
+    }
   })
 
   // STEP 3: GENERATE ULTIMATUM

@@ -15,7 +15,6 @@
     {# Hardcoded value of $govuk-black #}
 
     {% block headIcons %}
-      <link rel="shortcut icon" href="{{ assetPath | default('/assets') }}/images/favicon.ico" type="image/x-icon"/>
       <link rel="mask-icon" href="{{ assetPath | default('/assets') }}/images/govuk-mask-icon.svg" color="{{ themeColor | default('#0b0c0c') }}">
       {# Hardcoded value of $govuk-black #}
       <link rel="apple-touch-icon" sizes="180x180" href="{{ assetPath | default('/assets') }}/images/govuk-apple-touch-icon-180x180.png">
@@ -30,7 +29,7 @@
     <meta property="og:image" content="{{ assetPath | default('/assets') }}/images/govuk-opengraph-image.png">
   </head>
   <body class="govuk-template__body {{ bodyClasses }}">
-    <script>
+    <script type="text/javascript">
       document.body.className = (
         (document.body.className)
           ? document.body.className + ' js-enabled'
