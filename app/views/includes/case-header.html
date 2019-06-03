@@ -30,14 +30,15 @@
 <div class="govuk-grid-row action-bar">
   <div class="govuk-grid-column-full action-bar__content">
     {% if case.status === 'Referred' %}
+      {% set buttonHref = "/workflows/accept-case/review-case?id=" +  case.id %}
       {{ govukButton({
       text: "Start case",
-      href: "/workflows/accept-case/review-case",
+      href: buttonHref,
       classes: "action-bar__button"
       }) }}
       <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">
+        <summary class="govuk-details__summary inline-btn">
+          <span class="govuk-details__summary-text ">
             Reject case
           </span>
         </summary>

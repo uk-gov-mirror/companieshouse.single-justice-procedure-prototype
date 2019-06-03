@@ -7,32 +7,17 @@ module.exports = function (router) {
     var caseTab = 'section-navigation__link--active'
     var companyTab = 'section-navigation__link--active'
     var backLink = ''
-
-    if (req.session.doNotShowAcceptCase === true) {
-      backLink = '/cases/all'
-    } else {
-      backLink = '/workflows/accept-case/start?id=' + id
-    }
-
-    res.render('workflows/accept-case/review-case', {
-      case: req.session.workingCase,
-      caseOverviewTab: caseTab,
-      companyOverviewTab: companyTab,
-      backLink: backLink
-    })
-  })
-
-  // STEP 2: SELECT OFFENCES
-  router.get('/workflows/accept-case/select-offences', function (req, res) {
-    var id = parseInt(req.query.id)
-    var backLink = ''
     var compiledDefendants = []
     var defendantObject = {}
     var offenceObject = {}
     var i = 0
     var j = 0
 
-    backLink = '/workflows/accept-case/review-case?id=' + id
+    if (req.session.doNotShowAcceptCase === true) {
+      backLink = '/cases/all'
+    } else {
+      backLink = '/workflows/accept-case/start?id=' + id
+    }
 
     for (i = 0; i < req.session.workingCase.defendants.length; i++) {
       defendantObject.name = req.session.workingCase.defendants[i].name
@@ -54,14 +39,16 @@ module.exports = function (router) {
     console.log(compiledDefendants)
     console.log(compiledDefendants[0].offences)
 
-    res.render('workflows/accept-case/select-offences', {
+    res.render('workflows/accept-case/review-case', {
       case: req.session.workingCase,
+      caseOverviewTab: caseTab,
+      companyOverviewTab: companyTab,
       compiledDefendants: compiledDefendants,
       backLink: backLink
     })
   })
 
-  router.post('/workflows/accept-case/select-offences', function (req, res) {
+  router.post('/workflows/accept-case/review-case', function (req, res) {
     var plea = req.body.plea
     var outcome = req.body.outcome
     var outcomeErr = {}
@@ -72,6 +59,9 @@ module.exports = function (router) {
     var pleaNotGuiltyChecked = false
     var pleaNoneChecked = false
     var pleaErr = {}
+    var previous = res.redirect('back')
+
+    console.log(previous)
 
     if (typeof plea === 'undefined') {
       pleaErr.type = 'blank'
@@ -83,7 +73,7 @@ module.exports = function (router) {
     }
 
     if (errorFlag === true) {
-      res.render('case/outcomes/add-outcome', {
+      res.render('/workflows/accept-case/review-case', {
         pleaErr: pleaErr,
         plea: plea,
         pleaGuiltyChecked: pleaGuiltyChecked,

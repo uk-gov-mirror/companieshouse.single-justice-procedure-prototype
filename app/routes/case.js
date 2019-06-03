@@ -4,7 +4,7 @@ module.exports = function (router) {
     var id = parseInt(req.query.id)
 
     for (i = 0; i < req.session.cases.length; i++) {
-      console.log(req.session.cases[i].company.name)
+      // console.log(req.session.cases[i].company.name)
       if (req.session.cases[i].id === id) {
         req.session.workingCase = req.session.cases[i]
       }

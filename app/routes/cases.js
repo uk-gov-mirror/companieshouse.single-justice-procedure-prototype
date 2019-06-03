@@ -160,7 +160,7 @@ module.exports = function (router) {
     sortedCases = req.session.cases.slice(0)
     arraySort(sortedCases, viewParams.sort.sorter, {reverse: viewParams.sort.reverse})
 
-    console.log(req.session.filterParams)
+    // console.log(req.session.filterParams)
     if (typeof req.session.filterParams !== 'undefined') {
       filterParams = req.session.filterParams
       // COMPANY NUMBER FILTER
