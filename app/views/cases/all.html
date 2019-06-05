@@ -22,13 +22,7 @@
       <div class="govuk-grid-column-three-quarters column-results column-results--active">
         <a href="#filters" class="govuk-link filter-toggle govuk-button">Filter cases</a>
         <h3 class="info result-count govuk-heading-m" id="result-count" aria-live="assertive">&nbsp;</h3>
-        <p class="govuk-body">
-          <span class="sort-label">Sort cases by</span>
-          <a href="/cases/all?{{ viewParams.sort.companyName.urlString }}" class="govuk-link">{{ viewParams.sort.companyName.label }}</a>,
-          <a href="/cases/all?{{ viewParams.sort.companyNumber.urlString }}" class="govuk-link">{{ viewParams.sort.companyNumber.label }}</a>,
-          <a href="/cases/all?{{ viewParams.sort.reference.urlString }}" class="govuk-link">{{ viewParams.sort.reference.label }}</a>,
-          <a href="/cases/all?{{ viewParams.sort.referred.urlString }}" class="govuk-link">{{ viewParams.sort.referred.label }}</a>
-        </p>
+
         <table class="govuk-table" id="all-cases-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

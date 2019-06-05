@@ -25,7 +25,7 @@ module.exports = function (router) {
       for (j = 0; j < req.session.workingCase.defendants[i].offences.length; j++) {
         offenceObject.value = i + '-' + j
         if (req.session.workingCase.defendants[i].offences[j].type === 'AA') {
-          offenceObject.text = 'Annual accounts'
+          offenceObject.text = 'Annual accounts' + ' - 31 Mar 2018'
         } else if (req.session.workingCase.defendants[i].offences[j].type === 'CS') {
           offenceObject.text = 'Confirmation statement'
         } else {

@@ -3,7 +3,12 @@
 {% block pageTitle %}
   Prosecution Case Overview: PJM ACCOUNTANCY LIMITED
 {% endblock %}
-
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/cases/all"
+}) }}
+{% endblock %}
 {% block content %}
 
   {% include "includes/case-header.html" %}
