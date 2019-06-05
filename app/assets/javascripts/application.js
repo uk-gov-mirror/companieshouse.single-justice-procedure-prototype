@@ -190,3 +190,17 @@ $(document).ready(function () {
     }
   })
 })
+
+var form = $('form[name="caseDecision"]'),
+  radio = $('input[name="caseOption"]'),
+  choice = ''
+
+radio.change(function (e) {
+  choice = this.value
+
+  if (choice === 'yes') {
+    form.attr('action', '/workflows/accept-case/review-case?id=0')
+  } if (choice === 'no') {
+    form.attr('action', 'no.php')
+  }
+})

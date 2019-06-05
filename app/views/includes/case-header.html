@@ -17,175 +17,60 @@
   {% set issueUltimatumDisabled = true %}
 {% endif %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">Prosecution - Case
-        {{ case.reference }}
-      </span>
-      {{ case.company.name }}
-    </h1>
-  </div>
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-xl">
+    <span class="govuk-caption-xl">Prosecution - Case
+      {{ case.reference }}
+    </span>
+    {{ case.company.name }}
+  </h1>
 </div>
-<div class="govuk-grid-row action-bar">
-  <div class="govuk-grid-column-full action-bar__content">
-    {% if case.status === 'Referred' %}
-      {% set buttonHref = "/workflows/accept-case/review-case?id=" +  case.id %}
+<div class="govuk-width-container">
+  {% if case.status === 'Referred' %}
+    <form action="" method="get" novalidate="novalidate" name="caseDecision">
+      {% set noHtml %}
+      {{ govukTextarea({
+        id: "contact-by-email",
+        name: "contact-by-email",
+        type: "email",
+        classes: "govuk-!-width-two-thirds",
+        label: {
+          text: "Why are you rejecting this case?"
+        },
+        attributes: {
+          spellcheck: "false"
+        }
+       }) }}
+      {% endset -%}
+      {{ govukRadios({
+          idPrefix: "where-do-you-live",
+          name: "caseOption",
+          fieldset: {
+            legend: {
+              text: "Would you like to contiune?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No",
+              conditional: {
+                html: noHtml
+              }
+            }
+          ]
+        }) }}
       {{ govukButton({
-      text: "Start case",
-      href: buttonHref,
-      classes: "action-bar__button"
-      }) }}
-      <details class="govuk-details">
-        <summary class="govuk-details__summary inline-btn">
-          <span class="govuk-details__summary-text ">
-            Reject case
-          </span>
-        </summary>
-        <div class="govuk-details__text">
-          <form action="/case/reject-reason" method="post" class="action-bar__form">
-            <input type="hidden" name="caseID" value="{{ case.id }}"/>
-            <input type="hidden" name="caseAction" value="reason"/>
-            {{ govukTextarea({
-                name: "rejectReason",
-                id: "reject-reason",
-                classes: "govuk-!-width-one-third",
-                label: {
-                  text: "Why are you rejecting this case?",
-                  isPageHeading: "true"
-                }
-              }) }}
+          text: "Continue"
+        }) }}
+    </form>
 
-            {{ govukButton({
-                  text: "Confirm",
-                  classes: "govuk-button--blue"
-                }) }}
-          </form>
-
-        </details>
-      {% endif %}
-      {% if case.status === 'Accepted' %}
-        <form action="/case/ultimatum" method="post" class="action-bar__form">
-          <input type="hidden" name="caseID" value="{{ case.id }}"/>
-          <input type="hidden" name="caseAction" value="issueUltimatum"/>
-          {{ govukButton({
-          text: "Issue ultimatum",
-          classes: "action-bar__button action-bar__button--ultimatum",
-          disabled: issueUltimatumDisabled
-        }) }}
-        </form>
-      {% endif %}
-      {% if case.status === 'Ultimatum issued' %}
-        <form action="/case/ultimatum" method="post" class="action-bar__form">
-          <input type="hidden" name="caseID" value="{{ case.id }}"/>
-          <input type="hidden" name="caseAction" value="expireUltimatum"/>
-          {{ govukButton({
-          text: "*** Expire ultimatum ***",
-          classes: "action-bar__button action-bar__button--ultimatum"
-        }) }}
-        </form>
-      {% endif %}
-      {% if case.status === 'Ultimatum expired' %}
-        <form action="/case/sjpn" method="post" class="action-bar__form">
-          <input type="hidden" name="caseID" value="{{ case.id }}"/>
-          <input type="hidden" name="caseAction" value="issueSJPN"/>
-          {{ govukButton({
-          text: "Issue SJPN",
-          classes: "action-bar__button action-bar__button--SJPN"
-        }) }}
-        </form>
-      {% endif %}
-      {% if case.status === 'SJPN issued' %}
-        <form action="/case/sjpn" method="post" class="action-bar__form">
-          <input type="hidden" name="caseID" value="{{ case.id }}"/>
-          <input type="hidden" name="caseAction" value="expireSJPN"/>
-          {{ govukButton({
-          text: "*** Expire SJPN ***",
-          classes: "action-bar__button action-bar__button--sjpn"
-        }) }}
-        </form>
-      {% endif %}
-      {% if case.status !== 'Referred' and case.status !== 'SJPN issued' and case.status !== 'Awaiting outcomes' and case.status !== 'Closed'%}
-        <form action="/case/close-case" method="post" class="action-bar__form">
-          <input type="hidden" name="caseID" value="{{ case.id }}"/>
-          <input type="hidden" name="caseAction" value="reason"/>
-          {{ govukButton({
-        text: "Close case",
-        classes: "action-bar__button"
-      }) }}
-        </form>
-      {% endif %}
-    </div>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <nav class="section-navigation {{ 'section-navigation--subnav-present' if subNav }}">
-        <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
-          <li class="section-navigation__item {{ navTabListOverview }}">
-            <a href="/case/overview?id={{ case.id }}" class="section-navigation__link {{ navTabLinkOverview }} {{ tabDisabled }}">
-              <span id="heading-case-overview">Overview</span>
-            </a>
-          </li>
-          <li class="section-navigation__item {{ navTabListProfile }}">
-            <a href="/case/company-profile?id={{ case.id }}" class="section-navigation__link {{ navTabLinkProfile }} {{ tabDisabled }}">
-              <span id="heading-case-profile">Company profile</span>
-            </a>
-          </li>
-          <li class="section-navigation__item {{ navTabListDefendants }}">
-            <a href="/case/defendants?id={{ case.id }}" class="section-navigation__link {{ navTabLinkDefendants }} {{ tabDisabled }}">
-              <span id="heading-case-defendants">Defendants</span>
-            </a>
-          </li>
-          {% if case.status === "Accepted" or case.status === "Ultimatum issued" or case.status === "Ultimatum expired" or case.ultimatumGenerated === true %}
-            <li class="section-navigation__item {{ navTabListUltimatum }}">
-              <a href="/case/ultimatum?id={{ case.id }}" class="section-navigation__link {{ navTabLinkUltimatum }} {{ tabDisabled }}">
-                <span id="heading-case-ultimatum">Ultimatum</span>
-              </a>
-            </li>
-          {% endif %}
-          {% if case.status === "Ultimatum expired" or case.status === "SJPN issued" or case.sjpnGenerated === true %}
-            <li class="section-navigation__item {{ navTabListSJPN }}">
-              <a href="/case/sjpn?id={{ case.id }}" class="section-navigation__link {{ navTabLinkSJPN }} {{ tabDisabled }}">
-                <span id="heading-case-sjpn">SJPN</span>
-              </a>
-            </li>
-          {% endif %}
-          {% if case.status === "Awaiting outcomes" %}
-            <li class="section-navigation__item {{ navTabListOutcomes }}">
-              <a href="/case/outcomes?id={{ case.id }}" class="section-navigation__link {{ navTabLinkOutcomes }} {{ tabDisabled }}">
-                <span id="heading-case-outcomes">Outcomes</span>
-              </a>
-            </li>
-          {% endif %}
-
-          <li class="section-navigation__item {{ navTabListHistory }}">
-            <a href="/case/history?id={{ case.id }}" class="section-navigation__link {{ navTabLinkHistory }} {{ tabDisabled }}">
-              <span id="heading-case-history">History</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  {% if subNav %}
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <nav class="section-navigation section-navigation--subnav">
-          <ul class="section-navigation__list govuk-list govuk-list--bullet" role="naviagtion">
-            {% if case.status === "Ultimatum expired" %}
-              <li class="section-navigation__item {{ navTabListSJPN }}">
-                <a href="/case/sjpn?id={{ case.id }}" class="section-navigation__link {{ navTabLinkSJPN }} {{ tabDisabled }}">
-                  <span id="heading-case-sjpn">SJPN</span>
-                </a>
-              </li>
-              <li class="section-navigation__item {{ navTabListWitness }}">
-                <a href="/case/witness-statements?id={{ case.id }}" class="section-navigation__link {{ navTabLinkWitness }} {{ tabDisabled }}">
-                  <span id="heading-case-witness">Witness statements</span>
-                </a>
-              </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-    </div>
+    <!--{% set buttonHref = "/workflows/accept-case/review-case?id=" + case.id %}-->
   {% endif %}
+</div>

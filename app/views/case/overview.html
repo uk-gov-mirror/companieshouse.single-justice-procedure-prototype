@@ -8,56 +8,13 @@
 
   {% include "includes/case-header.html" %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-half">
-      <table class="govuk-table">
-        <caption class="govuk-table__caption govuk-visually-hidden">Case overview</caption>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row">Status</th>
-            <td class="govuk-table__cell ">{{ case.status }}</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row">Referred</th>
-            <td class="govuk-table__cell ">{{ case.referred }}</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row">Referrer</th>
-            <td class="govuk-table__cell ">{{ case.referrer }}</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="row">Company number</th>
-            <td class="govuk-table__cell ">{{ case.company.number }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="govuk-grid-column-one-half">
-      <h4 class="govuk-heading-s">Case timeline</h4>
-      <ul class="govuk-list timeline">
-        <li class="timeline__item">
-          <span class="timeline__item-date">18 July 2018</span>
-          Case closed
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__item-date">1 July 2018</span>
-          Verdict received from court
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__item-date">25 May 2018</span>
-          Plea received from court
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__item-date">15 March 2018</span>
-          Ultimatum sent to defendants
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__item-date">5 January 2018</span>
-          Case opened
-        </li>
-      </ul>
-    </div>
-  </div>
+  <!--<div class="govuk-grid-row"> <div class="govuk-grid-column-one-half"> <table class="govuk-table"> <caption class="govuk-table__caption govuk-visually-hidden">Case overview</caption> <tbody class="govuk-table__body"> <tr class="govuk-table__row">
+  <th class="govuk-table__header" scope="row">Status</th> <td class="govuk-table__cell ">{{ case.status }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Referred</th> <td class="govuk-table__cell ">{{
+  case.referred }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header" scope="row">Referrer</th> <td class="govuk-table__cell ">{{ case.referrer }}</td> </tr> <tr class="govuk-table__row"> <th class="govuk-table__header"
+  scope="row">Company number</th> <td class="govuk-table__cell ">{{ case.company.number }}</td> </tr> </tbody> </table> </div> <div class="govuk-grid-column-one-half"> <h4 class="govuk-heading-s">Case timeline</h4> <ul class="govuk-list timeline"> <li
+  class="timeline__item"> <span class="timeline__item-date">18 July 2018</span> Case closed </li> <li class="timeline__item"> <span class="timeline__item-date">1 July 2018</span> Verdict received from court </li> <li class="timeline__item"> <span
+  class="timeline__item-date">25 May 2018</span> Plea received from court </li> <li class="timeline__item"> <span class="timeline__item-date">15 March 2018</span> Ultimatum sent to defendants </li> <li class="timeline__item"> <span
+  class="timeline__item-date">5 January 2018</span> Case opened </li> </ul> </div> </div>-->
 {% endblock %}
 </main>
 </div>
