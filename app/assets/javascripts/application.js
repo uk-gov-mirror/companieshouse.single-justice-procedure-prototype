@@ -201,6 +201,6 @@ radio.change(function (e) {
   if (choice === 'yes') {
     form.attr('action', '/workflows/accept-case/review-case?id=0')
   } if (choice === 'no') {
-    form.attr('action', 'no.php')
+    form.attr('action', '/cases/all?id=0&case=rejected')
   }
 })
