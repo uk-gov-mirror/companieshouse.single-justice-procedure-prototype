@@ -74,21 +74,10 @@
                   {{ defendant.address.town }}<br/>
                   {{ defendant.address.county }}<br/>
                   {{ defendant.address.country }}<br/><br/>
-                  {% if defendant.addressType === 'service' %}
-                    <a href="" class="govuk-link defendant-address-button">Use residential address</a>
-                    <form action="" method="POST" id="defendant-address-form">
-                      <input type="hidden" name="useAddress" value="residential"/>
-                      <input type="hidden" name="caseID" value="{{ case.id }}"/>
-                      <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
-                    </form>
-                  {% else %}
-                    <a href="" class="govuk-link defendant-address-button">Use service address</a>
-                    <form action="" method="POST" id="defendant-address-form">
-                      <input type="hidden" name="useAddress" value="service"/>
-                      <input type="hidden" name="caseID" value="{{ case.id }}"/>
-                      <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
-                    </form>
-                  {% endif %}
+                  <!--{% if defendant.addressType === 'service' %} <a href="" class="govuk-link defendant-address-button">Use residential address</a> <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress"
+                  value="residential"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/> </form> {% else %} <a href="" class="govuk-link defendant-address-button">Use service address</a>
+                  <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress" value="service"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
+                  </form> {% endif %}-->
                 </td>
               </tr>
               <tr class="govuk-table__row">
