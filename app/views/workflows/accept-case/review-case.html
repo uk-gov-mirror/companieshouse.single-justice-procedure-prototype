@@ -24,10 +24,10 @@
 
     <div class="govuk-grid-row">
       <section class="decision-case" aria-labelledby="heading-case-details">
-        <h3 id="heading-case-details" class="govuk-heading-m">Case Details</h3>
+
         {% for defendant in case.defendants %}
+          <h2 id="heading-case-details" class="govuk-heading-l">{{ defendant.name }}</h2>
           <table class="govuk-table">
-            <caption class="govuk-table__caption govuk-!-font-size-24 govuk-!-margin-bottom-2">{{ defendant.name }}</caption>
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Date of birth</th>
@@ -96,7 +96,7 @@
                 legend: {
                   text: "Offenses",
                   isPageHeading: false,
-                  classes: "govuk-body govuk-!-font-size-27 govuk-!-font-weight-bold"
+                  classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
                 }
               },
               items: defendant.offences
