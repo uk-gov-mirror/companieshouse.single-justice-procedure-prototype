@@ -34,7 +34,7 @@
       </div>
       {% endset %}
       {% set link %}
-      <a href="" onclick="window.print();return false;" class="govuk-link ultimatum-view-link">Print ultimatum</a>
+      <button type="button" onclick="printJS('/public/documents/ultimatumnew.pdf')" class="govuk-link ultimatum-view-link">Print ultimatum</button>
       {% endset %}
       {{ govukTable({
         head: [
@@ -43,9 +43,6 @@
           },
           {
             text: "Ultimatum status"
-          },
-          {
-             text: "Details"
           },
           {
             text: "Print"
@@ -61,69 +58,12 @@
               classes: "ultimatum-generator"
             },
             {
-              text: "Show"
-            },
-            {
               html: link,
               classes: ""
             }
           ]
         ]
       }) }}
-      <div class="details-to-print" id="print">
-        <section class="company-info-details">
-          <p>*DirectorName*</p>
-          <p>*CompanyName*</p>
-          <p>*AddressLine1*</p>
-          <p>AddressLine2</p>
-          <p>AddressLine3</p>
-          <p>Postcode</p>
-        </section>
-        <section class="company-info-number">
-          <p class="crn">Company number</p>
-          <p class="crn-fig">
-            <strong>*CompanyNo*</strong>
-          </p>
-          <p class="ref">Reference number</p>
-          <p class="ref-fig">
-            <strong>*RefNumber*</strong>
-          </p>
-        </section>
-        <div class="clear"></div>
-        <p>*TodaysDate*</p>
-        <h2 class="dt-hide">Start of criminal proceedings</h2>
-        <p class="dt-hide">I’ve been asked to start criminal proceedings against you because your documents are overdue. We’ve sent reminders to you, but you have not filed your:</p>
-        <ul class="list">
-          <li>confirmation statement due on *DueDate*</li>
-          <li>accounts for *PeriodStartDate* to *PeriodEndDate*</li>
-          <li>accounts for *PeriodStartDate* to *PeriodEndDate*</li>
-        </ul>
-
-        <p class="deadline-area">
-          <span class="dt-hide">You must deliver all outstanding documents by</span>
-          <span class="deadline-date">*DeadlineDate*</span><span class="dt-hide inline">, or we’ll issue a single justice procedure notice from this date. This includes any documents due after the date of this letter. Documents are ‘delivered’ when we receive them in an acceptable electronic or paper format.</p>
-          <p class="dt-hide">As the company director, you’re responsible for sending these documents to us.</span></p>
-
-        <section class="strong dt-hide govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-
-          <p>If convicted, you could receive an unlimited fine for each set of accounts and confirmation statement. In certain circumstances, you could also be disqualified from being a director or taking part in the management of a company for up to 5 years.</p>
-          <p>Your company will also get an automatic financial penalty for any accounts delivered late, in addition to fines relating to the criminal proceedings.</p>
-        </section>
-        <blockquote class="dt-hide doc-quote">
-          <h3>File your documents now</h3>
-          <p>Use our online filing service: gov.uk/companieshouse</p>
-        </blockquote>
-
-        <p class="dt-hide">If your company is not trading and you want to remove it from the register go to: www.gov.uk/closing-a-limited-company</p>
-        <p class="dt-hide">Yours sincerely,</p>
-        <div class="sig dt-hide">
-          <p>
-            <strong>Stuart Morgan</strong>
-          </p>
-          <p>Head of the Enforcement and Integrity Unit</p>
-        </div>
-      </div>
 
       {{ govukButton({
         text: "Finish",
