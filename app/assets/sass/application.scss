@@ -300,6 +300,7 @@ $govuk-global-styles: true;
 
 .ultimatum-view-link {
   display: none;
+  margin-bottom: 0;
 }
 
 .govuk-button--blue {
@@ -312,6 +313,10 @@ $govuk-global-styles: true;
 
   &:active {
     background: $govuk-link-active-colour;
+  }
+
+  &:visited {
+    background: $govuk-link-visited-colour;
   }
 }
 
@@ -353,15 +358,4 @@ $govuk-global-styles: true;
 
 .inline-btn .govuk-details__summary-text {
   text-decoration: none !important;
-}
-
-@media print {
-  body {
-    color: red !important;
-    font-family: sans-serif;
-  }
-
-  .govuk-heading-xl {
-    font-family: sans-serif;
-  }
 }
