@@ -359,3 +359,7 @@ $govuk-global-styles: true;
 .inline-btn .govuk-details__summary-text {
   text-decoration: none !important;
 }
+
+.govuk-notification {
+  display: none;
+}

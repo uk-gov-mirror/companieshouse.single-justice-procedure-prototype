@@ -128,7 +128,7 @@ module.exports = function (router) {
   })
 
   // CASE DEFENDANTS
-  router.get('/case/defendants', function (req, res) {
+  /* router.get('/case/defendants', function (req, res) {
     var id = req.query.id
     var proceedMessage = ''
     var totalDefendants = 0
@@ -154,9 +154,9 @@ module.exports = function (router) {
       navTabLinkDefendants: 'section-navigation__link--active',
       proceedMessage: proceedMessage
     })
-  })
+  }) */
   // ULTIMATUM
-  router.get('/case/ultimatum', function (req, res) {
+  /* router.get('/case/ultimatum', function (req, res) {
     var id = req.query.id
 
     res.render('case/ultimatum', {
@@ -202,7 +202,7 @@ module.exports = function (router) {
       req.session.cases[id].status = 'Ultimatum expired'
       res.redirect('/cases/referrals')
     }
-  })
+  }) */
   // SJPN
   router.get('/case/sjpn', function (req, res) {
     var id = req.query.id
