@@ -204,3 +204,7 @@ radio.change(function (e) {
     form.attr('action', '/cases/all?id=0&case=rejected')
   }
 })
+
+function dismiss () {
+  document.getElementById('notification').parentNode.style.display = 'none'
+};

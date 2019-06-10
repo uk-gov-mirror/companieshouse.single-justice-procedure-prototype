@@ -6,6 +6,7 @@
 
 {% block beforeContent %}{% endblock %}
 {% block content %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">
@@ -16,13 +17,29 @@
     </div>
   </div>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ chErrorSummary({
+        titleText: "You've rejected case X",
+        errorList: [
+          {
+            text: "The date your passport was issued must be in the past",
+            href: "#passport-issued-error"
+          },
+          {
+            text: "Enter a postcode, like AA1 1AA",
+            href: "#postcode-error"
+           }
+        ]
+      }) }}
+    </div>
+  </div>
   {% if cases.length > 0 %}
     <div class="govuk-grid-row">
       {% include "includes/filters.html" %}
       <div class="govuk-grid-column-three-quarters column-results column-results--active">
         <a href="#filters" class="govuk-link filter-toggle govuk-button">Filter cases</a>
         <h3 class="info result-count govuk-heading-m" id="result-count" aria-live="assertive">&nbsp;</h3>
-
         <table class="govuk-table" id="all-cases-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">

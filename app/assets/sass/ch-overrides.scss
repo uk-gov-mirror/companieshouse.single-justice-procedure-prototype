@@ -42,3 +42,20 @@
     background-color: govuk-colour("blue");
   }
 }
+
+.govuk-notification {
+  border: 5px solid #005ea5;
+  color: #005ea5;
+  font-size: 0;
+  margin-bottom: 30px;
+  padding: 10px;
+  max-width: 440px;
+}
+
+.govuk-notification p {
+  line-height: 1;
+}
+
+.govuk-notification p:last-child {
+  margin-bottom: 0;
+}
