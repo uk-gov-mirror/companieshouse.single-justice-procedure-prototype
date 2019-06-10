@@ -23,8 +23,6 @@
     <form action="" method="get" novalidate="novalidate" name="caseDecision">
       {% set noHtml %}
       {{ govukTextarea({
-        id: "contact-by-email",
-        name: "contact-by-email",
         type: "email",
         classes: "govuk-!-width-two-thirds",
         label: {
@@ -36,7 +34,7 @@
        }) }}
       {% endset -%}
       {{ govukRadios({
-          idPrefix: "where-do-you-live",
+          idPrefix: "case-options",
           name: "caseOption",
           fieldset: {
             legend: {

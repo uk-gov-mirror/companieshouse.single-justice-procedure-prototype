@@ -204,7 +204,7 @@ module.exports = function (router) {
     }
   }) */
   // SJPN
-  router.get('/case/sjpn', function (req, res) {
+  /* router.get('/case/sjpn', function (req, res) {
     var id = req.query.id
 
     res.render('case/sjpn', {
@@ -300,7 +300,7 @@ module.exports = function (router) {
       hearingClasses: hearingClasses
     })
   })
-  router.post('/case/outcomes/add-outcome', function (req, res) {
+  /* router.post('/case/outcomes/add-outcome', function (req, res) {
     var caseID = req.body.caseID
     var defendantID = req.body.defendantID
     var offenceID = req.body.offenceID
@@ -497,7 +497,7 @@ module.exports = function (router) {
     }
   })
   // CASE HISTORY
-  router.get('/case/history', function (req, res) {
+  /* router.get('/case/history', function (req, res) {
     var id = req.query.id
 
     res.render('case/history', {
@@ -505,9 +505,9 @@ module.exports = function (router) {
       navTabListHistory: 'section-navigation__item--active',
       navTabLinkHistory: 'section-navigation__link--active'
     })
-  })
+  }) */
   // REJECT CASE
-  router.post('/case/reject-reason', function (req, res) {
+  /* router.post('/case/reject-reason', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
     var referral = req.session.cases[id]
@@ -536,9 +536,9 @@ module.exports = function (router) {
       req.session.cases[id].rejectReason = rejectReason
       res.redirect('/cases/all')
     }
-  })
+  }) */
   // CLOSE CASE
-  router.post('/case/close-case', function (req, res) {
+ /* router.post('/case/close-case', function (req, res) {
     var id = req.body.caseID
     var action = req.body.caseAction
     var referral = req.session.cases[id]
@@ -567,5 +567,5 @@ module.exports = function (router) {
       req.session.cases[id].closeReason = closeReason
       res.redirect('/cases/referrals')
     }
-  })
+  }) */
 }

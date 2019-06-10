@@ -11,6 +11,30 @@
       <h1 class="govuk-heading-xl">
         Login
       </h1>
+      {% from "input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+  label: {
+    text: "Username"
+  },
+  id: "event-name",
+  name: "event-name",
+  classes: "govuk-!-width-one-third",
+   id: "one-third",
+   name: "one-third"
+}) }}
+      {% from "input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+  label: {
+    text: "Password"
+  },
+  id: "event-name",
+  name: "event-name",
+  classes: "govuk-!-width-one-third",
+   id: "one-third",
+   name: "one-third"
+}) }}
       {{ govukButton({
         text: "Login",
         href: "/cases/all"
