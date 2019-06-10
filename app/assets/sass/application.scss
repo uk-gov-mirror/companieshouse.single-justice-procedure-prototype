@@ -318,6 +318,10 @@ $govuk-global-styles: true;
   &:visited {
     background: $govuk-link-visited-colour;
   }
+
+  &:focus {
+    background: $govuk-link-colour;
+  }
 }
 
 .action-bar__content .govuk-details {
