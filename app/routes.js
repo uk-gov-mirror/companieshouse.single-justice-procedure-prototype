@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { body } = require('express-validator/check')
 
 // Service Core
 require('./routes/core.js')(router)
