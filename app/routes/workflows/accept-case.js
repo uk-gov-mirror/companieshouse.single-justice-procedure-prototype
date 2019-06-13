@@ -19,9 +19,10 @@ module.exports = function (router) {
       backLink = '/workflows/accept-case/start?id=' + id
     }
 
-    for (i = 0; i < req.session.workingCase.defendants.length; i++) {
+    /* for (i = 0; i < req.session.workingCase.defendants.length; i++) {
       defendantObject.name = req.session.workingCase.defendants[i].name
       defendantObject.offences = []
+
       for (j = 0; j < req.session.workingCase.defendants[i].offences.length; j++) {
         offenceObject.value = i + '-' + j
         if (req.session.workingCase.defendants[i].offences[j].type === 'AA') {
@@ -36,9 +37,10 @@ module.exports = function (router) {
       }
       compiledDefendants.push(defendantObject)
     }
+
     console.log(compiledDefendants)
     console.log(compiledDefendants[0].offences)
-
+*/
     res.render('workflows/accept-case/review-case', {
       case: req.session.workingCase,
       caseOverviewTab: caseTab,

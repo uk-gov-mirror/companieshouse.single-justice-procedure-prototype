@@ -11,29 +11,33 @@
 {% endif %}
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-xl">
-    <span class="govuk-caption-xl">Prosecution - Case
-      {{ case.reference }}
-    </span>
-    {{ case.company.name }}
-  </h1>
+  <div class="govuk-grid-row">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">Prosecution - Case
+        {{ case.reference }}
+      </span>
+      {{ case.company.name }}
+    </h1>
+  </div>
 </div>
+
 <div class="govuk-width-container">
-  {% if case.status === 'Referred' %}
-    <form action="" method="get" novalidate="novalidate" name="caseDecision">
-      {% set noHtml %}
-      {{ govukTextarea({
+  <div class="govuk-grid-row">
+    {% if case.status === 'Referred' %}
+      <form action="" method="get" novalidate="novalidate" name="caseDecision">
+        {% set noHtml %}
+        {{ govukTextarea({
         type: "email",
         classes: "govuk-!-width-two-thirds",
         label: {
           text: "Why are you rejecting this case?"
         },
         attributes: {
-          spellcheck: "false"
+          spellcheck: "true"
         }
        }) }}
-      {% endset -%}
-      {{ govukRadios({
+        {% endset -%}
+        {{ govukRadios({
           idPrefix: "case-options",
           name: "caseOption",
           fieldset: {
@@ -57,11 +61,12 @@
             }
           ]
         }) }}
-      {{ govukButton({
+        {{ govukButton({
           text: "Submit"
         }) }}
-    </form>
+      </form>
 
-    <!--{% set buttonHref = "/workflows/accept-case/review-case?id=" + case.id %}-->
-  {% endif %}
+      <!--{% set buttonHref = "/workflows/accept-case/review-case?id=" + case.id %}-->
+    {% endif %}
+  </div>
 </div>

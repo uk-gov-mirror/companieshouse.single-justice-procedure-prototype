@@ -1,0 +1,125 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Accept case workflow for
+  {{ case.company.name }}. Step 1: Review case
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/case/overview?id=0"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+
+      <span class="govuk-caption-xl">Accept case workflow: Step 2 of 3</span>
+      <h1 class="govuk-heading-xl">
+        {{ case.company.name }}
+      </h1>
+    </div>
+
+    <div class="govuk-grid-row">
+      <section class="decision-case" aria-labelledby="heading-case-details">
+
+        <h2 id="heading-case-details" class="govuk-heading-l">Mark Page Bailey</h2>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Date of birth</th>
+              <td class="govuk-table__cell">05/06/1964</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Role</th>
+              <td class="govuk-table__cell">Director</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Appointed on</th>
+              <td class="govuk-table__cell">15/02/2006</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Status</th>
+              <td class="govuk-table__cell">
+
+                <strong class="govuk-tag govuk-tag--light-green">ACTIVE</strong>
+
+              </td>
+            </tr>
+
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant address</th>
+              <td class="govuk-table__cell">
+                <span class="govuk-!-font-weight-bold">Service address</span><br/>
+                Little Trendle Farm<br/>
+                Bere Alston<br/>
+                Yelverton<br/>
+                England<br/>
+                United Kingdom<br/><br/>
+              </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="row">Country of residence</th>
+              <td class="govuk-table__cell">{{ defendant.address.country }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {{ govukCheckboxes({
+            idPrefix: "plea",
+            name: "plea",
+            fieldset: {
+              legend: {
+                text: "Offences",
+                isPageHeading: false,
+                classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
+              }
+            },
+            items: [
+              {
+                value: "Accounts",
+                text: "Accounts - 28/02/2018"
+              },
+              {
+                value: "Confirmation Statement",
+                text: "Confirmation Statement - 15/02/2019"
+              }
+             ]
+         }) }}
+        {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
+        {{ govukButton({
+           text: "Continue",
+           href: buttonHref
+         }) }}
+        <form action="" method="POST">
+          <!-- items: defendant.offences-->
+          <!--{% for defendant in compiledDefendants %}-->
+          {{ govukCheckboxes({
+              idPrefix: "plea",
+              name: "plea",
+              fieldset: {
+                legend: {
+                  text: "Offences",
+                  isPageHeading: false,
+                  classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
+                }
+              },
+              items: [
+                {
+                  value: "Accounts",
+                  text: "Accounts - 28/02/2018"
+                },
+                {
+                  value: "Confirmation Statement",
+                  text: "Confirmation Statement - 15/02/2019"
+                }
+               ]
+           }) }}
+          <!--{% endfor %}-->
+
+        </form>
+      </section>
+    </div>
+  {% endblock %}

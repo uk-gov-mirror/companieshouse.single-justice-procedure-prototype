@@ -8,7 +8,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: "/cases/all"
+    href: "/case/overview?id=0"
   }) }}
 {% endblock %}
 
@@ -16,7 +16,7 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
 
-      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 2</span>
+      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 3</span>
       <h1 class="govuk-heading-xl">
         {{ case.company.name }}
       </h1>
@@ -87,9 +87,37 @@
             </tbody>
           </table>
         {% endfor %}
+
+        {{ govukCheckboxes({
+            idPrefix: "plea",
+            name: "plea",
+            fieldset: {
+              legend: {
+                text: "Offences",
+                isPageHeading: false,
+                classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
+              }
+            },
+            items: [
+              {
+                value: "Accounts",
+                text: "Accounts - 28/02/2018"
+              },
+              {
+                value: "Confirmation Statement",
+                text: "Confirmation Statement - 15/02/2019"
+              }
+             ]
+         }) }}
+        {% set buttonHref = "/workflows/accept-case/review-case-two?id=" +  case.id %}
+        {{ govukButton({
+           text: "Continue",
+           href: buttonHref
+         }) }}
         <form action="" method="POST">
-          {% for defendant in compiledDefendants %}
-            {{ govukCheckboxes({
+          <!-- items: defendant.offences-->
+          <!--{% for defendant in compiledDefendants %}-->
+          {{ govukCheckboxes({
               idPrefix: "plea",
               name: "plea",
               fieldset: {
@@ -99,14 +127,19 @@
                   classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
                 }
               },
-              items: defendant.offences
+              items: [
+                {
+                  value: "Accounts",
+                  text: "Accounts - 28/02/2018"
+                },
+                {
+                  value: "Confirmation Statement",
+                  text: "Confirmation Statement - 15/02/2019"
+                }
+               ]
            }) }}
-          {% endfor %}
-          {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
-          {{ govukButton({
-            text: "Continue",
-            href: buttonHref
-          }) }}
+          <!--{% endfor %}-->
+
         </form>
       </section>
     </div>
