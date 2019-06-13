@@ -19,7 +19,7 @@ var generateUltimatum = function (id) {
 
 // Generate ultimatum (Async)
 var generateUltimatumLabel = function (id) {
-  $('.ultimatum-generator').html('Generated - 3 April 2019')
+  $('.ultimatum-generator').html('Generated - 13 June 2019')
   $('.ultimatum-view-link').show()
 }
 
@@ -52,6 +52,15 @@ $(document).ready(function () {
   $('.result-count').attr('data-total', 10)
   $('.result-count').attr('data-pages', 5)
 
+  $(".filter input[type='checkbox']").change(function () {
+    var current = parseInt($('.result-count').attr('data-current'))
+    var total = parseInt($('.result-count').attr('data-total'))
+    var pages = parseInt($('.result-count').attr('data-pages'))
+    $('.result-count').attr('data-current', current + 1)
+    $('.result-count').attr('data-total', total + 1)
+    $('.result-count').text('Showing ' + (current + 1) + ' of ' + (total + 1) + ' cases on ' + pages + ' pages')
+  })
+
   $('.filters-heading').click(function () {
     if ($(this).parent().hasClass('open')) {
       $(this).parent().removeClass('open')
@@ -74,15 +83,6 @@ $(document).ready(function () {
   $('.filter-expand').click(function () {
     $('.filter').addClass('open')
     return false
-  })
-
-  $(".filter input[type='checkbox']").change(function () {
-    var current = parseInt($('.result-count').attr('data-current'))
-    var total = parseInt($('.result-count').attr('data-total'))
-    var pages = parseInt($('.result-count').attr('data-pages'))
-    $('.result-count').attr('data-current', current + 1)
-    $('.result-count').attr('data-total', total + 1)
-    $('.result-count').text('Showing ' + (current + 1) + ' of ' + (total + 1) + ' cases on ' + pages + ' pages')
   })
 
   // SHOW FILING TYPE
@@ -205,6 +205,7 @@ radio.change(function (e) {
   }
 })
 
+// Hide notification on the overview screen
 function dismiss () {
   document.getElementById('notification').parentNode.style.display = 'none'
 };
