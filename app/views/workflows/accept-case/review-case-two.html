@@ -16,16 +16,16 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
 
-      <span class="govuk-caption-xl">Accept case workflow: Step 2 of 3</span>
-      <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l">Company number: 00000000</span>
+      <h1 class="govuk-heading-l">
         BULLDOG TRADING LIMITED
       </h1>
     </div>
 
     <div class="govuk-grid-row">
       <section class="decision-case" aria-labelledby="heading-case-details">
-
-        <h2 id="heading-case-details" class="govuk-heading-l">Mark Page Bailey</h2>
+        <span class="govuk-caption-m">Person 2 of 2</span>
+        <h2 id="heading-case-details" class="govuk-heading-m">Mark Page Bailey</h2>
         <table class="govuk-table">
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
@@ -34,25 +34,17 @@
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Role</th>
-              <td class="govuk-table__cell">Director</td>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag govuk-tag--light-green">ACTIVE</strong>
+                Director</td>
             </tr>
             <tr class="govuk-table__row">
               <th class="govuk-table__header" scope="row">Appointed on</th>
               <td class="govuk-table__cell">15/02/2006</td>
             </tr>
             <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Status</th>
+              <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
               <td class="govuk-table__cell">
-
-                <strong class="govuk-tag govuk-tag--light-green">ACTIVE</strong>
-
-              </td>
-            </tr>
-
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant address</th>
-              <td class="govuk-table__cell">
-                <span class="govuk-!-font-weight-bold">Service address</span><br/>
                 Little Trendle Farm<br/>
                 Bere Alston<br/>
                 Yelverton<br/>
@@ -72,7 +64,7 @@
             name: "plea",
             fieldset: {
               legend: {
-                text: "Offences",
+                text: "Select offences",
                 isPageHeading: false,
                 classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
               }
@@ -88,6 +80,12 @@
               }
              ]
          }) }}
+        {% from "warning-text/macro.njk" import govukWarningText %}
+
+        {{ govukWarningText({
+text: "You have not selected any offenses.",
+iconFallbackText: "Warning"
+}) }}
         {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
         {{ govukButton({
            text: "Continue",

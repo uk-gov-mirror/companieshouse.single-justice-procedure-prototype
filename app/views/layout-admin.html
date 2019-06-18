@@ -53,38 +53,7 @@
   <!--{{ chSearchBar({ "classes": "", "containerClasses": "govuk-width-container govuk-width-container--full govuk-width-container--borderless" }) }}-->
 {% endblock %}
 
-{% block footer %}
-  {{ chFooter({
-    "meta": {
-      "items": [
-        {
-          "href": "/prototype-admin/clear-data",
-          "text": "Clear data"
-        }
-      ]
-    },
-    "classes": "",
-    "containerClasses": "govuk-width-container--full"
-  }) }}
-
-  {% set caseDebug %}
-  <form action="" id="debug-case">
-    {{ govukInput({
-      label: {
-        text: "Case Debug"
-      },
-      id: "case-debug-id",
-      name: "caseDebugID",
-      type: "number"
-    }) }}
-  </form>
-  {% endset %}
-
-  {{ govukDetails({
-    summaryText: "Case Debug",
-    html: caseDebug
-  }) }}
-{% endblock %}
+{% block footer %}{% endblock %}
 
 {% block bodyEnd %}
   {% block scripts %}
