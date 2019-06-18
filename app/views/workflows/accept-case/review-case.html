@@ -55,13 +55,8 @@
               {% endif %}
 
               <tr class="govuk-table__row">
-                <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant address</th>
+                <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
                 <td class="govuk-table__cell">
-                  {% if defendant.addressType === 'service' %}
-                    <span class="govuk-!-font-weight-bold">Service address</span><br/>
-                  {% else %}
-                    <span class="govuk-!-font-weight-bold">Residential address</span><br/>
-                  {% endif %}
                   {{ defendant.address.line1 }}<br/>
                   {{ defendant.address.line2 }}<br/>
                   {{ defendant.address.town }}<br/>
