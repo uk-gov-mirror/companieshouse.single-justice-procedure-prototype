@@ -42,7 +42,7 @@
           name: "caseOption",
           fieldset: {
             legend: {
-              text: "Would you like to contiune?",
+              text: "Would you like to issue an ultimatum?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--m"
             }
@@ -50,11 +50,11 @@
           items: [
             {
               value: "yes",
-              text: "Yes"
+              text: "Proceed"
             },
             {
               value: "no",
-              text: "No",
+              text: "Reject",
               conditional: {
                 html: noHtml
               }
@@ -62,7 +62,7 @@
           ]
         }) }}
         {{ govukButton({
-          text: "Submit"
+          text: "Confirm"
         }) }}
       </form>
 

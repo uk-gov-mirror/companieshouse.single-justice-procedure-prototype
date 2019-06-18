@@ -16,8 +16,8 @@
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
 
-      <span class="govuk-caption-xl">Accept case workflow: Step 1 of 3</span>
-      <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-l">Company number: 00000000</span>
+      <h1 class="govuk-heading-l">
         {{ case.company.name }}
       </h1>
     </div>
@@ -26,7 +26,8 @@
       <section class="decision-case" aria-labelledby="heading-case-details">
 
         {% for defendant in case.defendants %}
-          <h2 id="heading-case-details" class="govuk-heading-l">{{ defendant.name }}</h2>
+          <span class="govuk-caption-m">Person 1 of 2</span>
+          <h2 id="heading-case-details" class="govuk-heading-m">{{ defendant.name }}</h2>
           <table class="govuk-table">
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
@@ -35,25 +36,17 @@
               </tr>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Role</th>
-                <td class="govuk-table__cell">{{ defendant.role }}</td>
+                <td class="govuk-table__cell">
+                  {% if defendant.status === 'active' %}
+                    <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                  {% else %}
+                    <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                  {% endif %}{{ defendant.role }}</td>
               </tr>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Appointed on</th>
                 <td class="govuk-table__cell">{{ defendant.appointed }}</td>
               </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Status</th>
-                <td class="govuk-table__cell">
-
-                  {% if defendant.status === 'active' %}
-                    <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
-                  {% else %}
-                    <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
-                  {% endif %}
-
-                </td>
-              </tr>
-
               {% if defendant.status === 'resigned' %}
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resigned on</th>
@@ -73,7 +66,7 @@
                   {{ defendant.address.line2 }}<br/>
                   {{ defendant.address.town }}<br/>
                   {{ defendant.address.county }}<br/>
-                  {{ defendant.address.country }}<br/><br/>
+                  {{ defendant.address.country }}
                   <!--{% if defendant.addressType === 'service' %} <a href="" class="govuk-link defendant-address-button">Use residential address</a> <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress"
                   value="residential"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/> </form> {% else %} <a href="" class="govuk-link defendant-address-button">Use service address</a>
                   <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress" value="service"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
@@ -86,16 +79,15 @@
               </tr>
             </tbody>
           </table>
-        {% endfor %}
 
-        {{ govukCheckboxes({
+          {{ govukCheckboxes({
             idPrefix: "plea",
             name: "plea",
             fieldset: {
               legend: {
-                text: "Offences",
+                text: "Select offences",
                 isPageHeading: false,
-                classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
+                classes: "govuk-body govuk-!-font-size-22 govuk-!-font-weight-bold"
               }
             },
             items: [
@@ -109,6 +101,13 @@
               }
              ]
          }) }}
+          {% from "warning-text/macro.njk" import govukWarningText %}
+
+          {{ govukWarningText({
+ text: "You have not selected any offenses.",
+ iconFallbackText: "Warning"
+}) }}
+        {% endfor %}
         {% set buttonHref = "/workflows/accept-case/review-case-two?id=" +  case.id %}
         {{ govukButton({
            text: "Continue",

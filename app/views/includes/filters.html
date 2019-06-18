@@ -96,11 +96,13 @@
         }) }}
       </div>
       {{ govukButton({
-        text: "Filter cases"
+        text: "Filter cases",
+         classes: "govuk-!-margin-right-1"
       }) }}
+      {{ govukButton({
+  text: "Clear",
+  classes: "govuk-button--secondary link filter-reset"
+}) }}
     </form>
   </section>
-  <p>
-    <a href="" role="button" class="link filter-reset" title="Clear filters to see all cases" aria-controls="filters">Reset filters</a>
-  </p>
 </div>
