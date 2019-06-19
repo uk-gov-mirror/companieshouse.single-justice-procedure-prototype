@@ -15,16 +15,13 @@
 {% block content %}
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
-
       <span class="govuk-caption-l">Company number: 00000000</span>
       <h1 class="govuk-heading-l">
         {{ case.company.name }}
       </h1>
     </div>
-
     <div class="govuk-grid-row">
       <section class="decision-case" aria-labelledby="heading-case-details">
-
         {% for defendant in case.defendants %}
           <span class="govuk-caption-m">Defendant 1 of 2</span>
           <h2 id="heading-case-details" class="govuk-heading-m">{{ defendant.name }}</h2>
@@ -68,10 +65,6 @@
                   </form> {% endif %}-->
                 </td>
               </tr>
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="row">Country of residence</th>
-                <td class="govuk-table__cell">{{ defendant.address.country }}</td>
-              </tr>
             </tbody>
           </table>
 
@@ -88,20 +81,18 @@
             items: [
               {
                 value: "Accounts",
-                text: "Accounts - 28/02/2018"
+                text: "Accounts - 28 February 2018"
               },
               {
                 value: "Confirmation Statement",
-                text: "Confirmation Statement - 15/02/2019"
+                text: "Confirmation Statement - 15 February 2019"
               }
              ]
-         }) }}
-          {% from "warning-text/macro.njk" import govukWarningText %}
-
+           }) }}
           {{ govukWarningText({
- text: "You have not selected any offenses.",
- iconFallbackText: "Warning"
-}) }}
+           text: "You have not selected any offenses.",
+           iconFallbackText: "Warning"
+          }) }}
         {% endfor %}
         {% set buttonHref = "/workflows/accept-case/review-case-two?id=" +  case.id %}
         {{ govukButton({
@@ -133,7 +124,6 @@
                ]
            }) }}
           <!--{% endfor %}-->
-
         </form>
       </section>
     </div>

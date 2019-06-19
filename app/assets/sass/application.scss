@@ -367,3 +367,11 @@ $govuk-global-styles: true;
 .govuk-notification {
   display: none;
 }
+
+.govuk-greyed {
+  background: #efefef;
+}
+
+.govuk-ultimatum-table tr {
+  height: 49px;
+}

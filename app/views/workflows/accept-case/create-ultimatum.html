@@ -38,6 +38,7 @@
       {% endset %}
 
       {{ govukTable({
+        classes: "govuk-ultimatum-table",
         head: [
           {
             text: "Defendant"
@@ -74,6 +75,21 @@
             {
               html: link,
               classes: ""
+            }
+          ],
+          [
+
+            {
+              text: "John Smith",
+              classes: "govuk-greyed"
+            },
+            {
+              text: "Not applicable",
+              classes: "govuk-greyed"
+            },
+            {
+              text: "",
+              classes: "govuk-greyed"
             }
           ]
         ]
