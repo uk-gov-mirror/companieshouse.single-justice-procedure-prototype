@@ -80,6 +80,7 @@
 
         {{ govukWarningText({
 text: "You have not selected any offenses.",
+  classes: "offenses-warning",
 iconFallbackText: "Warning"
 }) }}
         {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
