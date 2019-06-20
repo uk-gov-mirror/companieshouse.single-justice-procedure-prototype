@@ -23,6 +23,13 @@
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
+    <p class="">Please check the following on CHIPS before proceeding:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Promise to file</li>
+      <li>Default letters</li>
+      <li>Any other relevant contacts</li>
+      <li>Are the outstanding documents time barred</li>
+    </ul>
     {% if case.status === 'Referred' %}
       <form action="" method="get" novalidate="novalidate" name="caseDecision">
         {% set noHtml %}
