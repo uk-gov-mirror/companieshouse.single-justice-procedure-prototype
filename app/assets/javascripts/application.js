@@ -228,6 +228,10 @@ var dynamicContent = getParameterByName('caseOption')
    if (dynamicContent == 'no') {
      $('.govuk-notification').show()
    }
+
+   $('.comment').click(function () {
+     $('.comment-textbox').slideDown()
+   })
  })
 
 var tog = $('.offenses-warning').hide()

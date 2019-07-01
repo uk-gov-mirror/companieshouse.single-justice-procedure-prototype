@@ -22,6 +22,7 @@
           <span class="govuk-caption-l">Reference -
             {{ case.reference }}
           </span>
+
           {{ case.company.name }}
         </h1>
         {% if case.status === 'Referred' %}
@@ -40,10 +41,12 @@
         <p class="govuk-body">Case reference:
           {{ case.reference }}
         </p>
+
       </div>
     </div>
   </div>
 </div>
+
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -55,7 +58,7 @@
         <ul class="govuk-tabs__list">
           <li class="govuk-tabs__list-item">
             <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#past-day">
-              Timeline
+              Case file
             </a>
           </li>
           <li class="govuk-tabs__list-item">
@@ -66,8 +69,24 @@
         </ul>
 
         <section class="govuk-tabs__panel" id="past-day">
-          <h2 class="govuk-heading-l">Timeline Overview</h2>
-          <a class="govuk-button govuk-blue" href="#">Add comment</a>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <h2 class="govuk-heading-l">Case file</h2>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <a class="govuk-button govuk-button--secondary comment">Add comment</a>
+            </div>
+          </div>
+          <div class="hide comment-textbox">
+            {{ govukTextarea({
+  name: "more-detail",
+  id: "more-detail",
+  label: {
+    text: "Leave your comment"
+  }
+}) }}
+            <button type="submit" class="govuk-button">Submit comment</button>
+          </div>
           <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
             <div class="govuk-accordion__section ">
@@ -124,6 +143,10 @@
         </section>
         <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
           <h2 class="govuk-heading-l">Defendents for case</h2>
+
+          {% for defendant in case.defendants %}
+            {{ defendant.name }}
+          {% endfor %}
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -134,7 +157,7 @@
             </thead>
             <tbody class="govuk-table__body">
               <tr class="govuk-table__row">
-                <td class="govuk-table__cell">David Francis</td>
+                <td class="govuk-table__cell">Angela Page Bailey</td>
                 <td class="govuk-table__cell">24</td>
                 <td class="govuk-table__cell">18</td>
               </tr>
