@@ -1,20 +1,22 @@
 module.exports = function (router) {
-  // CASE OVERVIEW
-  router.get('/case/overview', function (req, res) {
+  router.get('/case/company-profile', function (req, res) {
     var id = parseInt(req.query.id)
-
     for (i = 0; i < req.session.cases.length; i++) {
       // console.log(req.session.cases[i].company.name)
       if (req.session.cases[i].id === id) {
         req.session.workingCase = req.session.cases[i]
       }
     };
-
+    res.render('case/company-profile', {
+      case: req.session.cases[id]
+    })
+  })
+  // CASE OVERVIEW
+  router.get('/case/overview', function (req, res) {
+    var id = parseInt(req.query.id)
     req.session.recents.push(id)
     res.render('case/overview', {
-      case: req.session.cases[id],
-      navTabListOverview: 'section-navigation__item--active',
-      navTabLinkOverview: 'section-navigation__link--active'
+      case: req.session.cases[id]
     })
   })
   // CASE PROFILE
