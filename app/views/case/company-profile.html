@@ -36,8 +36,12 @@
     <div class="govuk-grid-column-full">
       <div class="action-bar__content">
         {% if case.status === 'Referred' %}
-          <a class="govuk-button" href="/case/overview?id=0">Proceed with case</a>
+          <a class="govuk-button govuk-!-margin-right-1" href="/case/overview?id=0">Proceed with case</a>
         {% endif %}
+
+        <button type="submit" class="govuk-button govuk-button--warning">
+          Withdraw case
+        </button>
       </div>
     </div>
   </div>
