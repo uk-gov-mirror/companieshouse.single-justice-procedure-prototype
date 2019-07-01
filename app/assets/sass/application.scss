@@ -373,3 +373,12 @@ $govuk-global-styles: true;
 .govuk-ultimatum-table tr {
   height: 49px;
 }
+
+.overview-case {
+  background: #f2f2f2;
+  padding: 20px 15px;
+}
+
+.overview-case .govuk-body {
+  margin: 0;
+}
