@@ -4,7 +4,13 @@
   Prosecution Case Company Profile: PJM ACCOUNTANCY LIMITED
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/cases/all"
+  }) }}
+{% endblock %}
+
 {% block content %}
 
   {% include "includes/case-header.html" %}
@@ -61,7 +67,7 @@
 
         <section class="govuk-tabs__panel" id="past-day">
           <h2 class="govuk-heading-l">Timeline Overview</h2>
-          <a class="govuk-button" href="#">Add comment</a>
+          <a class="govuk-button govuk-blue" href="#">Add comment</a>
           <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
             <div class="govuk-accordion__section ">
