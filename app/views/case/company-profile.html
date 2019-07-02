@@ -19,7 +19,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">Reference -
+          <span class="govuk-caption-l">Reference:
             {{ case.reference }}
           </span>
 
@@ -123,8 +123,8 @@
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col">Defendent</th>
-                <th class="govuk-table__header" scope="col">Status</th>
+                <th class="govuk-table__header" scope="col">Defendents</th>
+                <th class="govuk-table__header" scope="col">Offenses</th>
                 <th class="govuk-table__header" scope="col">Ultimatum</th>
               </tr>
             </thead>
@@ -132,25 +132,16 @@
               {% for defendant in case.defendants %}
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">{{ defendant.name }}</td>
-                  <td class="govuk-table__cell"></td>
+                  <td class="govuk-table__cell">
+
+                    {% if offense.type == AA %}
+                      Annual Accounts
+                    {% endif %}
+
+                  </td>
                   <td class="govuk-table__cell"></td>
                 </tr>
               {% endfor %}
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">Angela Page Bailey</td>
-                <td class="govuk-table__cell">24</td>
-                <td class="govuk-table__cell">18</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">Paul Farmer</td>
-                <td class="govuk-table__cell">16</td>
-                <td class="govuk-table__cell">20</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">Rita Patel</td>
-                <td class="govuk-table__cell">24</td>
-                <td class="govuk-table__cell">27</td>
-              </tr>
             </tbody>
           </table>
 
