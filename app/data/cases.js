@@ -363,7 +363,43 @@ module.exports = [
         time: '09:35',
         title: 'Case referred',
         user: 'Joanne Wiley'
+      },
+      {
+        date: 28,
+        notes: '',
+        time: 1551360007337,
+        title: 'Case accepted',
+        user: 'system'
+      },
+      {
+        date: 28,
+        notes: 'Ultimatum sent to the defendant',
+        time: 1551360013874,
+        title: 'Ultimatum issued',
+        user: 'system'
+      },
+      {
+        date: 28,
+        notes: 'Ultimatum period expired without response',
+        time: 1551360021980,
+        title: 'Ultimatum expired',
+        user: 'system'
+      },
+      {
+        date: 28,
+        notes: 'SJPN issued to defendant and queued for delivery to court',
+        time: 1551360033148,
+        title: 'SJPN issued',
+        user: 'system'
+      },
+      {
+        date: 28,
+        notes: 'SJPN expired, now waiting for court outcomes',
+        time: 1551360040219,
+        title: 'SJPN expired',
+        user: 'system'
       }
+
     ]
   },
   {
