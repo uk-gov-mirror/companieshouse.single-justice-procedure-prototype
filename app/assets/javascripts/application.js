@@ -231,6 +231,7 @@ var dynamicContent = getParameterByName('caseOption')
 
    $('.comment').click(function () {
      $('.comment-textbox').slideDown()
+     $('.comment').html('Cancel comment')
    })
  })
 
