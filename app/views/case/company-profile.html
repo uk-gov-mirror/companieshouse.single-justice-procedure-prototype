@@ -58,7 +58,7 @@
         <ul class="govuk-tabs__list">
           <li class="govuk-tabs__list-item">
             <a class="govuk-tabs__tab govuk-tabs__tab--selected" href="#past-day">
-              Case file
+              Case
             </a>
           </li>
           <li class="govuk-tabs__list-item">
@@ -89,6 +89,21 @@
           </div>
           <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
+            {% for note in case.history %}
+
+              <div class="govuk-accordion__section ">
+                <div class="govuk-accordion__section-header">
+                  <h2 class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                      {{ note.notes }}
+                    </span>
+                  </h2>
+                </div>
+                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                  <p class='govuk-body'>This is the content for Writing well for the web.</p>
+                </div>
+              </div>
+            {% endfor %}
             <div class="govuk-accordion__section ">
               <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
@@ -143,10 +158,6 @@
         </section>
         <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
           <h2 class="govuk-heading-l">Defendents for case</h2>
-
-          {% for defendant in case.defendants %}
-            {{ defendant.name }}
-          {% endfor %}
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
@@ -156,6 +167,13 @@
               </tr>
             </thead>
             <tbody class="govuk-table__body">
+              {% for defendant in case.defendants %}
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">{{ defendant.name }}</td>
+                  <td class="govuk-table__cell"></td>
+                  <td class="govuk-table__cell"></td>
+                </tr>
+              {% endfor %}
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell">Angela Page Bailey</td>
                 <td class="govuk-table__cell">24</td>
