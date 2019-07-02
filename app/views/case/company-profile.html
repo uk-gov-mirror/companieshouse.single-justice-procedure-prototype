@@ -95,12 +95,17 @@
                 <div class="govuk-accordion__section-header">
                   <h2 class="govuk-accordion__section-heading">
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                      {{ note.notes }}
+                      {{ note.title }}
                     </span>
                   </h2>
                 </div>
                 <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                  <p class='govuk-body'>This is the content for Writing well for the web.</p>
+                  <p class='govuk-body'>{{ note.time }}</p>
+                  <p class='govuk-body'>{{ note.date }}</p>
+                  <p class='govuk-body'>Referred by:
+                    {{ note.user }}</p>
+                  <p class='govuk-body'>{{ note.notes }}</p>
+
                 </div>
               </div>
             {% endfor %}
