@@ -11,7 +11,6 @@ module.exports = function (router) {
   })
   router.all('*', function (req, res, next) {
     if (typeof req.session.cases === 'undefined') {
-      // console.log('cases not loaded')
       return res.redirect('/')
     }
     next()

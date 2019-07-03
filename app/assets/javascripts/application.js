@@ -222,18 +222,22 @@ function getParameterByName (name, url) {
 }
 // Give the parameter a variable name
 var dynamicContent = getParameterByName('caseOption')
+var withdrawCase = getParameterByName('withdrawCase')
 
-	 $(document).ready(function () {
-		// Check if the URL parameter is apples
-   if (dynamicContent == 'no') {
-     $('.govuk-notification').show()
-   }
+$(document).ready(function () {
+  // Check if the URL parameter is apples
+  if (dynamicContent == 'no') {
+    $('.govuk-notification').show()
+  }
+  if (withdrawCase == 'no') {
+    $('.govuk-notification').show()
+  }
 
-   $('.comment').click(function () {
-     $('.comment-textbox').slideDown()
-     $('.comment').html('Cancel comment')
-   })
- })
+  $('.comment').click(function () {
+    $('.comment-textbox').slideDown()
+    $('.comment').html('Cancel comment')
+  })
+})
 
 var tog = $('.offenses-warning').hide()
 $('.govuk-checkboxes__input').change(function () {
