@@ -28,6 +28,17 @@ module.exports = function (router) {
     })
   })
 
+  router.get('/workflows/accept-case/review-case-two', function (req, res) {
+    var id = req.query.id
+    var caseTab = 'section-navigation__link--active'
+    var companyTab = 'section-navigation__link--active'
+
+    res.render('workflows/accept-case/review-case-two', {
+      case: req.session.cases[id],
+      caseOverviewTab: caseTab,
+      companyOverviewTab: companyTab
+    })
+  })
   // ACCEPT/REJECT DECISION SCREEN
   router.get('/case/decision', function (req, res) {
     var id = req.query.id

@@ -1,7 +1,7 @@
 module.exports = function (router) {
   // WORKFLOW START SCREEN
 
-  // STEP 1: REVIEW CASE
+  // REVIEW CASE
   router.get('/workflows/accept-case/review-case', function (req, res) {
     var id = parseInt(req.query.id)
     var caseTab = 'section-navigation__link--active'
@@ -12,35 +12,11 @@ module.exports = function (router) {
     var offenceObject = {}
     var i = 0
     var j = 0
-
     if (req.session.doNotShowAcceptCase === true) {
       backLink = '/cases/all'
     } else {
       backLink = '/workflows/accept-case/start?id=' + id
     }
-
-    /* for (i = 0; i < req.session.workingCase.defendants.length; i++) {
-      defendantObject.name = req.session.workingCase.defendants[i].name
-      defendantObject.offences = []
-
-      for (j = 0; j < req.session.workingCase.defendants[i].offences.length; j++) {
-        offenceObject.value = i + '-' + j
-        if (req.session.workingCase.defendants[i].offences[j].type === 'AA') {
-          offenceObject.text = 'Annual accounts' + ' - 31 Mar 2018'
-        } else if (req.session.workingCase.defendants[i].offences[j].type === 'CS') {
-          offenceObject.text = 'Confirmation statement'
-        } else {
-          offenceObject.text = req.session.workingCase.defendants[i].offences[j].type
-        }
-        offenceObject.checked = false
-        defendantObject.offences.push(offenceObject)
-      }
-      compiledDefendants.push(defendantObject)
-    }
-
-    console.log(compiledDefendants)
-    console.log(compiledDefendants[0].offences)
-*/
     res.render('workflows/accept-case/review-case', {
       case: req.session.workingCase,
       caseOverviewTab: caseTab,
@@ -49,7 +25,6 @@ module.exports = function (router) {
       backLink: backLink
     })
   })
-
   router.post('/workflows/accept-case/review-case', function (req, res) {
     var plea = req.body.plea
     var outcome = req.body.outcome
@@ -90,7 +65,19 @@ module.exports = function (router) {
     }
   })
 
-  // STEP 3: GENERATE ULTIMATUM
+  // Summary of the case
+  router.get('/workflows/accept-case/summary', function (req, res) {
+    var id = parseInt(req.query.id)
+    var backLink = ''
+
+    backLink = '/workflows/accept-case/review-case?id=' + id
+
+    res.render('workflows/accept-case/summary', {
+      case: req.session.workingCase,
+      backLink: backLink
+    })
+  })
+  // GENERATE ULTIMATUM
   router.get('/workflows/accept-case/create-ultimatum', function (req, res) {
     var id = parseInt(req.query.id)
     var backLink = ''
