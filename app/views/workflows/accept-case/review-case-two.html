@@ -83,7 +83,7 @@ text: "You have not selected any offenses.",
   classes: "offenses-warning",
 iconFallbackText: "Warning"
 }) }}
-        {% set buttonHref = "/workflows/accept-case/create-ultimatum?id=" +  case.id %}
+        {% set buttonHref = "/workflows/accept-case/summary?id=0"%}
         {{ govukButton({
            text: "Continue",
            href: buttonHref

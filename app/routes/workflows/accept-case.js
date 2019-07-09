@@ -92,6 +92,19 @@ module.exports = function (router) {
       backLink: backLink
     })
   })
+
+  // Summary of the case
+  router.get('/workflows/accept-case/summary', function (req, res) {
+    var id = parseInt(req.query.id)
+    var backLink = ''
+
+    backLink = '/workflows/accept-case/review-case?id=' + id
+
+    res.render('workflows/accept-case/summary', {
+      case: req.session.workingCase,
+      backLink: backLink
+    })
+  })
   router.post('/workflows/accept-case/accept-case', function (req, res) {
     var id = parseInt(req.body.id)
     var event = {}

@@ -100,32 +100,6 @@
            text: "Continue",
            href: buttonHref
          }) }}
-        <form action="" method="POST">
-          <!-- items: defendant.offences-->
-          <!--{% for defendant in compiledDefendants %}-->
-          {{ govukCheckboxes({
-              idPrefix: "plea",
-              name: "plea",
-              fieldset: {
-                legend: {
-                  text: "Offences",
-                  isPageHeading: false,
-                  classes: "govuk-body govuk-!-font-size-24 govuk-!-font-weight-bold"
-                }
-              },
-              items: [
-                {
-                  value: "Accounts",
-                  text: "Accounts - 28/02/2018"
-                },
-                {
-                  value: "Confirmation Statement",
-                  text: "Confirmation Statement - 15/02/2019"
-                }
-               ]
-           }) }}
-          <!--{% endfor %}-->
-        </form>
       </section>
     </div>
   {% endblock %}

@@ -1,0 +1,105 @@
+{% extends "layout-admin.html" %}
+
+{% block pageTitle %}
+  Step by step navigation
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: backLink
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <span class="govuk-caption-l">Company number: 00000000</span>
+        <h1 class="govuk-heading-l">
+          {{ case.company.name }}
+        </h1>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">Summary of the case</h2>
+        <div class=" person">
+          <h2 class="govuk-heading-s">Defendent 1</h2>
+
+          {{ govukSummaryList({
+             classes: 'govuk-!-margin-bottom-9',
+             rows: [
+               {
+                 key: {
+                   text: "Name"
+                 },
+                 value: {
+                   text: "Sarah Philips"
+                 }
+               },
+               {
+                 key: {
+                   text: "Offenses"
+                 },
+                 value: {
+                   html: "Annual Accounts<br>Confirmation Statements"
+                 },
+                 actions: {
+                   items: [
+                     {
+                       href: "#",
+                       text: "Change",
+                       visuallyHiddenText: "address"
+                     }
+                   ]
+                 }
+               }
+             ]
+           }) }}
+
+          <h2 class="govuk-heading-s">Defendent 2</h2>
+
+          {{ govukSummaryList({
+             classes: 'govuk-!-margin-bottom-9',
+             rows: [
+               {
+                 key: {
+                   text: "Name"
+                 },
+                 value: {
+                   text: "Sarah Philips"
+                 }
+               },
+               {
+                 key: {
+                   text: "Offenses"
+                 },
+                 value: {
+                   html: "Annual Accounts<br>Confirmation Statements"
+                 },
+                 actions: {
+                   items: [
+                     {
+                       href: "#",
+                       text: "Change",
+                       visuallyHiddenText: "address"
+                     }
+                   ]
+                 }
+               }
+             ]
+           }) }}
+          <h2 class="govuk-heading-m">Now proceed against selected defendents</h2>
+
+          <p class="govuk-body">By submitting this you confirm that the above details are correct.</p>
+
+          {{ govukButton({
+        text: "Generate ultimatum",
+        href: "/workflows/accept-case/create-ultimatum?id=" +  case.id
+      }) }}
+        </div>
+      </div>
+
+    {% endblock %}
