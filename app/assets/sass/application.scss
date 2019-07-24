@@ -395,3 +395,13 @@ $govuk-global-styles: true;
 .text-align-right {
   text-align: right;
 }
+
+.all-cases_titles {
+  text-transform: lowercase;
+  display: block;
+
+}
+
+.all-cases_titles::first-letter {
+  text-transform: uppercase;
+}

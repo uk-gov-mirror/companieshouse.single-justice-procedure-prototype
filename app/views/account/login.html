@@ -1,44 +1,48 @@
 {% extends "layout-admin.html" %}
 
 {% block pageTitle %}
-  Login
+  Sign in
 {% endblock %}
 
 {% block beforeContent %}{% endblock %}
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-      <h1 class="govuk-heading-xl">
-        Login
-      </h1>
-      {% from "input/macro.njk" import govukInput %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <span class="govuk-caption-xl">Single Justice Procedure</span>
 
-      {{ govukInput({
+        <h1 class="govuk-heading-xl">
+          Sign in
+        </h1>
+        {% from "input/macro.njk" import govukInput %}
+
+        {{ govukInput({
   label: {
     text: "Username"
   },
   id: "event-name",
   name: "event-name",
-  classes: "govuk-!-width-one-third",
-   id: "one-third",
-   name: "one-third"
+  classes: "govuk-!-width-two-thirds",
+   id: "two-thirds",
+   name: "two-thirds"
 }) }}
-      {% from "input/macro.njk" import govukInput %}
+        {% from "input/macro.njk" import govukInput %}
 
-      {{ govukInput({
+        {{ govukInput({
   label: {
     text: "Password"
   },
   id: "event-name",
   name: "event-name",
-  classes: "govuk-!-width-one-third",
-   id: "one-third",
-   name: "one-third"
+  classes: "govuk-!-width-two-thirds",
+   id: "two-thirds",
+   name: "two-thirds"
 }) }}
-      {{ govukButton({
-        text: "Login",
+        {{ govukButton({
+        text: "Sign in",
         href: "/cases/all"
       }) }}
+      </div>
     </div>
   </div>
 {% endblock %}
