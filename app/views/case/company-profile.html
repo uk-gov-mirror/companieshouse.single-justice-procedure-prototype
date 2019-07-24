@@ -28,6 +28,7 @@
         {% if case.status === 'Referred' %}
           <a class="govuk-button govuk-!-margin-right-1" href="/case/overview?id=0">Proceed with case</a>
         {% endif %}
+        {% if case.status === 'Ultimatum issued' %}{% endif %}
 
         <button type="submit" class="govuk-button govuk-button--warning">
           Withdraw case
@@ -47,6 +48,7 @@ text: "Reason for withdrawing case"
         <h2 class="govuk-heading-m">Details</h2>
         <p class="govuk-body">Status:
           {% if case.status === 'Referred' %}Referred{% endif %}
+          {% if case.status === 'Ultimatum issued' %}Ultimatum issued{% endif %}
         </p>
         <p class="govuk-body">Reference:
           {{ case.reference }}
@@ -85,7 +87,7 @@ text: "Reason for withdrawing case"
                 <h2 class="govuk-heading-l">Case file</h2>
               </div>
               <div class="govuk-grid-column-one-half">
-                <button class="govuk-button govuk-button--secondary comment">Add comment</button>
+                <button class="govuk-button govuk-button--secondary comment comment-closed">Add comment</button>
               </div>
             </div>
             <div class="hide comment-textbox">

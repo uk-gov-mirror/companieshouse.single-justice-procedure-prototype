@@ -1,13 +1,14 @@
 module.exports = function (router) {
-  router.get('/case/company-profile', function (req, res) {
+  router.get('/case/page-one/', function (req, res) {
     var id = parseInt(req.query.id)
+    var i = 0
+
     for (i = 0; i < req.session.cases.length; i++) {
-      // console.log(req.session.cases[i].company.name)
       if (req.session.cases[i].id === id) {
         req.session.workingCase = req.session.cases[i]
       }
     };
-    res.render('case/company-profile', {
+    res.render('case/page-one', {
       case: req.session.cases[id]
     })
   })
@@ -20,10 +21,10 @@ module.exports = function (router) {
     })
   })
   // CASE PROFILE
-  router.get('/case/company-profile', function (req, res) {
+  router.get('/case/page-one/', function (req, res) {
     var id = req.query.id
 
-    res.render('case/company-profile', {
+    res.render('case/page-one/', {
       case: req.session.cases[id],
       navTabListProfile: 'section-navigation__item--active',
       navTabLinkProfile: 'section-navigation__link--active'

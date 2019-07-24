@@ -233,9 +233,13 @@ $(document).ready(function () {
     $('.govuk-notification').show()
   }
 
-  $('.comment').click(function () {
-    $('.comment-textbox').slideDown()
-    $('.comment').html('Cancel comment')
+  $('.comment-closed').click(function () {
+    $('.comment-textbox').slideToggle()
+    $(this).text($(this).text() == 'Add comment' ? 'Cancel Comment' : 'Add comment')
+  })
+  $('.ultimatum-view-link').click(function () {
+    var time = new Date()
+    $(this).parent('.person-btn-container').parent('.govuk-table__row').children('.person-date').html(time.toDateString())
   })
 })
 
