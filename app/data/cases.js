@@ -1287,7 +1287,7 @@ module.exports = [
   {
     id: 4,
     reference: 'RR00000001',
-    status: 'Awaiting Witness Statement',
+    status: 'Ready for witness statement',
     referred: '11 Sep 2018',
     referrer: 'Joanne Wiley',
     priority: 'normal',

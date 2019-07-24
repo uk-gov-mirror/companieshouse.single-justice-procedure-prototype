@@ -15,47 +15,57 @@
 {% block content %}
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <span class="govuk-caption-l">Company number: 00000000</span>
+          <h1 class="govuk-heading-l">
+            BULLDOG TRADING LIMITED
+          </h1>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          {{ govukButton({
+  text: "Reject the whole case",
+  classes: "govuk-button--warning reject"
+}) }}
+        </div>
 
-      <span class="govuk-caption-l">Company number: 00000000</span>
-      <h1 class="govuk-heading-l">
-        BULLDOG TRADING LIMITED
-      </h1>
-    </div>
+      </div>
 
-    <div class="govuk-grid-row">
-      <section class="decision-case" aria-labelledby="heading-case-details">
-        <span class="govuk-caption-m">Defendant 2 of 2</span>
-        <h2 id="heading-case-details" class="govuk-heading-m">Mark Page Bailey</h2>
-        <table class="govuk-table">
-          <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Date of birth</th>
-              <td class="govuk-table__cell">05 June 1964</td>
-            </tr>
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Role</th>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag govuk-tag--light-green">Active</strong>
-                Director</td>
-            </tr>
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="row">Appointed on</th>
-              <td class="govuk-table__cell">15 February 2006</td>
-            </tr>
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
-              <td class="govuk-table__cell">
-                Little Trendle Farm<br/>
-                Bere Alston<br/>
-                Yelverton<br/>
-                England<br/>
-                United Kingdom<br/>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <section class="decision-case" aria-labelledby="heading-case-details">
+            <span class="govuk-caption-m">Defendant 2 of 2</span>
+            <h2 id="heading-case-details" class="govuk-heading-m">Mark Page Bailey</h2>
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Date of birth</th>
+                  <td class="govuk-table__cell">05 June 1964</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Role</th>
+                  <td class="govuk-table__cell">
+                    <strong class="govuk-tag govuk-tag--light-green">Active</strong>
+                    Director</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Appointed on</th>
+                  <td class="govuk-table__cell">15 February 2006</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
+                  <td class="govuk-table__cell">
+                    Little Trendle Farm<br/>
+                    Bere Alston<br/>
+                    Yelverton<br/>
+                    England<br/>
+                    United Kingdom<br/>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-        {{ govukCheckboxes({
+            {{ govukCheckboxes({
             idPrefix: "plea",
             name: "plea",
             fieldset: {
@@ -76,22 +86,22 @@
               }
              ]
          }) }}
-        {% from "warning-text/macro.njk" import govukWarningText %}
+            {% from "warning-text/macro.njk" import govukWarningText %}
 
-        {{ govukWarningText({
+            {{ govukWarningText({
 text: "You have not selected any offenses.",
   classes: "offenses-warning",
 iconFallbackText: "Warning"
 }) }}
-        {% set buttonHref = "/workflows/accept-case/summary?id=0"%}
-        {{ govukButton({
+            {% set buttonHref = "/workflows/accept-case/summary?id=0"%}
+            {{ govukButton({
            text: "Continue",
            href: buttonHref
          }) }}
-        <form action="" method="POST">
-          <!-- items: defendant.offences-->
-          <!--{% for defendant in compiledDefendants %}-->
-          {{ govukCheckboxes({
+            <form action="" method="POST">
+              <!-- items: defendant.offences-->
+              <!--{% for defendant in compiledDefendants %}-->
+              {{ govukCheckboxes({
               idPrefix: "plea",
               name: "plea",
               fieldset: {
@@ -112,9 +122,10 @@ iconFallbackText: "Warning"
                 }
                ]
            }) }}
-          <!--{% endfor %}-->
+              <!--{% endfor %}-->
 
-        </form>
-      </section>
-    </div>
-  {% endblock %}
+            </form>
+          </section>
+        </div>
+      </div>
+    {% endblock %}

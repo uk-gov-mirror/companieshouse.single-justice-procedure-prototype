@@ -177,60 +177,71 @@ text: "Reason for withdrawing case"
 
     <div class="govuk-width-container">
       <div class="govuk-grid-row">
-        <span class="govuk-caption-l">Company number: 00000000</span>
-        <h1 class="govuk-heading-l">
-          {{ case.company.name }}
-        </h1>
+        <div class="govuk-grid-column-two-thirds">
+          <span class="govuk-caption-l">Company number: 00000000</span>
+          <h1 class="govuk-heading-l">
+            {{ case.company.name }}
+          </h1>
+        </div>
+        <div class="govuk-grid-column-one-third">
+
+          {{ govukButton({
+  text: "Reject the whole case",
+  classes: "govuk-button--warning reject"
+}) }}
+        </div>
       </div>
       <div class="govuk-grid-row">
-        <section class="decision-case" aria-labelledby="heading-case-details">
-          {% for defendant in case.defendants %}
-            <span class="govuk-caption-m">Defendant 1 of 2</span>
-            <h2 id="heading-case-details" class="govuk-heading-m">{{ defendant.name }}</h2>
-            <table class="govuk-table">
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Date of birth</th>
-                  <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Role</th>
-                  <td class="govuk-table__cell">
-                    {% if defendant.status === 'active' %}
-                      <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
-                    {% else %}
-                      <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
-                    {% endif %}{{ defendant.role }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="row">Appointed on</th>
-                  <td class="govuk-table__cell">{{ defendant.appointed }}</td>
-                </tr>
-                {% if defendant.status === 'resigned' %}
+        <div class="govuk-grid-column-full">
+
+          <section class="decision-case" aria-labelledby="heading-case-details">
+            {% for defendant in case.defendants %}
+              <span class="govuk-caption-m">Defendant 1 of 2</span>
+              <h2 id="heading-case-details" class="govuk-heading-m">{{ defendant.name }}</h2>
+              <table class="govuk-table">
+                <tbody class="govuk-table__body">
                   <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Resigned on</th>
-                    <td class="govuk-table__cell">{{ defendant.resigned }}</td>
+                    <th class="govuk-table__header" scope="row">Date of birth</th>
+                    <td class="govuk-table__cell">{{ defendant.dateOfBirth }}</td>
                   </tr>
-                {% endif %}
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Role</th>
+                    <td class="govuk-table__cell">
+                      {% if defendant.status === 'active' %}
+                        <strong class="govuk-tag govuk-tag--light-green">{{ defendant.status }}</strong>
+                      {% else %}
+                        <strong class="govuk-tag govuk-tag--grey">{{ defendant.status }}</strong>
+                      {% endif %}{{ defendant.role }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">Appointed on</th>
+                    <td class="govuk-table__cell">{{ defendant.appointed }}</td>
+                  </tr>
+                  {% if defendant.status === 'resigned' %}
+                    <tr class="govuk-table__row">
+                      <th class="govuk-table__header" scope="row">Resigned on</th>
+                      <td class="govuk-table__cell">{{ defendant.resigned }}</td>
+                    </tr>
+                  {% endif %}
 
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
-                  <td class="govuk-table__cell">
-                    {{ defendant.address.line1 }}<br/>
-                    {{ defendant.address.line2 }}<br/>
-                    {{ defendant.address.town }}<br/>
-                    {{ defendant.address.county }}<br/>
-                    {{ defendant.address.country }}
-                    <!--{% if defendant.addressType === 'service' %} <a href="" class="govuk-link defendant-address-button">Use residential address</a> <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress"
-                    value="residential"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/> </form> {% else %} <a href="" class="govuk-link defendant-address-button">Use service address</a>
-                    <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress" value="service"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
-                    </form> {% endif %}-->
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header govuk-table__header--top" scope="row">Defendant service address</th>
+                    <td class="govuk-table__cell">
+                      {{ defendant.address.line1 }}<br/>
+                      {{ defendant.address.line2 }}<br/>
+                      {{ defendant.address.town }}<br/>
+                      {{ defendant.address.county }}<br/>
+                      {{ defendant.address.country }}
+                      <!--{% if defendant.addressType === 'service' %} <a href="" class="govuk-link defendant-address-button">Use residential address</a> <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress"
+                      value="residential"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/> </form> {% else %} <a href="" class="govuk-link defendant-address-button">Use service address</a>
+                      <form action="" method="POST" id="defendant-address-form"> <input type="hidden" name="useAddress" value="service"/> <input type="hidden" name="caseID" value="{{ case.id }}"/> <input type="hidden" name="defendantID" value="{{ defendant.id }}"/>
+                      </form> {% endif %}-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-            {{ govukCheckboxes({
+              {{ govukCheckboxes({
             idPrefix: "plea",
             name: "plea",
             fieldset: {
@@ -251,18 +262,133 @@ text: "Reason for withdrawing case"
               }
              ]
            }) }}
-            {{ govukWarningText({
+              {{ govukWarningText({
            text: "You have not selected any offenses.",
            classes: "offenses-warning",
            iconFallbackText: "Warning"
           }) }}
-          {% endfor %}
-          {% set buttonHref = "/workflows/accept-case/review-case-two?id=" +  case.id %}
-          {{ govukButton({
+            {% endfor %}
+            {% set buttonHref = "/workflows/accept-case/review-case-two?id=" +  case.id %}
+            {{ govukButton({
            text: "Continue",
            href: buttonHref
          }) }}
-        </section>
+          </section>
+        </div>
+      </div>
+    {% endif %}
+    {% if case.status === 'Ready for witness statement' %}
+      <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+
+            <span class="govuk-caption-xl">Reference: 00000000</span>
+            <h1 class="govuk-heading-xl">Company name</h1>
+
+            <h2 class="govuk-heading-m">Company Details</h2>
+
+            {{ govukSummaryList({
+            classes: 'govuk-!-margin-bottom-9',
+            rows: [
+              {
+                key: {
+                  text: "Company"
+                },
+                value: {
+                  text: "Bulldog Trading Limited"
+                }
+              },
+              {
+                key: {
+                  text: "Incorporation Date"
+                },
+                value: {
+                  text: "30 June 2017"
+                }
+              }
+            ]
+          }) }}
+
+            <h2 class="govuk-heading-m">Defendent 1</h2>
+
+            {{ govukSummaryList({
+            classes: 'govuk-!-margin-bottom-9',
+            rows: [
+              {
+                key: {
+                  text: "Name"
+                },
+                value: {
+                  text: "Joe Blogs"
+                }
+              },
+              {
+                key: {
+                  text: "Role"
+                },
+                value: {
+                  text: "Director"
+                }
+              },
+              {
+                key: {
+                  text: "Offenses"
+                },
+                value: {
+                  html: "Offense 1 - 20 June 2019<br>Offense 2 - 20 June 2019<br>Offense 3 - 20 June 2019"
+                }
+              }
+            ]
+          }) }}
+
+            <h2 class="govuk-heading-m">Defendent 2</h2>
+
+            {{ govukSummaryList({
+            classes: 'govuk-!-margin-bottom-9',
+            rows: [
+              {
+                key: {
+                  text: "Name"
+                },
+                value: {
+                  text: "Joe Blogs"
+                }
+              },
+              {
+                key: {
+                  text: "Role"
+                },
+                value: {
+                  text: "Director"
+                }
+              },
+              {
+                key: {
+                  text: "Offenses"
+                },
+                value: {
+                  html: "Offense 1 - 20 June 2019<br>Offense 2 - 20 June 2019<br>Offense 3 - 20 June 2019"
+                }
+              }
+            ]
+          }) }}
+
+            <h2 class="govuk-heading-m">Confirmation</h2>
+
+            <p class="govuk-body">If you're happy with the above details then accept and e-sign below.</p>
+
+            <form action="/form-handler" method="post" novalidate="novalidate">
+
+              <input type="hidden" name="answers-checked" value="true">
+
+              {{ govukButton({
+              text: "Accept and e-sign"
+            }) }}
+
+            </form>
+
+          </div>
+        </div>
       </div>
     {% endif %}
   {% endblock %}
