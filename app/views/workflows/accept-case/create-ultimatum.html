@@ -4,17 +4,11 @@
   Step by step navigation
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukBackLink({
-  text: "Back",
-  href: backLink
-}) }}
-{% endblock %}
-
 {% block content %}
   <div class="govuk-width-container">
     <div class="govuk-grid-row">
-      <span class="govuk-caption-l">Company number: 00000000</span>
+      <span class="govuk-caption-l">Company number:
+        {{ case.company.number }}</span>
       <h1 class="govuk-heading-l">
         {{ case.company.name }}
       </h1>

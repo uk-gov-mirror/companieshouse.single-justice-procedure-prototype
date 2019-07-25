@@ -247,3 +247,4 @@ var tog = $('.offenses-warning').hide()
 $('.govuk-checkboxes__input').change(function () {
   $(tog).toggle($('.govuk-checkboxes__input:not(:checked)').length > 1)
 }).change()
+
