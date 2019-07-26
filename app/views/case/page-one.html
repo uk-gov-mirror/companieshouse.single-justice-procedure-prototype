@@ -293,13 +293,13 @@ text: "Reason for withdrawing case"
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
           {{ govukTable({
-            caption: "Company Details",
+            caption: "Company details",
             firstCellIsHeader: true,
             classes: "govuk-table govuk-table--condensed decision-case",
             rows: [
               [
                 {
-                  text: "Incorporation Date"
+                  text: "Incorporation date"
                 },
                 {
                   text: "30 June 2017"
@@ -310,7 +310,6 @@ text: "Reason for withdrawing case"
 
           {{ govukTable({
             caption: "Confirmation Statement - 14 June 2018",
-            firstCellIsHeader: true,
             classes: "govuk-table govuk-table--condensed decision-case",
             head: [
               {
@@ -326,7 +325,7 @@ text: "Reason for withdrawing case"
                   text: "Joe Blogs"
                 },
                 {
-                  text: "2nd January 2014"
+                  text: "2 January 2014"
                 }
               ],
               [
@@ -334,7 +333,7 @@ text: "Reason for withdrawing case"
                   text: "Sarah Blogs"
                 },
                 {
-                  text: "2nd January 2014"
+                  text: "2 January 2014"
                 }
               ]
             ]
@@ -342,7 +341,6 @@ text: "Reason for withdrawing case"
 
           {{ govukTable({
             caption: "Annual Accounts - 20 June 2018",
-            firstCellIsHeader: true,
             classes: "govuk-table govuk-table--condensed decision-case",
             head: [
               {
@@ -358,7 +356,7 @@ text: "Reason for withdrawing case"
                   text: "Joe Blogs"
                 },
                 {
-                  text: "2nd January 2014"
+                  text: "2 January 2014"
                 }
               ],
               [
@@ -366,7 +364,7 @@ text: "Reason for withdrawing case"
                   text: "Sarah Blogs"
                 },
                 {
-                  text: "2nd January 2014"
+                  text: "2 January 2014"
                 }
               ]
             ]
@@ -469,6 +467,11 @@ text: "Reason for withdrawing case"
           {{ govukButton({
               text: "Accept and sign"
         }) }}
+
+          {{ govukDetails({
+  summaryText: "Reject back to prosecution",
+  text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
+}) }}
         </div>
       </div>
 
