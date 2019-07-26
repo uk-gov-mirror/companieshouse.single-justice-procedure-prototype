@@ -672,7 +672,7 @@ module.exports = [
     priority: 'normal',
     bookmarked: true,
     company: {
-      name: 'ACCEPTED CASE',
+      name: 'ULTIMATUM ISSUED',
       number: '05711252',
       incorporationDate: '9 January 2012',
       status: 'active',

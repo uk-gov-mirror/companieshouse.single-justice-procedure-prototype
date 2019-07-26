@@ -278,118 +278,199 @@ text: "Reason for withdrawing case"
         </div>
       </div>
     {% endif %}
+    <!-- If the case status is ready for witness statement -->
     {% if case.status === 'Ready for witness statement' %}
-      <div class="govuk-width-container">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-caption-l">Company number:
+            {{ case.company.number }}</span>
+          <h1 class="govuk-heading-l">
+            {{ case.company.name }}
+          </h1>
+        </div>
 
-            <span class="govuk-caption-xl">Reference: 00000000</span>
-            <h1 class="govuk-heading-xl">Company name</h1>
-
-            <h2 class="govuk-heading-m">Company Details</h2>
-
-            {{ govukSummaryList({
-            classes: 'govuk-!-margin-bottom-9',
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          {{ govukTable({
+            caption: "Company Details",
+            firstCellIsHeader: true,
+            classes: "govuk-table govuk-table--condensed decision-case",
             rows: [
-              {
-                key: {
-                  text: "Company"
-                },
-                value: {
-                  text: "Bulldog Trading Limited"
-                }
-              },
-              {
-                key: {
+              [
+                {
                   text: "Incorporation Date"
                 },
-                value: {
+                {
                   text: "30 June 2017"
                 }
-              }
+              ]
             ]
           }) }}
 
-            <h2 class="govuk-heading-m">Defendent 1</h2>
-
-            {{ govukSummaryList({
-            classes: 'govuk-!-margin-bottom-9',
+          {{ govukTable({
+            caption: "Confirmation Statement - 14 June 2018",
+            firstCellIsHeader: true,
+            classes: "govuk-table govuk-table--condensed decision-case",
+            head: [
+              {
+                text: "Director name"
+              },
+              {
+                text: "Appointed date"
+              }
+            ],
             rows: [
-              {
-                key: {
-                  text: "Name"
-                },
-                value: {
+              [
+                {
                   text: "Joe Blogs"
-                }
-              },
-              {
-                key: {
-                  text: "Role"
                 },
-                value: {
-                  text: "Director"
+                {
+                  text: "2nd January 2014"
                 }
-              },
-              {
-                key: {
-                  text: "Offenses"
+              ],
+              [
+                {
+                  text: "Sarah Blogs"
                 },
-                value: {
-                  html: "Offense 1 - 20 June 2019<br>Offense 2 - 20 June 2019<br>Offense 3 - 20 June 2019"
+                {
+                  text: "2nd January 2014"
                 }
-              }
+              ]
             ]
           }) }}
 
-            <h2 class="govuk-heading-m">Defendent 2</h2>
-
-            {{ govukSummaryList({
-            classes: 'govuk-!-margin-bottom-9',
+          {{ govukTable({
+            caption: "Annual Accounts - 20 June 2018",
+            firstCellIsHeader: true,
+            classes: "govuk-table govuk-table--condensed decision-case",
+            head: [
+              {
+                text: "Director name"
+              },
+              {
+                text: "Appointed date"
+              }
+            ],
             rows: [
-              {
-                key: {
-                  text: "Name"
-                },
-                value: {
+              [
+                {
                   text: "Joe Blogs"
-                }
-              },
-              {
-                key: {
-                  text: "Role"
                 },
-                value: {
-                  text: "Director"
+                {
+                  text: "2nd January 2014"
                 }
-              },
-              {
-                key: {
-                  text: "Offenses"
+              ],
+              [
+                {
+                  text: "Sarah Blogs"
                 },
-                value: {
-                  html: "Offense 1 - 20 June 2019<br>Offense 2 - 20 June 2019<br>Offense 3 - 20 June 2019"
+                {
+                  text: "2nd January 2014"
                 }
-              }
+              ]
             ]
           }) }}
+        </div>
+        <div class="govuk-grid-column-one-half">
+          <div class="govuk-grid-column-full" aria-describeddby="heading-company-filings">
+            <div class="filters">
+              <div role="widget" class="filter open">
+                <div class="govuk-body filters-heading" role="button" aria-controls="filter-filing" aria-expanded="true" tabindex="0">
+                  <span id="filter-label-filing">
+                    <span class="govuk-visually-hidden">Filter by
+                    </span>Filing type</span>
+                  <div class="toggle"></div>
+                </div>
+                <fieldset id="filter-filing" class="govuk-fieldset filters-wrapper" aria-hidden="true" aria-labelledby="filter-label-filing">
+                  <legend class="govuk-visually-hidden">What filing types do you want to see?</legend>
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-one-half">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="filter-filing-aa" name="filterFiling" type="checkbox" value="aa">
+                          <label class="govuk-label govuk-checkboxes__label" for="filter-filing-aa">
+                            Annual accounts
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="filter-filing-cs01" name="filterFiling" type="checkbox" value="cs01">
+                          <label class="govuk-label govuk-checkboxes__label" for="filter-filing-cs01">
+                            Confirmation statement
+                          </label>
+                        </div>
+                      </div>
+                      <div class="govuk-grid-column-one-half">
+                        <div class="govuk-checkboxes__item">
+                          <input class="govuk-checkboxes__input" id="filter-filing-def3" name="filterFiling" type="checkbox" value="def3">
+                          <label class="govuk-label govuk-checkboxes__label" for="filter-filing-def3">
+                            Annual return
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <table class="govuk-table govuk-table--condensed">
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="col">Filing date</th>
+                  <th class="govuk-table__header" scope="col">Filing history</th>
+                </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                {% for filing in case.company.filings | reverse %}
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                      {{ filing.date }}
+                    </td>
 
-            <h2 class="govuk-heading-m">Confirmation</h2>
-
-            <p class="govuk-body">If you're happy with the above details then accept and e-sign below.</p>
-
-            <form action="/form-handler" method="post" novalidate="novalidate">
-
-              <input type="hidden" name="answers-checked" value="true">
-
-              {{ govukButton({
-              text: "Accept and e-sign"
-            }) }}
-
-            </form>
-
+                    <td class="govuk-table__cell">
+                      {{ filing.name }}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class="govuk-grid-column-full">
+              <ul class="pagination govuk-body" role="navigation">
+                <li class="pagination__item pagination__item--disabled">
+                  <a href="#previous" class="pagination__link pagination__link--disabled">Previous</a>
+                </li>
+                <li class="pagination__item pagination__item--active">
+                  <a href="#" class="pagination__link pagination__link--active">1</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">2</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">3</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">4</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">5</a>
+                </li>
+                <li class="pagination__item">
+                  <a href="#" class="pagination__link">Next</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-m">Confirmation</h2>
+          <p class="govuk-body">If you're happy with the above details then accept and e-sign below.</p>
+          {{ govukButton({
+              text: "Accept and sign"
+        }) }}
+        </div>
+      </div>
+
     {% endif %}
   {% endblock %}
