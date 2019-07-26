@@ -20,6 +20,15 @@ module.exports = function (router) {
       case: req.session.cases[id]
     })
   })
+
+  router.get('/case/reject-reason', function (req, res) {
+    var id = parseInt(req.query.id)
+    req.session.recents.push(id)
+    res.render('case/reject-reason', {
+      case: req.session.cases[id]
+    })
+  })
+
   // CASE PROFILE
   router.get('/case/page-one/', function (req, res) {
     var id = req.query.id
