@@ -469,10 +469,26 @@ text: "Reason for withdrawing case"
               text: "Accept and sign"
         }) }}
 
-          {{ govukDetails({
-  summaryText: "Reject back to prosecution",
-  text: "We need to know your nationality so we can work out which elections you’re entitled to vote in. If you cannot provide your nationality, you’ll have to send copies of identity documents through the post."
-}) }}
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Reject back to prosecution
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="more-detail">
+                  Can you provide more detail?
+                </label>
+
+                <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+              </div>
+              <button type="submit" class="govuk-button govuk-button--warning">
+                Reject case
+              </button>
+            </div>
+          </details>
+
         </div>
       </div>
 
